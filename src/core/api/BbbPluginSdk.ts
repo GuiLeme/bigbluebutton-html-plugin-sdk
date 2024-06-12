@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+import { useEffect } from 'react';
 import { UseLoadedUserListFunction } from '../../data-consumption/domain/users/loaded-user-list/types';
 import { UseCurrentUserFunction } from '../../data-consumption/domain/users/current-user/types';
 import {
@@ -38,6 +40,8 @@ import { useChatMessageDomElements } from '../../dom-element-manipulation/chat/m
 import { UseTalkingIndicatorFunction } from '../../data-consumption/domain/user-voice/talking-indicator/types';
 import { useTalkingIndicator } from '../../data-consumption/domain/user-voice/talking-indicator/hooks';
 import { useUiData } from '../../ui-data-hooks/hooks';
+import { UseMeetingFunction } from '../../data-consumption/domain/meeting/from-core/types';
+import { useMeeting } from '../../data-consumption/domain/meeting/from-core/hooks';
 
 declare const window: PluginBrowserWindow;
 
@@ -61,6 +65,7 @@ export abstract class BbbPluginSdk {
    *
    */
   public static initialize(uuid: string) {
+    if (!this.isReactEnvironment()) throw new Error('Initializing pluginApi outside of a react function component. It should be done inside');
     const pluginApi: PluginApi = window.bbb_plugins[uuid];
     pluginApi.useCustomSubscription = ((
       query: string,
@@ -70,6 +75,7 @@ export abstract class BbbPluginSdk {
       () => useCurrentPresentation()) as UseCurrentPresentationFunction;
     pluginApi.useLoadedUserList = (() => useLoadedUserList()) as UseLoadedUserListFunction;
     pluginApi.useCurrentUser = (() => useCurrentUser()) as UseCurrentUserFunction;
+    pluginApi.useMeeting = (() => useMeeting()) as UseMeetingFunction;
     pluginApi.useUsersBasicInfo = (() => useUsersBasicInfo()) as UseUsersBasicInfoFunction;
     pluginApi.useTalkingIndicator = (() => useTalkingIndicator()) as UseTalkingIndicatorFunction;
     pluginApi.useLoadedChatMessages = (
@@ -96,6 +102,20 @@ export abstract class BbbPluginSdk {
     } else {
       throw new Error('Plugin name not set');
     }
+  }
+
+  private static isReactEnvironment(): boolean {
+    const fn = console.error;
+    try {
+      console.error = () => {};
+      useEffect(() => {}, []);
+    } catch {
+      console.error = fn;
+      console.error('[PLUGIN-ERROR] Error: Initializing pluginApi outside of a react function component. It should be done inside');
+      return false;
+    }
+    console.error = fn;
+    return true;
   }
 
   /**
