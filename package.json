@@ -45,7 +45,8 @@
     "lint": "eslint . --ignore-pattern node_modules",
     "lint:fix": "npm run lint -- --fix",
     "lint:watch": "watch 'yarn lint'",
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "test-chromium-ci": "export CI='true' && npx playwright test --project=chromium"
   },
   "files": [
     "dist"
