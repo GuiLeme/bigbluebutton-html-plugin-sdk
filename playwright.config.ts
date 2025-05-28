@@ -1,11 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
-import dotenv from 'dotenv';
-import path from 'path';
-
 import { CI, ELEMENT_WAIT_LONGER_TIME, ELEMENT_WAIT_TIME } from './tests/core/constants';
 import { server } from './tests/core/parameters';
-
-dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 export default defineConfig({
   testDir: process.cwd(),

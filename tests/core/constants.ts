@@ -1,3 +1,8 @@
+import dotenv from 'dotenv';
+import path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
 export const CI = process.env.CI === 'true';
 const TIMEOUT_MULTIPLIER = Number(process.env.TIMEOUT_MULTIPLIER);
 const MULTIPLIER = CI ? TIMEOUT_MULTIPLIER || 2 : TIMEOUT_MULTIPLIER || 1;
