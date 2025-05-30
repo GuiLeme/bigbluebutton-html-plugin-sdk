@@ -10,4 +10,9 @@ export const coreElements = {
   joinEchoTestButton: 'button[data-test="joinEchoTestButton"]',
   audioDropdownMenu: 'button[data-test="audioDropdownMenu"]',
   establishingAudioLabel: 'span[data-test="establishingAudioLabel"]',
+  // video
+  joinVideoButton: 'button[data-test="joinVideo"]',
+  startSharingWebcam: 'button[data-test="startSharingWebcam"]',
+  leaveVideo: 'button[data-test="leaveVideo"]',
+  videoDropdownMenu: 'button[data-test="videoDropdownMenu"]',
 };

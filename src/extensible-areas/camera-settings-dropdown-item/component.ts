@@ -14,6 +14,8 @@ export class CameraSettingsDropdownOption implements CameraSettingsDropdownInter
 
   icon: string;
 
+  dataTest: string = '';
+
   onClick: () => void;
 
   /**
@@ -22,18 +24,20 @@ export class CameraSettingsDropdownOption implements CameraSettingsDropdownInter
    *
    * @param label - label to be displayed in camera settings dropdown option.
    * @param icon - icon to be used in the option for the dropdown. It goes in the left side of it.
+   * @param dataTest - data-test attribute to be used in the option for the dropdown.
    * @param onClick - function to be called when clicking the button.
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, label = '', icon = '', onClick = () => {},
+    id, label = '', icon = '', dataTest = '', onClick = () => {},
   }: CameraSettingsDropdownOptionProps) {
     if (id) {
       this.id = id;
     }
     this.label = label;
     this.icon = icon;
+    this.dataTest = dataTest;
     this.onClick = onClick;
     this.type = CameraSettingsDropdownItemType.OPTION;
   }
