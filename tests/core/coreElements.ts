@@ -4,4 +4,10 @@ export const coreElements = {
   errorMessageLabel: 'span[id="error-message"]',
   whiteboard: 'div[data-testid="canvas"]',
   actions: 'button[data-test="actionsButton"]',
+  // audio
+  joinAudioButton: 'button[data-test="joinAudio"]',
+  microphoneBtn: 'button[data-test="microphoneBtn"]',
+  joinEchoTestButton: 'button[data-test="joinEchoTestButton"]',
+  audioDropdownMenu: 'button[data-test="audioDropdownMenu"]',
+  establishingAudioLabel: 'span[data-test="establishingAudioLabel"]',
 };

@@ -91,6 +91,11 @@ export class SessionPage {
     await expect(locator, description).toBeVisible({ timeout });
   }
 
+  async wasRemoved(selector: string, description: string, timeout = ELEMENT_WAIT_TIME) {
+    const locator = this.getLocator(selector);
+    await expect(locator, description).toBeHidden({ timeout });
+  }
+
   async checkElement(selector: string, index = 0): Promise<boolean> {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     return this.page.evaluate(([selector, index]) => {
