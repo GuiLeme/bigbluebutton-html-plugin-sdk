@@ -1,43 +1,22 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { test as base, expect, TestInfo } from '@playwright/test';
-import { secret, server } from '../../../tests/core/parameters';
-import { Sample } from '../../../tests/core/sample';
-import { encodeCustomParams } from '../../../tests/core/helpers';
+import { expect } from '@playwright/test';
+import { createSampleTest } from '../../../tests/core/fixtures/sampleFixture';
+import { createSampleBeforeAll } from '../../../tests/core/fixtures/sampleBeforeAll';
 import { elements as e } from './elements';
 import { extractObject } from './utils/extractObject';
 
-let pluginUrl: string | undefined = process.env.ACTIONS_BAR_URL;
-
-const test = base.extend<{
-  sampleTest: Sample;
-}>({
-  sampleTest: async ({ browser, context, page }, use) => {
-    if (!pluginUrl) throw new Error('Plugin URL is not set from beforeAll.');
-    const createParameter = encodeCustomParams(`pluginManifests=${JSON.stringify([{ url: pluginUrl }])}`);
-    const sampleTest = new Sample({ browser, context });
-    await sampleTest.initModPage(page, { createParameter });
-    await use(sampleTest);
-  },
+const { test, setPluginUrl, getPluginUrl } = createSampleTest({
+  envVarName: 'ACTIONS_BAR_URL',
+  getPluginUrl: () => process.env.ACTIONS_BAR_URL,
 });
 
 test.describe.parallel('Action bar', () => {
-  test.beforeAll(async ({ request }, testInfo: TestInfo) => {
-    if (!server) return test.skip(true, 'No server URL variable provided. Skipping test');
-    if (!secret) return test.skip(true, 'No server secret variable provided. Skipping test');
-
-    const serverDomain = new URL(server).origin;
-    const manifestUrlPath = '/plugins/sample-actions-bar-plugin/dist/manifest.json';
-    pluginUrl = `${serverDomain}${manifestUrlPath}`;
-
-    const response = await request.get(pluginUrl);
-    test.skip(!response.ok(), `Failed to fetch plugin manifest for ${testInfo.title} plugin. returned status ${response.status()}`);
-
-    try {
-      return response.json();
-    } catch (error) {
-      return test.skip(error, `Invalid JSON response from plugin manifest for ${testInfo.title} plugin`);
-    }
-  });
+  test.beforeAll(createSampleBeforeAll({
+    pluginName: 'sample-actions-bar-plugin',
+    envVarName: 'ACTIONS_BAR_URL',
+    setPluginUrl,
+    getPluginUrl,
+  }));
 
   test('should log expected message when custom SVG button is clicked', async ({ sampleTest }) => {
     await sampleTest.modPage.hasElement(e.actionsBarButtonCustomSvg, 'should display the button with custom SVG');
