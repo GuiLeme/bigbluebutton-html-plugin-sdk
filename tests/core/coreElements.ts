@@ -15,4 +15,8 @@ export const coreElements = {
   startSharingWebcam: 'button[data-test="startSharingWebcam"]',
   leaveVideo: 'button[data-test="leaveVideo"]',
   videoDropdownMenu: 'button[data-test="videoDropdownMenu"]',
+  // presentation
+  presentationToolbarWrapper: 'div[id="presentationToolbarWrapper"]',
+  skipSlide: 'select[data-test="skipSlide"]',
+  nextSlide: 'button[data-test="nextSlide"]',
 };
