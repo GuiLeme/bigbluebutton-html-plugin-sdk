@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { UiDataPayloads } from './types';
+import { UiDataPayloads } from '../types';
 import { UI_DATA_LISTENER_SUBSCRIBED } from './consts';
 
 export function useUiData<

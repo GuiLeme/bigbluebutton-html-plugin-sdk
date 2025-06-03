@@ -41,7 +41,7 @@ import { useChatMessageDomElements } from '../../dom-element-manipulation/chat/m
 import { useUserCameraDomElements } from '../../dom-element-manipulation/user-camera/hooks';
 import { UseTalkingIndicatorFunction } from '../../data-consumption/domain/user-voice/talking-indicator/types';
 import { useTalkingIndicator } from '../../data-consumption/domain/user-voice/talking-indicator/hooks';
-import { useUiData } from '../../ui-data-hooks/hooks';
+import { useUiData } from '../../ui-data/hooks/hooks';
 import { UseMeetingFunction } from '../../data-consumption/domain/meeting/from-core/types';
 import { useMeeting } from '../../data-consumption/domain/meeting/from-core/hooks';
 import { serverCommands } from '../../server-commands/commands';
@@ -50,6 +50,7 @@ import { GenericDataForLearningAnalyticsDashboard } from '../../learning-analyti
 import { getRemoteData } from '../../remote-data/utils';
 import { persistEventFunctionWrapper } from '../../event-persistence/hooks';
 import useLocaleMessagesAuxiliary from '../auxiliary/plugin-information/locale-messages/useLocaleMessages';
+import { getUiData } from '../../ui-data/getters/getters';
 
 declare const window: PluginBrowserWindow;
 
@@ -97,6 +98,7 @@ export abstract class BbbPluginSdk {
     ) => useUserCameraDomElements(streamIds, uuid);
     pluginApi.uiCommands = uiCommands;
     pluginApi.useUiData = useUiData;
+    pluginApi.getUiData = getUiData;
     const pluginName = pluginApi?.pluginName;
     pluginApi.useShouldUnmountPlugin = useShouldUnmountPlugin;
     if (pluginName) {

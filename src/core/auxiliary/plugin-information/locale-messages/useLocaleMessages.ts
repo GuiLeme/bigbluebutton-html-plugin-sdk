@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IntlLocaleUiDataNames } from '../../../../ui-data-hooks';
+import { IntlLocaleUiDataNames } from '../../../../ui-data';
 import { pluginLogger } from '../../../../utils';
 import { IntlMessages, UseLocaleMessagesProps } from './types';
 import { fetchLocaleAndStore, mergeLocaleMessages } from './utils';
