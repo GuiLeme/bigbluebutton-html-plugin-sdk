@@ -4,7 +4,7 @@ export * from './data-consumption';
 
 export * from './data-channel';
 
-export * from './ui-data-hooks';
+export * from './ui-data';
 
 export * from './server-commands';
 
