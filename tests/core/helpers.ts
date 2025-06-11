@@ -1,10 +1,11 @@
 import { expect, Page } from '@playwright/test';
-import sha from 'sha.js';
+import sha, { Algorithm } from 'sha.js';
 import xml2js from 'xml2js';
 import axios from 'axios';
 import {
   attendeePW, fullName, moderatorPW, secret, server,
 } from './parameters';
+import { InitParameters } from './sessionPage';
 
 declare global {
   interface Window {
@@ -62,8 +63,8 @@ export interface SessionSettings {
   emojiRain: boolean;
 }
 
-function getChecksum(text) {
-  let algorithm = (process.env.CHECKSUM || '').toLowerCase();
+function getChecksum(text: string) {
+  let algorithm: Algorithm = (process.env.CHECKSUM || '').toLowerCase() as Algorithm;
   if (!['sha1', 'sha256', 'sha512'].includes(algorithm)) {
     switch (secret?.length) {
       case 128:
@@ -80,13 +81,13 @@ function getChecksum(text) {
   return sha(algorithm).update(text).digest('hex');
 }
 
-function getRandomInt(min, max) {
+function getRandomInt(min: number, max: number) {
   const adjustedMin = Math.ceil(min);
   const adjustedMax = Math.floor(max);
   return Math.floor(Math.random() * (adjustedMax - adjustedMin)) + adjustedMin;
 }
 
-function createMeetingUrl(params, createParameter) {
+function createMeetingUrl(params: InitParameters, createParameter: string | undefined) {
   const meetingID = `random-${getRandomInt(1000000, 10000000).toString()}`;
   const mp = params.moderatorPW;
   const ap = params.attendeePW;
@@ -99,12 +100,15 @@ function createMeetingUrl(params, createParameter) {
   return url;
 }
 
-function createMeetingPromise(params, createParameter) {
+function createMeetingPromise(params: InitParameters, createParameter: string | undefined) {
   const url = createMeetingUrl(params, createParameter);
   return axios.get(url, { adapter: 'http' });
 }
 
-export async function createMeeting(params, createParameter) {
+export async function createMeeting(
+  params: InitParameters,
+  createParameter: string | undefined,
+): Promise<string> {
   const promise = createMeetingPromise(params, createParameter);
   const response = await promise;
   expect(response.status).toEqual(200);
