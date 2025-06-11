@@ -10,7 +10,7 @@ export type SampleBeforeAllConfig = {
   getPluginUrl?: () => string | undefined;
 };
 
-export function createSampleBeforeAll(config: SampleBeforeAllConfig) {
+export function checkPluginAvailability(config: SampleBeforeAllConfig) {
   return async ({ request }: { request: APIRequestContext }, testInfo: TestInfo): Promise<void> => {
     // Check if custom URL is already provided via environment variable
     const customUrl = config.getPluginUrl?.();

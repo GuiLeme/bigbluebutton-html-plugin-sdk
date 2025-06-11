@@ -11,7 +11,7 @@ The `createSampleTest` function creates a Playwright test instance with a `sampl
 ```typescript
 import { expect } from '@playwright/test';
 import { createSampleTest } from '../../../tests/core/sampleFixture';
-import { createSampleBeforeAll } from '../../../tests/core/sampleBeforeAll';
+import { checkPluginAvailability } from '../../../tests/core/sampleBeforeAll';
 
 const { test, setPluginUrl, getPluginUrl } = createSampleTest({
   envVarName: 'YOUR_PLUGIN_URL_ENV_VAR', // e.g., 'ACTIONS_BAR_URL'
@@ -21,11 +21,11 @@ const { test, setPluginUrl, getPluginUrl } = createSampleTest({
 
 ### 2. Using the shared beforeAll hook (`sampleBeforeAll.ts`)
 
-The `createSampleBeforeAll` function creates a `beforeAll` hook that automatically fetches the plugin manifest and sets up the plugin URL.
+The `checkPluginAvailability` function creates a `beforeAll` hook that automatically checks the plugin availability, fetches the plugin manifest and sets up the plugin URL.
 
 ```typescript
 test.describe.parallel('Your Plugin Tests', () => {
-  test.beforeAll(createSampleBeforeAll({
+  test.beforeAll(checkPluginAvailability({
     pluginName: 'sample-your-plugin-name', // Must match the folder name in /plugins/
     envVarName: 'YOUR_PLUGIN_URL_ENV_VAR',
     setPluginUrl,

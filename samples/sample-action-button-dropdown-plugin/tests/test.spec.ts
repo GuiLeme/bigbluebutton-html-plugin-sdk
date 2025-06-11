@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { expect } from '@playwright/test';
 import { createSampleTest } from '../../../tests/core/fixtures/sampleFixture';
-import { createSampleBeforeAll } from '../../../tests/core/fixtures/sampleBeforeAll';
+import { checkPluginAvailability } from '../../../tests/core/fixtures/sampleBeforeAll';
 import { ELEMENT_WAIT_LONGER_TIME } from '../../../tests/core/constants';
 import { elements as e } from './elements';
 
@@ -11,7 +11,7 @@ const { test, setPluginUrl, getPluginUrl } = createSampleTest({
 });
 
 test.describe.parallel('Action button dropdown', () => {
-  test.beforeAll(createSampleBeforeAll({
+  test.beforeAll(checkPluginAvailability({
     pluginName: 'sample-action-button-dropdown-plugin',
     envVarName: 'ACTION_BUTTON_DROPDOWN_URL',
     setPluginUrl,

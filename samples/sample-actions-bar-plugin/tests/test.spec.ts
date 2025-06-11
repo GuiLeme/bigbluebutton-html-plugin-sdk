@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { expect } from '@playwright/test';
 import { createSampleTest } from '../../../tests/core/fixtures/sampleFixture';
-import { createSampleBeforeAll } from '../../../tests/core/fixtures/sampleBeforeAll';
+import { checkPluginAvailability } from '../../../tests/core/fixtures/sampleBeforeAll';
 import { elements as e } from './elements';
 import { extractObject } from './utils/extractObject';
 
@@ -11,7 +11,7 @@ const { test, setPluginUrl, getPluginUrl } = createSampleTest({
 });
 
 test.describe.parallel('Action bar', () => {
-  test.beforeAll(createSampleBeforeAll({
+  test.beforeAll(checkPluginAvailability({
     pluginName: 'sample-actions-bar-plugin',
     envVarName: 'ACTIONS_BAR_URL',
     setPluginUrl,
