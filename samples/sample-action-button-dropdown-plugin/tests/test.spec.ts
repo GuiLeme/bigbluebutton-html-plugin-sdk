@@ -1,33 +1,39 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { test, TestInfo } from '@playwright/test';
-import { server } from '../../../tests/core/parameters';
-import { encodeCustomParams } from '../../../tests/core/helpers';
-import { ActionsButtonDropdown } from './test';
+import { expect } from '@playwright/test';
+import { createSampleTest } from '../../../tests/core/fixtures/sampleFixture';
+import { checkPluginAvailability } from '../../../tests/core/fixtures/sampleBeforeAll';
+import { ELEMENT_WAIT_LONGER_TIME } from '../../../tests/core/constants';
+import { elements as e } from './elements';
 
-let pluginUrl: string;
+const { test, setPluginUrl, getPluginUrl } = createSampleTest({
+  envVarName: 'ACTIONS_BUTTON_DROPDOWN_URL',
+  getPluginUrl: () => process.env.ACTION_BUTTON_DROPDOWN_URL,
+});
 
 test.describe.parallel('Action button dropdown', () => {
-  test.beforeAll(async ({ request }, testInfo: TestInfo) => {
-    if (!server) return test.skip(true, 'No server variable provided. Skipping test');
+  test.beforeAll(checkPluginAvailability({
+    pluginName: 'sample-action-button-dropdown-plugin',
+    envVarName: 'ACTION_BUTTON_DROPDOWN_URL',
+    setPluginUrl,
+    getPluginUrl,
+  }));
 
-    const serverDomain = new URL(server).origin;
-    const manifestUrlPath = '/plugins/sample-action-button-dropdown-plugin/dist/manifest.json';
-    pluginUrl = `${serverDomain}${manifestUrlPath}`;
-    const response = await request.get(pluginUrl);
-    test.skip(!response.ok(), `Failed to fetch plugin manifest for ${testInfo.title} plugin. returned status ${response.status()}`);
-    try {
-      return response.json();
-    } catch (error) {
-      return test.skip(error, `Invalid JSON response from plugin manifest for ${testInfo.title} plugin`);
-    }
-  });
-
-  test('should display and log when clicked', async ({ browser, context, page }): Promise<void> => {
-    if (!pluginUrl) test.skip(true, 'Plugin URL is not set from beforeAll.');
-
-    const sampleTest = new ActionsButtonDropdown({ browser, context });
-    const createParameter = encodeCustomParams(`pluginManifests=${JSON.stringify([{ url: pluginUrl }])}`);
-    await sampleTest.initModPage(page, { createParameter });
-    return sampleTest.test();
+  test('should display and log when clicked', async ({ sampleTest }): Promise<void> => {
+    await sampleTest.modPage.page.waitForSelector(
+      e.whiteboard,
+      { timeout: ELEMENT_WAIT_LONGER_TIME },
+    );
+    await sampleTest.modPage.page.click(e.actions);
+    await sampleTest.modPage.hasElement(e.pluginSeparator, 'should display the separator element injected by the plugin');
+    await sampleTest.modPage.hasElement(e.pluginButton, 'should display the button element injected by the plugin');
+    await sampleTest.modPage.hasText(e.pluginButton, 'Button injected by plugin', 'should display the correct text on the injected button');
+    const [consoleMessage] = await Promise.all([
+      sampleTest.modPage.waitForPluginLogger(),
+      sampleTest.modPage.page.click(e.pluginButton),
+    ]);
+    expect(
+      consoleMessage.text(),
+      'should display the expected log from the plugin button correctly',
+    ).toContain('Log that the button from sample-action-button-dropdown-plugin has been clicked');
   });
 });

@@ -92,3 +92,7 @@ You can run all the available commands in a sample folder to use only that speci
 
 *   **Console:** Test results will be printed to the console.
 *   **HTML Report:** For local development, an HTML report is generated in the `playwright-report/` directory. This report provides a detailed view of test execution and can be opened by viewing the `index.html` file in that directory or running the command `npx playwright show-report`.
+
+## Development
+
+For a more detailed steps and explanation about how to setup the base spec file, check the [fixtures README](core/fixtures/README.md)
