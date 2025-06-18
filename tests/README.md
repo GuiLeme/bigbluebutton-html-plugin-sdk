@@ -34,7 +34,7 @@ Test files are identified by the `*.spec.ts` pattern on sample folders. Examples
       Certain environment variables are used to configure the test environment, particularly for interacting with a BigBlueButton server. These are typically defined in a `.env` file in the root of the project.
 
       *   **`BBB_URL` (Required):** The URL of the BigBlueButton server to run tests against.
-          *   Example: `BBB_URL=https://your.bbb.server/bigbluebutton/api/`
+          *   Example: `BBB_URL=https://your.bbb.server/bigbluebutton/`
       *   **`BBB_SECRET` (Required):** The shared secret for the BigBlueButton server.
           *   Example: `BBB_SECRET=yoursupersecretkey`
       *   **`TIMEOUT_MULTIPLIER` (Optional):** A numerical value to multiply default timeout values. Useful for slower environments. If not set, it defaults to `2` in CI environments and `1` otherwise.

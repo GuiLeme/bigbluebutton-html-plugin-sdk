@@ -95,7 +95,7 @@ function createMeetingUrl(params, createParameter) {
   const query = createParameter !== undefined ? `${baseQuery}&${createParameter}` : baseQuery;
   const apiCall = `create${query}${params.secret}`;
   const checksum = getChecksum(apiCall);
-  const url = `${params.server}/create?${query}&checksum=${checksum}`;
+  const url = `${params.server}/api/create?${query}&checksum=${checksum}`;
   return url;
 }
 
@@ -121,7 +121,7 @@ export function getJoinURL({
   const query = joinParameter ? `${baseQuery}&${joinParameter}` : baseQuery;
   const apiCall = `join${query}${secret}`;
   const checksum = getChecksum(apiCall);
-  return `${server}/join?${query}&checksum=${checksum}`;
+  return `${server}/api/join?${query}&checksum=${checksum}`;
 }
 
 export function encodeCustomParams(param: string): string {
