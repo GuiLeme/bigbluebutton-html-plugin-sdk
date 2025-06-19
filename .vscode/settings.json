@@ -1,0 +1,10 @@
+{
+  "[json]": {
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+  },
+  "files.associations": {
+    "package.json": "json",
+  },
+  "editor.formatOnSave": true,
+}
