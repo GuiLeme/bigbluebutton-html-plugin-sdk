@@ -22,16 +22,22 @@ function useLocaleMessagesAuxiliary(
       const { locale, fallbackLocale } = currentLocale;
       const localeUrl = `${localesBaseUrl}/${locale}.json`;
       const fallbackLocaleUrl = `${localesBaseUrl}/${fallbackLocale}.json`;
-      Promise.all([
-        localeUrl,
+      pluginLogger.info(`Fetching locale [${locale}] and fallback [${fallbackLocale}] for plugin [${pluginApi.pluginName}]`);
+      const urlToFetchList = [
         fallbackLocaleUrl,
-      ].map((url) => {
+      ];
+      if (locale !== fallbackLocale) urlToFetchList.push(localeUrl);
+      Promise.all(urlToFetchList.map(async (url) => {
         if (url !== fallbackLocaleUrl || !fallbackMessages) {
           try {
-            return fetchLocaleAndStore(url, fetchConfigs);
+            const a = await fetchLocaleAndStore(url, fetchConfigs);
+            return a;
           } catch (err) {
-            pluginLogger.error(`Something went wrong while trying to fetch ${localeUrl}: `, err);
-            return Promise.reject(err);
+            pluginLogger.error(
+              `[${pluginApi.pluginName}] - Something went wrong while trying to fetch [${url}] or parse its result: `,
+              err,
+            );
+            return Promise.resolve({});
           }
         }
         return Promise.resolve(fallbackMessages);
