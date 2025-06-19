@@ -61,7 +61,10 @@ test.describe.parallel('Custom Subscription Hook', () => {
     expect(urlsJson?.text, 'should log the correct TEXT URL for the second slide').toBeDefined();
     expect(urlsJson?.text, 'TEXT URL should be a valid URL').toMatch(/^https?:\/\/.+/);
 
-    await sampleTest.modPage.page.locator(e.skipSlide).selectOption({ label: 'Slide 15' }); // last slide
+    const skipSlideSelect = sampleTest.modPage.page.locator(e.skipSlide);
+    const options = await skipSlideSelect.locator('option').all();
+    expect(options.length, 'presentation should have more than 1 slide for the plugin to perform as expected').toBeGreaterThan(1);
+    await skipSlideSelect.selectOption({ index: options.length - 1 });
     await expect(sampleTest.modPage.page.locator(e.nextSlide), 'should disable the next slide button when on the last slide').toBeDisabled();
 
     const [consoleMessage2] = await Promise.all([
