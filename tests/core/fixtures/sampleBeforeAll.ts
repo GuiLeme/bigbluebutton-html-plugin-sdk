@@ -19,18 +19,10 @@ export function checkPluginAvailability(config: SampleBeforeAllConfig) {
       return;
     }
 
-    if (!server) {
-      const msg = 'No server URL variable provided. Skipping test';
-      console.log(msg);
-      testInfo.skip(true, msg);
-      return;
-    }
-    if (!secret) {
-      const msg = 'No server secret variable provided. Skipping test';
-      console.log(msg);
-      testInfo.skip(true, msg);
-      return;
-    }
+    const BBB_URL_PATTERN = /^https:\/\/[^/]+\/bigbluebutton\/$/;
+    if (!secret) throw new Error('BBB_SECRET environment variable is not set');
+    if (!server) throw new Error('BBB_URL environment variable is not set');
+    if (!BBB_URL_PATTERN.test(server)) throw new Error('BBB_URL must follow the pattern "https://DOMAIN_NAME/bigbluebutton/"');
 
     const serverDomain = new URL(server).origin;
     const manifestUrlPath = `/plugins/${config.pluginName}/dist/manifest.json`;
