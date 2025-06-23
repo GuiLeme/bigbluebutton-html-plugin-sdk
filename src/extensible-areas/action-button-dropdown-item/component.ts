@@ -57,10 +57,20 @@ export class ActionButtonDropdownOption implements ActionButtonDropdownInterface
 export class ActionButtonDropdownSeparator implements ActionButtonDropdownInterface {
   id: string = '';
 
+  dataTest?: string;
+
   type: ActionButtonDropdownItemType;
 
-  constructor() {
+  /**
+   * Returns the separator for the action button dropdown
+   *
+   * @param dataTest - optional string attribute to be used for testing
+   *
+   * @returns the separator to be displayed in the action button dropdown
+   */
+  constructor({ dataTest = '' }) {
     this.type = ActionButtonDropdownItemType.SEPARATOR;
+    this.dataTest = dataTest;
   }
 
   setItemId: (id: string) => void = (id: string) => {

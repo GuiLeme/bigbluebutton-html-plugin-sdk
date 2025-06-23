@@ -24,7 +24,7 @@ test.describe.parallel('Action button dropdown', () => {
       { timeout: ELEMENT_WAIT_LONGER_TIME },
     );
     await sampleTest.modPage.page.click(e.actions);
-    await sampleTest.modPage.hasElement(e.pluginSeparator, 'should display the separator element injected by the plugin');
+    await sampleTest.modPage.hasElement(e.actionButtonDropdownPluginSeparator, 'should display the action button dropdown separator element injected by the plugin');
     await sampleTest.modPage.hasElement(e.pluginButton, 'should display the button element injected by the plugin');
     await sampleTest.modPage.hasText(e.pluginButton, 'Button injected by plugin', 'should display the correct text on the injected button');
     const [consoleMessage] = await Promise.all([
