@@ -25,7 +25,7 @@ test.describe.parallel('Camera Settings Dropdown', () => {
     );
     await sampleTest.modPage.page.click(e.joinVideoButton);
     await sampleTest.modPage.page.click(e.startSharingWebcam);
-    await sampleTest.modPage.page.click(e.leaveVideo);
+    await sampleTest.modPage.hasElement(e.leaveVideo, 'should display the leave video button after joining video');
     await sampleTest.modPage.hasElement('video', 'should display the video element after joining video');
     await sampleTest.modPage.page.click(e.videoDropdownMenu);
 
