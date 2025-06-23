@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import { createSampleTest } from '../../../tests/core/fixtures/sampleFixture';
 import { checkPluginAvailability } from '../../../tests/core/fixtures/sampleBeforeAll';
 import { elements as e } from './elements';
-import { extractObject } from './utils/extractObject';
+import { extractObject } from '../../../tests/utils/extractObject';
 
 const { test, setPluginUrl, getPluginUrl } = createSampleTest({
   envVarName: 'ACTIONS_BAR_URL',

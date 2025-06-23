@@ -28,7 +28,7 @@ interface InitFunctionParameters {
   initOptions: InitOptions;
 }
 
-interface InitParameters {
+export interface InitParameters {
   server: string | undefined;
   secret: string | undefined;
   welcome: string;
@@ -39,15 +39,22 @@ interface InitParameters {
 
 export class SessionPage {
   readonly page: Page;
+
   readonly browser: Browser;
+
   settings: SessionSettings | undefined;
+
   initParameters: InitParameters;
+
   username: string;
+
   meetingId: string;
 
   constructor({ browser, page }: PageProps) {
     this.browser = browser;
     this.page = page;
+    this.username = '';
+    this.meetingId = '';
     this.initParameters = { ...parameters };
   }
 
@@ -63,7 +70,7 @@ export class SessionPage {
     if (!isModerator) this.initParameters.moderatorPW = '';
     this.username = fullName || this.initParameters.fullName;
 
-    this.meetingId = await createMeeting(parameters, createParameter);
+    this.meetingId = await createMeeting(this.initParameters, createParameter);
     const joinUrl = getJoinURL({
       meetingID: this.meetingId, isModerator, joinParameter, skipSessionDetailsModal,
     });
@@ -91,13 +98,18 @@ export class SessionPage {
     await expect(locator, description).toBeVisible({ timeout });
   }
 
+  async wasRemoved(selector: string, description: string, timeout = ELEMENT_WAIT_TIME) {
+    const locator = this.getLocator(selector);
+    await expect(locator, description).toBeHidden({ timeout });
+  }
+
   async checkElement(selector: string, index = 0): Promise<boolean> {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     return this.page.evaluate(([selector, index]) => {
       if (typeof selector !== 'string') throw new Error('Selector must be a string');
       const element = document.querySelectorAll(selector);
       if (element.length > 0) {
-        return element[index] !== undefined;
+        return element[index as number] !== undefined;
       }
       return false;
     }, [selector, index]);

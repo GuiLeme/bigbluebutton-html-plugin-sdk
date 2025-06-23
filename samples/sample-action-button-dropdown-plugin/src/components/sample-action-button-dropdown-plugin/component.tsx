@@ -25,7 +25,9 @@ function SampleActionButtonDropdownPlugin(
   React.useEffect(() => {
     if (currentUser?.presenter) {
       pluginApi.setActionButtonDropdownItems([
-        new ActionButtonDropdownSeparator(),
+        new ActionButtonDropdownSeparator({
+          dataTest: 'actionDropdownSeparatorPlugin',
+        }),
         new ActionButtonDropdownOption({
           label: 'Button injected by plugin',
           icon: 'copy',

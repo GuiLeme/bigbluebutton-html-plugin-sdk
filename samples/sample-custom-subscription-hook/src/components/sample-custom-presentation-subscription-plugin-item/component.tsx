@@ -14,7 +14,7 @@ import { PresentationFromGraphqlWrapper, SampleCustomSubscriptionPluginProps } f
 function SampleCustomPresentationSubscriptionPlugin(
   { pluginUuid: uuid }: SampleCustomSubscriptionPluginProps,
 ):
- React.ReactElement {
+  React.ReactElement {
   BbbPluginSdk.initialize(uuid);
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);
 
@@ -45,6 +45,7 @@ function SampleCustomPresentationSubscriptionPlugin(
         label: 'Log data for next slide',
         tooltip: 'It queries data from next slide and logs on the console',
         style: {},
+        dataTest: 'logNextSlideDataButton',
         onClick: () => {
           pluginLogger.info('Logging data from sample-custom-presentation-subscription-plugin: ', JSON.stringify(dataResult));
         },

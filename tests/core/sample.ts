@@ -9,7 +9,7 @@ interface SampleProps {
 export class Sample {
   readonly browser: Browser;
   readonly context: BrowserContext;
-  modPage: SessionPage;
+  modPage!: SessionPage;
 
   constructor({ browser, context }: SampleProps) {
     this.browser = browser;
