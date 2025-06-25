@@ -132,11 +132,6 @@ Here is as complete `manifest.json` example with all possible configurations:
   ], // One can enable more data-channels to better organize client communication
   "eventPersistence": {
     "isEnabled": true, // By default it is not enabled
-    "maximumPayloadSizeInBytes": 1024,
-    "rateLimiting": {
-      "messagesAllowedPerSecond": 10,
-      "messagesAllowedPerMinute": 20
-    }
   },
   "remoteDataSources": [
     {
@@ -451,7 +446,7 @@ This feature is mainly used for security purposes, see [external data section](#
 
 ### Event persistence
 
-This feature will allow the developer to save an information (which is basically an event) in the `event.xml` file of the meeting if it's being recorded.
+This feature will allow the developer to save an information (an event) in the `event.xml` file of the meeting, if it's being recorded.
 
 To use it, one first need to add the following lines to their `manifest.json`:
 
@@ -460,11 +455,6 @@ To use it, one first need to add the following lines to their `manifest.json`:
   // ...rest of manifest configuration
   "eventPersistence": {
       "isEnabled": true,
-      "maximumPayloadSizeInBytes": 1024,
-      "rateLimiting": {
-          "messagesAllowedPerSecond": 10,
-          "messagesAllowedPerMinute": 20
-      }
   }
 }
 ```
