@@ -6,11 +6,14 @@ import {
   pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleOptionsDropdownPluginProps } from './types';
+import { UserAggregatorQuery } from './user-aggregator-query/component';
 
 function SampleOptionsDropdownPlugin(
   { pluginUuid: uuid }: SampleOptionsDropdownPluginProps,
 ): React.ReactElement<SampleOptionsDropdownPluginProps> {
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);
+  BbbPluginSdk.initialize(uuid);
+  const [activateQuery, setActivateQuery] = React.useState(false);
 
   useEffect(() => {
     pluginApi.setOptionsDropdownItems([
@@ -19,13 +22,18 @@ function SampleOptionsDropdownPlugin(
         label: 'This will log on the console',
         icon: 'copy',
         onClick: () => {
+          setActivateQuery(true);
           pluginLogger.info('Log from options dropdown plugin');
         },
       }),
     ]);
   }, []);
 
-  return null;
+  return activateQuery && (
+    <UserAggregatorQuery
+      pluginApi={pluginApi}
+    />
+  );
 }
 
 export default SampleOptionsDropdownPlugin;

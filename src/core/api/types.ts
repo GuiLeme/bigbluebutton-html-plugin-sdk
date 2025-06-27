@@ -35,6 +35,7 @@ import { PersistEventFunction } from '../../event-persistence/types';
 import { UseLocaleMessagesFunction } from '../auxiliary/plugin-information/locale-messages/types';
 import { UseShouldUnmountPluginFunction } from '../auxiliary/plugin-unmount/types';
 import { GetUiDataFunction } from '../../ui-data/getters/types';
+import { UseCustomQueryFunction } from '../../data-consumption/domain/shared/custom-query/types';
 
 // Setter Functions for the API
 export type SetPresentationToolbarItems = (presentationToolbarItem:
@@ -189,13 +190,21 @@ export interface PluginApi {
    */
   useShouldUnmountPlugin?: UseShouldUnmountPluginFunction;
   /**
-   * Returns an object containing the data on the current presentation being displayed
-   * in the presentation area, and its current page.
+   * Returns an object containing the data related to the custom subscription made.
+   * This hook is reactive - If the resulting data changes, it updates the hook.
    *
    * @returns `GraphqlResponseWrapper` with the data type specified in the generic type.
    *
    */
   useCustomSubscription?: UseCustomSubscriptionFunction;
+  /**
+   * Returns an object containing the data related to the custom subscription made.
+   * This hook is not reactive - Once the data is returned, it doesn't update anymore.
+   *
+   * @returns `GraphqlResponseWrapper` with the data type specified in the generic type.
+   *
+   */
+  useCustomQuery?: UseCustomQueryFunction;
   // --- DataChannel Hook ---
   /**
    * Returns an array with tha data wrapped in the `GraphqlResponseWrapper` in the first
