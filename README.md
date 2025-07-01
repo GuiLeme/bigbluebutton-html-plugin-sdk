@@ -334,6 +334,8 @@ One other thing is that the type of the return is precisely the same type requir
   - send: This function will send a notification for the client to render, keep in mind that it's only client-side. Should you want it to be rendered in multiple clients, use this with a data-channel;
 - user-status:
   - setAwayStatus: this function will set the away status of the user to a certain status;
+- captions:
+  - setDisplayAudioCaptions: This function will set the track of transcripted audio to be displayed;
 
 See usage ahead:
 
