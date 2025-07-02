@@ -3,6 +3,7 @@ import { CustomSubscriptionArguments } from '../data-consumption/domain/shared/c
 import { Hooks } from './enum';
 import { DataChannelArguments } from '../data-channel/types';
 import { DomElementManipulationArguments } from '../dom-element-manipulation/type';
+import { UseCustomMutationArguments } from '../data-creation/types';
 
 /**
  * Wrapper for the data that comes from the core. With this more complex object
@@ -18,7 +19,7 @@ export interface GraphqlResponseWrapper<TData> {
 }
 
 export type HookArguments = CustomSubscriptionArguments | DataChannelArguments
-  | DomElementManipulationArguments;
+  | DomElementManipulationArguments | UseCustomMutationArguments;
 
 export interface UpdatedEventDetails<T> {
   hook: Hooks;

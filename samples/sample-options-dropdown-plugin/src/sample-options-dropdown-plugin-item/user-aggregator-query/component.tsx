@@ -18,7 +18,7 @@ interface QueryResult {
 
 function UserAggregatorQuery(
   props: UserAggregatorQueryProps,
-):React.ReactElement<UserAggregatorQueryProps> {
+): React.ReactElement<UserAggregatorQueryProps> {
   const { pluginApi } = props;
   const { data, loading } = pluginApi.useCustomQuery<QueryResult>(`
     query UsersCount {
@@ -29,7 +29,7 @@ function UserAggregatorQuery(
     }
   }`);
   useEffect(() => {
-    pluginLogger.info(`This is the result of the query: ${data}`);
+    pluginLogger.info(`This is the result of the query: ${JSON.stringify(data)}`);
   }, [loading]);
   return null;
 }

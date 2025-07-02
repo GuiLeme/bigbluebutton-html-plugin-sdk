@@ -53,6 +53,9 @@ import { persistEventFunctionWrapper } from '../../event-persistence/hooks';
 import useLocaleMessagesAuxiliary from '../auxiliary/plugin-information/locale-messages/useLocaleMessages';
 import { getUiData } from '../../ui-data/getters/getters';
 import { useCustomQuery } from '../../data-consumption/domain/shared/custom-query/hooks';
+import { UseCustomQueryFunction } from '../../data-consumption/domain/shared/custom-query/types';
+import { useCustomMutation } from '../../data-creation/hook';
+import { UseCustomMutationFunction } from '../../data-creation/types';
 
 declare const window: PluginBrowserWindow;
 
@@ -85,7 +88,11 @@ export abstract class BbbPluginSdk {
     pluginApi.useCustomQuery = ((
       query: string,
       variablesObjectWrapper?: CustomQueryHookOptions,
-    ) => useCustomQuery(query, variablesObjectWrapper)) as UseCustomSubscriptionFunction;
+    ) => useCustomQuery(query, variablesObjectWrapper)) as UseCustomQueryFunction;
+    pluginApi.useCustomMutation = ((
+      mutation: string,
+      options?: object,
+    ) => useCustomMutation(mutation, options)) as UseCustomMutationFunction;
     pluginApi.useCurrentPresentation = (
       () => useCurrentPresentation()) as UseCurrentPresentationFunction;
     pluginApi.useLoadedUserList = (() => useLoadedUserList()) as UseLoadedUserListFunction;
@@ -127,10 +134,8 @@ export abstract class BbbPluginSdk {
       pluginApi.getRemoteData = (
         dataSourceName: string,
       ) => getRemoteData(dataSourceName, pluginName);
-      pluginApi.persistEvent = <T = object>(
-        eventName: string,
-        payload: T,
-      ) => persistEventFunctionWrapper(
+      pluginApi
+        .persistEvent = <T = object>(eventName: string, payload: T) => persistEventFunctionWrapper(
           pluginName,
           eventName,
           payload,
