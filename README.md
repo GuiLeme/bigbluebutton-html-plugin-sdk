@@ -222,6 +222,59 @@ export interface GraphqlResponseWrapper<TData> {
 
 So we have the `data`, which is different for each hook, that's why it's a generic, the error, that will be set if, and only if, there is an error, otherwise it is undefined, and loading, which tells the developer if the query is still loading (being fetched) or not.
 
+### Realtime Data Creation
+
+**`useCustomMutation` Hook**
+
+The `useCustomMutation` hook enables you to post data to the backend (Postgres) using existing GraphQL mutations, respecting user permissions.
+
+It works similarly to Apollo Client’s `useMutation`, returning a *trigger function* and a *result object* with information about the mutation execution. These will be described in more detail below.
+
+One important difference is that the mutation query **must** be provided as a string. This is due to how the SDK communicates with the HTML5 client. As a consequence, you must explicitly define the type of the `variables` argument for the trigger function, as shown in the example below.
+
+```typescript
+interface MutationVariablesType {
+  reactionEmoji: string;
+}
+
+const [trigger, result] = pluginApi.useCustomMutation<MutationVariablesType>(`
+  mutation SetReactionEmoji($reactionEmoji: String!) {
+    userSetReactionEmoji(reactionEmoji: $reactionEmoji)
+  }
+`);
+
+// Later in the code, you can trigger the mutation:
+trigger({
+  variables: {
+    reactionEmoji: '👏',
+  },
+});
+```
+
+Note that the same type (`MutationVariablesType`) passed as the generic parameter to `useCustomMutation` is also the type of the `variables` object in the trigger function.
+
+The `result` object returned by the hook contains the following fields:
+
+```typescript
+const {
+  called,
+  data,
+  error,
+  loading,
+} = result;
+```
+
+which follow this interface:
+
+```typescript
+interface MutationResultObject {
+  called: boolean;   // Indicates if the trigger function has been called
+  data?: object;     // Response data after the mutation is triggered
+  error?: object;    // Error details from the mutation execution
+  loading: boolean;  // Whether the mutation is currently loading (triggered or in progress)
+}
+```
+
 ### Real time data exchange
 
 - `useDataChannel` hook: this will allow you to exchange information (Send and receive) amongst different users through the same plugin;
