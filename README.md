@@ -335,7 +335,7 @@ One other thing is that the type of the return is precisely the same type requir
 - user-status:
   - setAwayStatus: this function will set the away status of the user to a certain status;
 - captions:
-  - setDisplayAudioCaptions: This function will set the track of transcripted audio to be displayed;
+  - setDisplayAudioCaptions: This function will set the track of transcripted audio to be displayed or disable it;
 
 See usage ahead:
 
