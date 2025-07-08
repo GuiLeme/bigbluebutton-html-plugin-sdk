@@ -10,5 +10,6 @@ export interface PresentationToolbarButtonProps {
   label: string;
   tooltip: string;
   style: React.CSSProperties;
+  dataTest?: string;
   onClick: () => void;
 }

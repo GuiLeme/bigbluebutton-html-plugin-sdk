@@ -16,6 +16,8 @@ export class PresentationToolbarButton implements PresentationToolbarInterface {
 
   style: React.CSSProperties;
 
+  dataTest: string;
+
   onClick: () => void;
 
   /**
@@ -26,11 +28,12 @@ export class PresentationToolbarButton implements PresentationToolbarInterface {
    * @param tooltip - tooltip to be displayed when hovering the button
    * @param onClick - function to be called when clicking the button
    * @param style - style of the button in the presentation toolbar
+   * @param dataTest - data-test attribute for testing purposes
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5)
    */
   constructor({
-    id, label = '', tooltip = '', onClick = () => {}, style = {},
+    id, label = '', tooltip = '', dataTest = '', onClick = () => {}, style = {},
   }: PresentationToolbarButtonProps) {
     if (id) {
       this.id = id;
@@ -39,6 +42,7 @@ export class PresentationToolbarButton implements PresentationToolbarInterface {
     this.tooltip = tooltip;
     this.onClick = onClick;
     this.style = style;
+    this.dataTest = dataTest;
     this.type = PresentationToolbarItemType.BUTTON;
   }
 

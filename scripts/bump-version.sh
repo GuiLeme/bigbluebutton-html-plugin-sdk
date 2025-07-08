@@ -33,6 +33,9 @@ npm install
 # Publishes to npm
 npm publish
 
+echo "Sleeping 120 seconds to allow npm replicate internally"
+sleep 120
+
 # Update the package.json files of sample projects
 for sample in samples/*/; do
   if [ -f "$sample/package.json" ]; then

@@ -24,7 +24,7 @@ import { UsePluginSettingsFunction } from '../../data-consumption/domain/setting
 import { UseLoadedChatMessagesFunction } from '../../data-consumption/domain/chat/loaded-chat-messages/types';
 import { UseTalkingIndicatorFunction } from '../../data-consumption/domain/user-voice/talking-indicator/types';
 import { GenericContentInterface } from '../../extensible-areas/generic-content-item/types';
-import { UseUiDataFunction } from '../../ui-data-hooks/types';
+import { UseUiDataFunction } from '../../ui-data/hooks/types';
 import { UseMeetingFunction } from '../../data-consumption/domain/meeting/from-core/types';
 import { ServerCommands } from '../../server-commands/types';
 import { SendGenericDataForLearningAnalyticsDashboard } from '../../learning-analytics-dashboard/types';
@@ -34,6 +34,7 @@ import { GetDataSource } from '../../remote-data/types';
 import { PersistEventFunction } from '../../event-persistence/types';
 import { UseLocaleMessagesFunction } from '../auxiliary/plugin-information/locale-messages/types';
 import { UseShouldUnmountPluginFunction } from '../auxiliary/plugin-unmount/types';
+import { GetUiDataFunction } from '../../ui-data/getters/types';
 
 // Setter Functions for the API
 export type SetPresentationToolbarItems = (presentationToolbarItem:
@@ -100,6 +101,7 @@ export type SetGenericContentItems = (
  */
 export interface PluginApi {
   pluginName?: string;
+  localesBaseUrl?: string;
   // --- Extensible Areas Setters ---
   setPresentationToolbarItems: SetPresentationToolbarItems;
   setUserListDropdownItems: SetUserListDropdownItems;
@@ -232,6 +234,16 @@ export interface PluginApi {
    *
    */
   useUiData?: UseUiDataFunction;
+  /**
+   * Function that returns the ui data the developer wants.
+   *
+   * @param dataName The name of ui data chosen to be returned.
+   *
+   * @returns The Promise with the UI data object according to the
+   * UiDataName chosen as the parameter
+   *
+   */
+  getUiData?: GetUiDataFunction;
   // --- Dom element manipulation
   /**
    * Returns an array with the DOM elements for the chat messages.

@@ -19,12 +19,12 @@ function SampleDataChannelPlugin(
   BbbPluginSdk.initialize(uuid);
   // This Plugin only keeps track of a variable
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);
-  const { data: dataResponseDefaultAllItems, pushEntry: pushEntryFunctionDefault, deleteEntry: deleteEntryFunctionDefault } = pluginApi.useDataChannel<DataExampleType>('public-channel', DataChannelTypes.All_ITEMS);
+  const { data: dataResponseDefaultAllItems, pushEntry: pushEntryFunctionDefault, deleteEntry: deleteEntryFunctionDefault } = pluginApi.useDataChannel<DataExampleType>('public-channel', DataChannelTypes.ALL_ITEMS);
   const { data: dataResponseDefaultLastItem } = pluginApi.useDataChannel<DataExampleType>('public-channel', DataChannelTypes.LATEST_ITEM);
-  const { data: dataResponseNewSubChannel, pushEntry: pushToNewSubChannel, deleteEntry: deleteEntryFunctionNewSubChannel } = pluginApi.useDataChannel<DataExampleType>('public-channel', DataChannelTypes.All_ITEMS, 'newSubChannel');
+  const { data: dataResponseNewSubChannel, pushEntry: pushToNewSubChannel, deleteEntry: deleteEntryFunctionNewSubChannel } = pluginApi.useDataChannel<DataExampleType>('public-channel', DataChannelTypes.ALL_ITEMS, 'newSubChannel');
 
   useEffect(() => {
-    pluginLogger.info('Log to verify the data flow: ', dataResponseDefaultAllItems, dataResponseDefaultLastItem, dataResponseNewSubChannel);
+    pluginLogger.info('Log to verify the data flow: ', { dataResponseDefaultAllItems, dataResponseDefaultLastItem, dataResponseNewSubChannel });
   }, [dataResponseDefaultAllItems, dataResponseNewSubChannel, dataResponseDefaultLastItem]);
 
   useEffect(() => {
@@ -34,6 +34,7 @@ function SampleDataChannelPlugin(
         label: 'Click to increment data-channel',
         icon: 'user',
         tooltip: 'this is a button injected by plugin',
+        dataTest: 'incrementDataChannelButtonPlugin',
         allowed: true,
         onClick: () => {
           const currentValue = dataResponseDefaultAllItems.data
@@ -58,6 +59,7 @@ function SampleDataChannelPlugin(
         icon: 'user',
         tooltip: 'this is a button injected by plugin',
         allowed: true,
+        dataTest: 'wipeDataOffButtonPlugin',
         onClick: () => {
           if (deleteEntryFunctionDefault) {
             deleteEntryFunctionDefault([RESET_DATA_CHANNEL]);

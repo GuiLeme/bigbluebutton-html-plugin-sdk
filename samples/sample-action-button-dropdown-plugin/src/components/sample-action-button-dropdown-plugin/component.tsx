@@ -25,12 +25,15 @@ function SampleActionButtonDropdownPlugin(
   React.useEffect(() => {
     if (currentUser?.presenter) {
       pluginApi.setActionButtonDropdownItems([
-        new ActionButtonDropdownSeparator(),
+        new ActionButtonDropdownSeparator({
+          dataTest: 'actionDropdownSeparatorPlugin',
+        }),
         new ActionButtonDropdownOption({
           label: 'Button injected by plugin',
           icon: 'copy',
           tooltip: 'this is a button injected by plugin',
           allowed: true,
+          dataTest: 'actionDropdownButtonPlugin',
           onClick: () => {
             pluginLogger.info('Log that the button from sample-action-button-dropdown-plugin has been clicked');
           },
