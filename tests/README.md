@@ -14,7 +14,7 @@ Test configurations are primarily managed in the `playwright.config.ts` file loc
 Test files are identified by the `*.spec.ts` pattern on sample folders. Examples include:
 
 *   `samples/sample-actions-bar-plugin/tests/test.spec.ts`
-*   `samples/sample-action-button-dropdown-plugin/tests/test.spec.ts`
+*   `samples/sample-media-area-plugin/tests/test.spec.ts`
 
 ## Setup
 

@@ -1,12 +1,12 @@
 import { PluginProvidedUiItemDescriptor } from '../base';
 
 /**
- * Interface for a generic item for the action button dropdown.
+ * Interface for a generic item for the media area.
  */
-export interface ActionButtonDropdownInterface extends PluginProvidedUiItemDescriptor{
+export interface MediaAreaInterface extends PluginProvidedUiItemDescriptor{
 }
 
-export interface ActionButtonDropdownOptionProps {
+export interface MediaAreaOptionProps {
   id?: string;
   label: string;
   icon: string;

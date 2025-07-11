@@ -174,7 +174,7 @@ export abstract class BbbPluginSdk {
       window.bbb_plugins[uuid] = {
         setUserListDropdownItems: () => [],
         setPresentationToolbarItems: () => [],
-        setActionButtonDropdownItems: () => [],
+        setMediaAreaItems: () => [],
         setActionsBarItems: () => [],
         setAudioSettingsDropdownItems: () => [],
         setAppsGalleryItems: () => [],

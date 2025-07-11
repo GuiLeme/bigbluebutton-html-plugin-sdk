@@ -1,4 +1,4 @@
-import { ActionButtonDropdownItemType } from './action-button-dropdown-item/enums';
+import { MediaAreaItemType } from './media-area-item/enums';
 import { ActionsBarItemType } from './actions-bar-item/enums';
 import { AppsGalleryType } from './apps-gallery-item/enums';
 import { AudioSettingsDropdownItemType } from './audio-settings-dropdown-item/enums';
@@ -16,7 +16,7 @@ import { UserListDropdownItemType } from './user-list-dropdown-item/enums';
 import { UserListItemAdditionalInformationType } from './user-list-item-additional-information/enums';
 
 type PluginProvidedUiItemType = PresentationToolbarItemType |
-  UserListDropdownItemType | ActionButtonDropdownItemType |
+  UserListDropdownItemType | MediaAreaItemType |
   ActionsBarItemType | AppsGalleryType |
   AudioSettingsDropdownItemType | PresentationDropdownItemType | NavBarItemType |
   OptionsDropdownItemType | CameraSettingsDropdownItemType | UserCameraDropdownItemType |

@@ -1,4 +1,4 @@
-interface SampleActionButtonDropdownPluginProps {
+interface SampleMediaAreaPluginProps {
     pluginName: string,
     pluginUuid: string,
 }
@@ -9,4 +9,4 @@ interface IsMeetingBreakoutGraphqlResponse {
     }[]
 }
 
-export { SampleActionButtonDropdownPluginProps, IsMeetingBreakoutGraphqlResponse };
+export { SampleMediaAreaPluginProps, IsMeetingBreakoutGraphqlResponse };

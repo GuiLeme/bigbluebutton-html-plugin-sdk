@@ -22,15 +22,15 @@ have a look at the READMEs in the respective [samples](samples)-folders.
 
 For development purposes you can run a plugin locally from source.
 
-For example if you take the [`sample-action-button-dropdown-plugin`](samples/sample-action-button-dropdown-plugin),
+For example if you take the [`sample-media-area-plugin`](samples/sample-media-area-plugin),
 you do the following:
 
-*Running from source code with local BBB-server*
+_Running from source code with local BBB-server_
 
 1. Start the development server:
 
    ```bash
-   cd $HOME/src/bigbluebutton-html-plugin-sdk/samples/sample-action-button-dropdown-plugin
+   cd $HOME/src/bigbluebutton-html-plugin-sdk/samples/sample-media-area-plugin
    npm install
    npm start
    ```
@@ -89,16 +89,16 @@ And there you go, you can test it freely.
 ### Building the Plugin (Production)
 
 To build a plugin for production use
-(again, using the example of [`sample-action-button-dropdown-plugin`](samples/sample-action-button-dropdown-plugin)),
+(again, using the example of [`sample-media-area-plugin`](samples/sample-media-area-plugin)),
 follow these steps:
 
 ```bash
-cd $HOME/src/bigbluebutton-html-plugin-sdk/samples/sample-action-button-dropdown-plugin
+cd $HOME/src/bigbluebutton-html-plugin-sdk/samples/sample-media-area-plugin
 npm ci
 npm run build-bundle
 ```
 
-The above command will generate the `dist` folder, containing the bundled JavaScript file named `SampleActionButtonDropdownPlugin.js` along with the `manifest.json`.
+The above command will generate the `dist` folder, containing the bundled JavaScript file named `SampleMediaAreaPlugin.js` along with the `manifest.json`.
 These files can be hosted on any HTTPS server.
 
 To use the plugin with BigBlueButton, add the plugin's `manifest.json` URL to `bigbluebutton.properties` or you can simply send it via `/create` parameter:
@@ -110,8 +110,8 @@ pluginManifests=[{"url":"<your-domain>/path/to/manifest.json"}]
 #### Hosting the Plugin on a BBB Server
 
 While the plugin can be hosted on any Server, it is also possible to host the bundled file directly on
-a BigBlueButton server. For that you copy `dist/SampleActionButtonDropdownPlugin.js` and `dist/manifest.json` to the folder `/var/www/bigbluebutton-default/assets/plugins/sampleActionButtonDropdownPlugin`.
-In this case, the your manifest URL will be `https://<your-host>/plugins/sampleActionButtonDropdownPlugin/manifest.json`.
+a BigBlueButton server. For that you copy `dist/SampleMediaAreaPlugin.js` and `dist/manifest.json` to the folder `/var/www/bigbluebutton-default/assets/plugins/sampleMediaAreaPlugin`.
+In this case, the your manifest URL will be `https://<your-host>/plugins/sampleMediaAreaPlugin/manifest.json`.
 
 ### Manifest Json
 
@@ -215,6 +215,7 @@ That being said, here are the extensible areas we have so far:
 - Audio settings dropdown items (option, separator)
 - Camera settings dropdown items (option, separator)
 - Options settings dropdown items (option, separator)
+- Media Area Items (option, separator)
 - Nav bar items (button, info)
 - Presentation dropdown items (option, separator)
 - Presentation toolbar items (button, separator, spinner)

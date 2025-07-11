@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 
 import {
-  BbbPluginSdk, PluginApi, ActionButtonDropdownOption,
+  BbbPluginSdk, PluginApi, MediaAreaOption,
   RESET_DATA_CHANNEL, DataChannelTypes,
   pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
@@ -28,9 +28,9 @@ function SampleDataChannelPlugin(
   }, [dataResponseDefaultAllItems, dataResponseNewSubChannel, dataResponseDefaultLastItem]);
 
   useEffect(() => {
-    pluginApi.setActionButtonDropdownItems([]);
-    pluginApi.setActionButtonDropdownItems([
-      new ActionButtonDropdownOption({
+    pluginApi.setMediaAreaItems([]);
+    pluginApi.setMediaAreaItems([
+      new MediaAreaOption({
         label: 'Click to increment data-channel',
         icon: 'user',
         tooltip: 'this is a button injected by plugin',
@@ -54,7 +54,7 @@ function SampleDataChannelPlugin(
             } as DataExampleType);
           }
         },
-      }), new ActionButtonDropdownOption({
+      }), new MediaAreaOption({
         label: 'Click wipe data off data-channel',
         icon: 'user',
         tooltip: 'this is a button injected by plugin',

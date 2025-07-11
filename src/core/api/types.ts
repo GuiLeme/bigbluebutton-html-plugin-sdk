@@ -1,6 +1,6 @@
 import { UiCommands } from '../../ui-commands/types';
 import { UseChatMessageDomElementsFunction } from '../../dom-element-manipulation/chat/message/types';
-import { ActionButtonDropdownInterface } from '../../extensible-areas/action-button-dropdown-item/types';
+import { MediaAreaInterface } from '../../extensible-areas/media-area-item/types';
 import { ActionsBarInterface } from '../../extensible-areas/actions-bar-item/types';
 import { AudioSettingsDropdownInterface } from '../../extensible-areas/audio-settings-dropdown-item/types';
 import { CameraSettingsDropdownInterface } from '../../extensible-areas/camera-settings-dropdown-item/types';
@@ -44,8 +44,8 @@ export type SetUserListDropdownItems = (
   userListDropdownItem: UserListDropdownInterface[]
 ) => string[];
 
-export type SetActionButtonDropdownItems = (
-  actionButtonDropdownInterface: ActionButtonDropdownInterface[]
+export type SetMediaAreaItems = (
+  mediaAreaDropdownInterface: MediaAreaInterface[]
 ) => string[];
 
 export type SetActionsBarItems = (
@@ -105,7 +105,7 @@ export interface PluginApi {
   // --- Extensible Areas Setters ---
   setPresentationToolbarItems: SetPresentationToolbarItems;
   setUserListDropdownItems: SetUserListDropdownItems;
-  setActionButtonDropdownItems: SetActionButtonDropdownItems;
+  setMediaAreaItems: SetMediaAreaItems;
   setActionsBarItems: SetActionsBarItems;
   setAudioSettingsDropdownItems: SetAudioSettingsDropdownItems;
   setAppsGalleryItems: SetAppsGalleryItems;

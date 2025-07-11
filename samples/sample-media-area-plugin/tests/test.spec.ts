@@ -7,13 +7,13 @@ import { elements as e } from './elements';
 
 const { test, setPluginUrl, getPluginUrl } = createSampleTest({
   envVarName: 'ACTIONS_BUTTON_DROPDOWN_URL',
-  getPluginUrl: () => process.env.ACTION_BUTTON_DROPDOWN_URL,
+  getPluginUrl: () => process.env.MEDIA_AREA_DROPDOWN_URL,
 });
 
-test.describe.parallel('Action button dropdown', () => {
+test.describe.parallel('Media area', () => {
   test.beforeAll(checkPluginAvailability({
-    pluginName: 'sample-action-button-dropdown-plugin',
-    envVarName: 'ACTION_BUTTON_DROPDOWN_URL',
+    pluginName: 'sample-media-area-plugin',
+    envVarName: 'MEDIA_AREA_DROPDOWN_URL',
     setPluginUrl,
     getPluginUrl,
   }));
@@ -24,7 +24,7 @@ test.describe.parallel('Action button dropdown', () => {
       { timeout: ELEMENT_WAIT_LONGER_TIME },
     );
     await sampleTest.modPage.page.click(e.actions);
-    await sampleTest.modPage.hasElement(e.actionButtonDropdownPluginSeparator, 'should display the action button dropdown separator element injected by the plugin');
+    await sampleTest.modPage.hasElement(e.mediaAreaPluginSeparator, 'should display the media area separator element injected by the plugin');
     await sampleTest.modPage.hasElement(e.pluginButton, 'should display the button element injected by the plugin');
     await sampleTest.modPage.hasText(e.pluginButton, 'Button injected by plugin', 'should display the correct text on the injected button');
     const [consoleMessage] = await Promise.all([
@@ -34,6 +34,6 @@ test.describe.parallel('Action button dropdown', () => {
     expect(
       consoleMessage.text(),
       'should display the expected log from the plugin button correctly',
-    ).toContain('Log that the button from sample-action-button-dropdown-plugin has been clicked');
+    ).toContain('Log that the button from sample-media-area-plugin has been clicked');
   });
 });

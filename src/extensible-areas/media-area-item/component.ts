@@ -1,14 +1,14 @@
-import { ActionButtonDropdownItemType } from './enums';
+import { MediaAreaItemType } from './enums';
 import {
-  ActionButtonDropdownInterface, ActionButtonDropdownOptionProps,
+  MediaAreaInterface, MediaAreaOptionProps,
 } from './types';
 
-// ActionButtonDropdown Extensible Area
+// MediaArea Extensible Area
 
-export class ActionButtonDropdownOption implements ActionButtonDropdownInterface {
+export class MediaAreaOption implements MediaAreaInterface {
   id: string = '';
 
-  type: ActionButtonDropdownItemType;
+  type: MediaAreaItemType;
 
   label: string;
 
@@ -23,7 +23,7 @@ export class ActionButtonDropdownOption implements ActionButtonDropdownInterface
   onClick: () => void;
 
   /**
-   * Returns the option for the action button dropdown
+   * Returns the option for the media area
    *
    * @param label - label to be displayed on the option
    * @param icon - icon to be displayed on the option
@@ -32,11 +32,11 @@ export class ActionButtonDropdownOption implements ActionButtonDropdownInterface
    * @param allowed - boolean indicating whether the option should be displayed
    * @param onClick - function to be called when clicking
    *
-   * @returns the option to be displayed in the action button dropdown
+   * @returns the option to be displayed in the media area
    */
   constructor({
     id, label = '', icon = '', tooltip = '', dataTest = '', allowed = true, onClick = () => {},
-  }: ActionButtonDropdownOptionProps) {
+  }: MediaAreaOptionProps) {
     if (id) {
       this.id = id;
     }
@@ -46,34 +46,34 @@ export class ActionButtonDropdownOption implements ActionButtonDropdownInterface
     this.dataTest = dataTest;
     this.allowed = allowed;
     this.onClick = onClick;
-    this.type = ActionButtonDropdownItemType.OPTION;
+    this.type = MediaAreaItemType.OPTION;
   }
 
   setItemId: (id: string) => void = (id: string) => {
-    this.id = `ActionButtonDropdownOption_${id}`;
+    this.id = `MediaAreaOption_${id}`;
   };
 }
 
-export class ActionButtonDropdownSeparator implements ActionButtonDropdownInterface {
+export class MediaAreaSeparator implements MediaAreaInterface {
   id: string = '';
 
   dataTest?: string;
 
-  type: ActionButtonDropdownItemType;
+  type: MediaAreaItemType;
 
   /**
-   * Returns the separator for the action button dropdown
+   * Returns the separator for the media area
    *
    * @param dataTest - optional string attribute to be used for testing
    *
-   * @returns the separator to be displayed in the action button dropdown
+   * @returns the separator to be displayed in the media area
    */
   constructor({ dataTest = '' }) {
-    this.type = ActionButtonDropdownItemType.SEPARATOR;
+    this.type = MediaAreaItemType.SEPARATOR;
     this.dataTest = dataTest;
   }
 
   setItemId: (id: string) => void = (id: string) => {
-    this.id = `ActionButtonDropdownSeparator_${id}`;
+    this.id = `MediaAreaSeparator_${id}`;
   };
 }

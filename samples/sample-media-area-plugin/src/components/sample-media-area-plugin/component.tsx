@@ -3,39 +3,39 @@ import * as React from 'react';
 import {
   BbbPluginSdk,
   PluginApi,
-  ActionButtonDropdownSeparator,
-  ActionButtonDropdownOption,
+  MediaAreaSeparator,
+  MediaAreaOption,
   pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 
-import { SampleActionButtonDropdownPluginProps } from './types';
+import { SampleMediaAreaPluginProps } from './types';
 
 export interface DataExampleType {
   first_example_field: number;
   second_example_field: string;
 }
 
-function SampleActionButtonDropdownPlugin(
-  { pluginUuid: uuid }: SampleActionButtonDropdownPluginProps,
-): React.ReactElement<SampleActionButtonDropdownPluginProps> {
+function SampleMediaAreaPlugin(
+  { pluginUuid: uuid }: SampleMediaAreaPluginProps,
+): React.ReactElement<SampleMediaAreaPluginProps> {
   BbbPluginSdk.initialize(uuid);
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);
   const { data: currentUser } = pluginApi.useCurrentUser();
 
   React.useEffect(() => {
     if (currentUser?.presenter) {
-      pluginApi.setActionButtonDropdownItems([
-        new ActionButtonDropdownSeparator({
-          dataTest: 'actionDropdownSeparatorPlugin',
+      pluginApi.setMediaAreaItems([
+        new MediaAreaSeparator({
+          dataTest: 'mediaAreaSeparator',
         }),
-        new ActionButtonDropdownOption({
+        new MediaAreaOption({
           label: 'Button injected by plugin',
           icon: 'copy',
           tooltip: 'this is a button injected by plugin',
           allowed: true,
-          dataTest: 'actionDropdownButtonPlugin',
+          dataTest: 'mediaAreaOption',
           onClick: () => {
-            pluginLogger.info('Log that the button from sample-action-button-dropdown-plugin has been clicked');
+            pluginLogger.info('Log that the button from sample-media-area-plugin has been clicked');
           },
         }),
       ]);
@@ -44,4 +44,4 @@ function SampleActionButtonDropdownPlugin(
   return null;
 }
 
-export default SampleActionButtonDropdownPlugin;
+export default SampleMediaAreaPlugin;
