@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const path = require("path");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
 
 module.exports = {
-  entry: "./src/index.tsx",
+  entry: './src/index.tsx',
   output: {
-    filename: "SampleMediaAreaPlugin.js",
-    library: "SampleMediaAreaPlugin",
-    libraryTarget: "umd",
-    publicPath: "/",
-    globalObject: "this",
+    filename: 'SampleMediaAreaPlugin.js',
+    library: 'SampleMediaAreaPlugin',
+    libraryTarget: 'umd',
+    publicPath: '/',
+    globalObject: 'this',
   },
   devServer: {
-    allowedHosts: "all",
+    allowedHosts: 'all',
     port: 4701,
-    host: "0.0.0.0",
+    host: '0.0.0.0',
     hot: false,
     liveReload: false,
     client: {
@@ -22,12 +22,12 @@ module.exports = {
     },
     onBeforeSetupMiddleware: (devServer) => {
       if (!devServer) {
-        throw new Error("webpack-dev-server is not defined");
+        throw new Error('webpack-dev-server is not defined');
       }
 
       // Serve manifest.json from the project root when requested at /manifest.json
-      devServer.app.get("/manifest.json", (req, res) => {
-        res.sendFile(path.resolve(__dirname, "manifest.json"));
+      devServer.app.get('/manifest.json', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'manifest.json'));
       });
     },
   },
@@ -37,27 +37,27 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
         },
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx", ".tsx", ".ts"],
+    extensions: ['.js', '.jsx', '.tsx', '.ts'],
   },
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
-        { from: "manifest.json", to: "./" }, // Copy manifest.json to static/ in the output folder
+        { from: 'manifest.json', to: './' }, // Copy manifest.json to static/ in the output folder
       ],
     }),
   ],
