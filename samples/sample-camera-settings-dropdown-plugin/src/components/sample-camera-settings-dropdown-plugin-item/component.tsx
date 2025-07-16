@@ -18,6 +18,7 @@ function SampleCameraSettingsDropdownPlugin(
       new CameraSettingsDropdownOption({
         label: 'This will log on the console',
         icon: 'user',
+        dataTest: 'cameraSettingsDropdownButtonPlugin',
         onClick: () => {
           pluginLogger.info('Log from camera settings plugin');
         },

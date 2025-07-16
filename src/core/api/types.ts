@@ -1,6 +1,6 @@
 import { UiCommands } from '../../ui-commands/types';
 import { UseChatMessageDomElementsFunction } from '../../dom-element-manipulation/chat/message/types';
-import { ActionButtonDropdownInterface } from '../../extensible-areas/action-button-dropdown-item/types';
+import { MediaAreaInterface } from '../../extensible-areas/media-area-item/types';
 import { ActionsBarInterface } from '../../extensible-areas/actions-bar-item/types';
 import { AudioSettingsDropdownInterface } from '../../extensible-areas/audio-settings-dropdown-item/types';
 import { CameraSettingsDropdownInterface } from '../../extensible-areas/camera-settings-dropdown-item/types';
@@ -24,7 +24,7 @@ import { UsePluginSettingsFunction } from '../../data-consumption/domain/setting
 import { UseLoadedChatMessagesFunction } from '../../data-consumption/domain/chat/loaded-chat-messages/types';
 import { UseTalkingIndicatorFunction } from '../../data-consumption/domain/user-voice/talking-indicator/types';
 import { GenericContentInterface } from '../../extensible-areas/generic-content-item/types';
-import { UseUiDataFunction } from '../../ui-data-hooks/types';
+import { UseUiDataFunction } from '../../ui-data/hooks/types';
 import { UseMeetingFunction } from '../../data-consumption/domain/meeting/from-core/types';
 import { ServerCommands } from '../../server-commands/types';
 import { SendGenericDataForLearningAnalyticsDashboard } from '../../learning-analytics-dashboard/types';
@@ -34,6 +34,7 @@ import { GetDataSource } from '../../remote-data/types';
 import { PersistEventFunction } from '../../event-persistence/types';
 import { UseLocaleMessagesFunction } from '../auxiliary/plugin-information/locale-messages/types';
 import { UseShouldUnmountPluginFunction } from '../auxiliary/plugin-unmount/types';
+import { GetUiDataFunction } from '../../ui-data/getters/types';
 
 // Setter Functions for the API
 export type SetPresentationToolbarItems = (presentationToolbarItem:
@@ -43,8 +44,8 @@ export type SetUserListDropdownItems = (
   userListDropdownItem: UserListDropdownInterface[]
 ) => string[];
 
-export type SetActionButtonDropdownItems = (
-  actionButtonDropdownInterface: ActionButtonDropdownInterface[]
+export type SetMediaAreaItems = (
+  mediaAreaDropdownInterface: MediaAreaInterface[]
 ) => string[];
 
 export type SetActionsBarItems = (
@@ -100,10 +101,11 @@ export type SetGenericContentItems = (
  */
 export interface PluginApi {
   pluginName?: string;
+  localesBaseUrl?: string;
   // --- Extensible Areas Setters ---
   setPresentationToolbarItems: SetPresentationToolbarItems;
   setUserListDropdownItems: SetUserListDropdownItems;
-  setActionButtonDropdownItems: SetActionButtonDropdownItems;
+  setMediaAreaItems: SetMediaAreaItems;
   setActionsBarItems: SetActionsBarItems;
   setAudioSettingsDropdownItems: SetAudioSettingsDropdownItems;
   setAppsGalleryItems: SetAppsGalleryItems;
@@ -232,6 +234,16 @@ export interface PluginApi {
    *
    */
   useUiData?: UseUiDataFunction;
+  /**
+   * Function that returns the ui data the developer wants.
+   *
+   * @param dataName The name of ui data chosen to be returned.
+   *
+   * @returns The Promise with the UI data object according to the
+   * UiDataName chosen as the parameter
+   *
+   */
+  getUiData?: GetUiDataFunction;
   // --- Dom element manipulation
   /**
    * Returns an array with the DOM elements for the chat messages.

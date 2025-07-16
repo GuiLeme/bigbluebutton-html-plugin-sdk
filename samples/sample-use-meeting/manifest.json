@@ -4,11 +4,6 @@
   "javascriptEntrypointUrl": "SampleUseMeeting.js",
   "localesBaseUrl": "https://cdn.dominio.com/pluginabc/",
   "eventPersistence": {
-      "isEnabled": true,
-      "maximumPayloadSizeInBytes": 1024,
-      "rateLimiting": {
-          "messagesAllowedPerSecond": 10,
-          "messagesAllowedPerMinute": 20
-      }
+      "isEnabled": true
   }
 }

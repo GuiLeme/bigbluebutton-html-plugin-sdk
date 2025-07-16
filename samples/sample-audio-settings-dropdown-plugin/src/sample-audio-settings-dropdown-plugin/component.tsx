@@ -23,6 +23,7 @@ function SampleAudioSettingsDropdownPlugin(
         onClick: () => {
           pluginLogger.info('Log from audio settings dropdown plugin');
         },
+        dataTest: 'pluginAudioSettingsDropdownButton',
       });
 
     const separatorToAudioSettingsDropdown:

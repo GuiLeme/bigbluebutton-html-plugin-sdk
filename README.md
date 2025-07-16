@@ -22,15 +22,15 @@ have a look at the READMEs in the respective [samples](samples)-folders.
 
 For development purposes you can run a plugin locally from source.
 
-For example if you take the [`sample-action-button-dropdown-plugin`](samples/sample-action-button-dropdown-plugin),
+For example if you take the [`sample-media-area-plugin`](samples/sample-media-area-plugin),
 you do the following:
 
-*Running from source code with local BBB-server*
+_Running from source code with local BBB-server_
 
 1. Start the development server:
 
    ```bash
-   cd $HOME/src/bigbluebutton-html-plugin-sdk/samples/sample-action-button-dropdown-plugin
+   cd $HOME/src/bigbluebutton-html-plugin-sdk/samples/sample-media-area-plugin
    npm install
    npm start
    ```
@@ -41,7 +41,7 @@ you do the following:
 pluginManifests=[{"url": "http://localhost:4701/manifest.json"}]
 ```
 
-*Running from souce code with a remote BBB-server*
+*Running from source code with a remote BBB-server*
 
 If you are running your BBB-server elsewhere, than you can't simply point the manifest URL to a local address, you'll need to either serve the built version into a CDN or serve the dev version using a service to make it public. And for the second option we'd recommend NGROK. Here are the instructions to do that:
 
@@ -89,16 +89,16 @@ And there you go, you can test it freely.
 ### Building the Plugin (Production)
 
 To build a plugin for production use
-(again, using the example of [`sample-action-button-dropdown-plugin`](samples/sample-action-button-dropdown-plugin)),
+(again, using the example of [`sample-media-area-plugin`](samples/sample-media-area-plugin)),
 follow these steps:
 
 ```bash
-cd $HOME/src/bigbluebutton-html-plugin-sdk/samples/sample-action-button-dropdown-plugin
+cd $HOME/src/bigbluebutton-html-plugin-sdk/samples/sample-media-area-plugin
 npm ci
 npm run build-bundle
 ```
 
-The above command will generate the `dist` folder, containing the bundled JavaScript file named `SampleActionButtonDropdownPlugin.js` along with the `manifest.json`.
+The above command will generate the `dist` folder, containing the bundled JavaScript file named `SampleMediaAreaPlugin.js` along with the `manifest.json`.
 These files can be hosted on any HTTPS server.
 
 To use the plugin with BigBlueButton, add the plugin's `manifest.json` URL to `bigbluebutton.properties` or you can simply send it via `/create` parameter:
@@ -110,12 +110,12 @@ pluginManifests=[{"url":"<your-domain>/path/to/manifest.json"}]
 #### Hosting the Plugin on a BBB Server
 
 While the plugin can be hosted on any Server, it is also possible to host the bundled file directly on
-a BigBlueButton server. For that you copy `dist/SampleActionButtonDropdownPlugin.js` and `dist/manifest.json` to the folder `/var/www/bigbluebutton-default/assets/plugins/sampleActionButtonDropdownPlugin`.
-In this case, the your manifest URL will be `https://<your-host>/plugins/sampleActionButtonDropdownPlugin/manifest.json`.
+a BigBlueButton server. For that you copy `dist/SampleMediaAreaPlugin.js` and `dist/manifest.json` to the folder `/var/www/bigbluebutton-default/assets/plugins/sampleMediaAreaPlugin`.
+In this case, the your manifest URL will be `https://<your-host>/plugins/sampleMediaAreaPlugin/manifest.json`.
 
 ### Manifest Json
 
-Here is as complete `manifet.json` example with all possible configurations:
+Here is as complete `manifest.json` example with all possible configurations:
 
 ```json
 {
@@ -132,11 +132,6 @@ Here is as complete `manifet.json` example with all possible configurations:
   ], // One can enable more data-channels to better organize client communication
   "eventPersistence": {
     "isEnabled": true, // By default it is not enabled
-    "maximumPayloadSizeInBytes": 1024,
-    "rateLimiting": {
-      "messagesAllowedPerSecond": 10,
-      "messagesAllowedPerMinute": 20
-    }
   },
   "remoteDataSources": [
     {
@@ -145,11 +140,55 @@ Here is as complete `manifet.json` example with all possible configurations:
       "fetchMode": "onMeetingCreate", // Possible values: "onMeetingCreate", "onDemand" 
       "permissions": ["moderator", "viewer"]
     }
+  ],
+  "settingsSchema": [
+    {
+      "name": "myJson",
+      "label": "myJson",
+      "required": true,
+      "defaultValue": {
+        "abc": 123
+      },
+      "type": "json" // Possible values: "int", "float", "string", "boolean", "json"
+    }
   ]
 }
 ```
 
 To better understand remote-data-sources, please, refer to [this section](#external-data-resources)
+
+**settingsSchema:**
+
+The settingsSchema serves two main purposes:
+
+1. **Validation:** Ensures that all required settings are provided for a plugin. If any required setting is missing, the plugin will not load.
+2. **Configuration Exposure:** Lists all available settings for the plugin, enabling external systems—such as a Learning Management System (LMS)—to present these settings to a meeting organizer. This allows the organizer to configure the plugin manually before the meeting begins.
+
+| **Name**       | **Required** | **Description**                                                                                                |
+| -------------- | ------------ | -------------------------------------------------------------------------------------------------------------- |
+| `name`         | Yes          | The name of the setting as defined in the YAML file                                                            |
+| `label`        | No           | A user-facing label that appears in the integration UI                                                         |
+| `required`     | Yes          | Indicates whether this setting must be provided (`true` or `false`)                                            |
+| `defaultValue` | No           | The default value to use if no setting is explicitly defined                                                   |
+| `type`         | Yes          | The expected data type for the setting. Possible values: `"int"`, `"float"`, `"string"`, `"boolean"`, `"json"` |
+
+**Example**
+
+Given the `settingsSchema` defined in the `manifest.json` seen, the corresponding YAML configuration file (`/etc/bigbluebutton/bbb-html5.yml`) would look like:
+
+```yml
+public:
+  plugins:
+    - name: MyPlugin
+      settings:
+        myJson:
+          abc: my123
+          def: 3234
+```
+
+## Testing SDK
+
+To setup and run the automated tests for the plugin SDK samples, check the [testing doc](/tests/README.md)
 
 ## API
 
@@ -166,7 +205,7 @@ pluginApi.setterFunctionExample([{
 }])
 ```
 
-See, it is basicaly a function that requires an array as an argument, with which the more items you push to that array, the more of that extensible area you will have.
+See, it is basically a function that requires an array as an argument, with which the more items you push to that array, the more of that extensible area you will have.
 
 That being said, here are the extensible areas we have so far:
 
@@ -176,6 +215,7 @@ That being said, here are the extensible areas we have so far:
 - Audio settings dropdown items (option, separator)
 - Camera settings dropdown items (option, separator)
 - Options settings dropdown items (option, separator)
+- Media Area Items (option, separator)
 - Nav bar items (button, info)
 - Presentation dropdown items (option, separator)
 - Presentation toolbar items (button, separator, spinner)
@@ -189,7 +229,7 @@ That being said, here are the extensible areas we have so far:
 
 Mind that no plugin will interfere into another's extensible area. So feel free to set whatever you need into a certain plugin with no worries.
 
-### Auxiliar functions:
+### Auxiliary functions:
 
 - `getSessionToken`: returns the user session token located on the user's URL.
 - `getJoinUrl`: returns the join url associated with the parameters passed as an argument. Since it fetches the BigBlueButton API, this getter method is asynchronous.
@@ -204,7 +244,7 @@ Mind that no plugin will interfere into another's extensible area. So feel free 
 - `useLoadedChatMessages` hook: provides information regarding the loaded chat messages;
 - `useCustomSubscription` hook: with this hook, the developer can query pretty much anything graphql can provide. Note: Make sure that, on BBB version change, the custom subscriptions you make will work as expected.
 - `usePluginSettings` hook: it provides all the specific settings regarding the current plugin it's been loaded from.
-- `useTalkingIndicator` hook: it gives you invormation on the user-voice data, that is, who is talking or muted.
+- `useTalkingIndicator` hook: it gives you information on the user-voice data, that is, who is talking or muted.
 - `useMeeting` hook: it gives you information on the current meeting that the user is on.
 
 So for these types of hooks, the return will follow the same structure:
@@ -225,8 +265,8 @@ So we have the `data`, which is different for each hook, that's why it's a gener
 
 So for this hook to read the data from the data channel, the developer will be able to choose the format in which they want it.The possible formats are described down below:
 
-- ALL_ITEMS: Fetches all items from specific data-channel and specific subchannel-name since the begining of the meeting from the newest to the latest (It can be used as a history);
-- LATEST_ITEM: Fetches only the latest item pushed to the data-channel within a specific subchannel-name since the begining of the meeting;
+- ALL_ITEMS: Fetches all items from specific data-channel and specific subchannel-name since the beginning of the meeting from the newest to the latest (It can be used as a history);
+- LATEST_ITEM: Fetches only the latest item pushed to the data-channel within a specific subchannel-name since the beginning of the meeting;
 - NEW_ITEMS: Fetches the new items pushed to the data-channel within a specific subchannel-name since the moment that the `useDataChannel` hook has been called (It will not see entries sent previous to that moment);
 
 An interesting thing about this hook is that it is generic, so, you can use a custom type, and this will be  found not only in the consumer part of the data structure returned, but also in functions in which you need to specify an object to be persisted, meaning it will force the object to be of the type you mentioned previously (that is the case for `pushEntry` and `replaceEntry`). One can find examples of usage of this in the data-channel plugin sample or most of the official ones. The syntax is described below:
@@ -236,10 +276,10 @@ const {
   data: response, // Data that will be returned
   pushEntry: pushEntryFunction, // Function to push another item to the data-channel
   deleteEntry: deleteEntryFunction, // Function to delete specific item or wipe all
-  replaceEntry: replaceEntryFunction, // Function replace a specifi item
+  replaceEntry: replaceEntryFunction, // Function replace a specific item
 } = useDataChannel<CustomType>(
   channelName, // Defined according to what is on manifest.json
-  DataChannelTypes.All_ITEMS, // | LATEST_ITEM | NEW_ITEMS -> ALL_ITEMS is default
+  DataChannelTypes.ALL_ITEMS, // | LATEST_ITEM | NEW_ITEMS -> ALL_ITEMS is default
   subChannelName = 'default', // If no subchannelName is specified, it will be 'default'
 );
 ```
@@ -285,14 +325,14 @@ export type ObjectTo = ToUserId | ToRole;
 
 ### Real time ui data consumption
 
-- `useUiData` hook: This will return certain data from the UI depending on the parameter the developer uses. It works just like the useUiEvent hook, but instead of passing a callback as a parameter to be run everytime the event occurs, it will return the data directly, keep in mind that the second parameter is the default value that this function will assume. Possible choices:
+- `useUiData` hook: This will return certain data from the UI depending on the parameter the developer uses. It works just like the useUiEvent hook, but instead of passing a callback as a parameter to be run every time the event occurs, it will return the data directly, keep in mind that the second parameter is the default value that this function will assume. Possible choices:
   - IntlLocaleUiDataNames.CURRENT_LOCALE;
   - ChatFormUiDataNames.CURRENT_CHAT_INPUT_TEXT;
   - ChatFormUiDataNames.CHAT_INPUT_IS_FOCUSED;
   - ExternalVideoVolumeUiDataNames.CURRENT_VOLUME_VALUE;
   - ExternalVideoVolumeUiDataNames.IS_VOLUME_MUTED;
   - UserListUiDataNames.USER_LIST_IS_OPEN;
-  - LayoutPresentatioAreaUiDataNames.CURRENT_ELEMENT;
+  - LayoutPresentationAreaUiDataNames.CURRENT_ELEMENT;
 
 Example of usage:
 
@@ -410,9 +450,9 @@ Going through each parameter to better understand it's structure:
 
 - `name`: It is the name of the remote data source, that is the name you'll use later on in the plugin when developing it;
 - `url`: The Url to which the data will be fetched (it can be hard-coded in the `manifest.json`, but we recommend passing it as a `meta_` parameter);
-- `fetchMode`: It tells the plugin-server if it should fetch the data only when creating the meeting, or everytime the function is called in the plugin portion;
-  - If one chooses `onMeetingCreate`, the data will be fetched when the create endpoint of the meeting is called, then it's cached in the plugin-server so that everytime the plugin wants that data, the plugin-server will respond with the cached data;
-  - On the other hand, if `onDemand` is selected, everytime the plugin calls this method, the plugin-server will fetch the data and then proxy it to the plugin;
+- `fetchMode`: It tells the plugin-server if it should fetch the data only when creating the meeting, or every time the function is called in the plugin portion;
+  - If one chooses `onMeetingCreate`, the data will be fetched when the create endpoint of the meeting is called, then it's cached in the plugin-server so that every time the plugin wants that data, the plugin-server will respond with the cached data;
+  - On the other hand, if `onDemand` is selected, every time the plugin calls this method, the plugin-server will fetch the data and then proxy it to the plugin;
 - `permissions`: This tells the back-end which role of the meeting can access this remote data;
 
 Here is the `/create` parameters you would have to pass to make this remote-data-source api work:
@@ -448,7 +488,7 @@ This feature is mainly used for security purposes, see [external data section](#
 
 ### Event persistence
 
-This feature will allow the developer to save an information (which is basically an event) in the `event.xml` file of the meeting if it's being recorded.
+This feature will allow the developer to save an information (an event) in the `event.xml` file of the meeting, if it's being recorded.
 
 To use it, one first need to add the following lines to their `manifest.json`:
 
@@ -457,11 +497,6 @@ To use it, one first need to add the following lines to their `manifest.json`:
   // ...rest of manifest configuration
   "eventPersistence": {
       "isEnabled": true,
-      "maximumPayloadSizeInBytes": 1024,
-      "rateLimiting": {
-          "messagesAllowedPerSecond": 10,
-          "messagesAllowedPerMinute": 20
-      }
   }
 }
 ```
@@ -530,13 +565,13 @@ See example below:
   // All set from this plugin will disappear from the UI;
 ```
 
-**How to propperly build a plugin?**
+**How to properly build a plugin?**
 Just go to your plugin folder, install dependencies and run the build command as follows:
 
 ```bash
 cd my-plugin-folder/
 npm i
-npm run build-bundl
+npm run build-bundle
 ```
 
 At this point, another folder will be created into the plugin directory called "dist/" inside of that folder you will find the plugin itself `MyPlugin.js`. Remember that the name of this file will be the same as defined in the `webpack.config.js`, such as:

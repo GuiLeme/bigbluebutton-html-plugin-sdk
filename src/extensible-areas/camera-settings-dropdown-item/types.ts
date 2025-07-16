@@ -14,5 +14,6 @@ export interface CameraSettingsDropdownOptionProps {
   id?: string;
   label: string;
   icon: string;
+  dataTest?: string;
   onClick: () => void;
 }

@@ -1,0 +1,7 @@
+{
+  "requiredSdkVersion": "~0.0.73",
+  "name": "SampleMediaAreaPlugin",
+  "javascriptEntrypointUrl": "SampleMediaAreaPlugin.js",
+  "localesBaseUrl": "https://cdn.dominio.com/pluginabc/",
+  "enabledForBreakoutRooms": true
+}

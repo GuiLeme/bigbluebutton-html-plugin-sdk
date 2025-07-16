@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import {
   BbbPluginSdk,
   PluginApi,
-  ActionButtonDropdownSeparator,
-  ActionButtonDropdownOption,
+  MediaAreaSeparator,
+  MediaAreaOption,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleServerCommandsPluginProps, Message } from './types';
 
@@ -27,9 +27,9 @@ function SampleServerCommandsPluginItem(
 
   useEffect(() => {
     // These buttons are interfaces for the user to manually send messages.
-    pluginApi.setActionButtonDropdownItems([
-      new ActionButtonDropdownSeparator(),
-      new ActionButtonDropdownOption({
+    pluginApi.setMediaAreaItems([
+      new MediaAreaSeparator(),
+      new MediaAreaOption({
         label: 'Send chat message',
         icon: 'chat',
         tooltip: 'This is a button to send chat message',
@@ -41,7 +41,7 @@ function SampleServerCommandsPluginItem(
           });
         },
       }),
-      new ActionButtonDropdownOption({
+      new MediaAreaOption({
         label: 'Send custom chat message',
         icon: 'chat',
         tooltip: 'This is a button to send chat message',
