@@ -25,7 +25,10 @@ test.describe.parallel('Media area', () => {
     );
     await sampleTest.modPage.page.click(e.mediaArea);
     // commented out because media area still don't have a separator
-    // await sampleTest.modPage.hasElement(e.mediaAreaPluginSeparator, 'should display the media area separator element injected by the plugin');
+    // await sampleTest.modPage.hasElement(
+    //   e.mediaAreaPluginSeparator,
+    //   'should display the media area separator element injected by the plugin',
+    // );
     await sampleTest.modPage.hasElement(e.pluginButton, 'should display the button element injected by the plugin');
     await sampleTest.modPage.hasText(e.pluginButton, 'Button injected by plugin', 'should display the correct text on the injected button');
     const [consoleMessage] = await Promise.all([
