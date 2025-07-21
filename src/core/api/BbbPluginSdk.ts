@@ -16,6 +16,7 @@ import {
 } from '../../data-channel/types';
 import { uiCommands } from '../../ui-commands/commands';
 import {
+  CustomQueryHookOptions,
   CustomSubscriptionHookOptions,
 } from '../../index';
 import {
@@ -51,6 +52,10 @@ import { getRemoteData } from '../../remote-data/utils';
 import { persistEventFunctionWrapper } from '../../event-persistence/hooks';
 import useLocaleMessagesAuxiliary from '../auxiliary/plugin-information/locale-messages/useLocaleMessages';
 import { getUiData } from '../../ui-data/getters/getters';
+import { useCustomQuery } from '../../data-consumption/domain/shared/custom-query/hooks';
+import { UseCustomQueryFunction } from '../../data-consumption/domain/shared/custom-query/types';
+import { useCustomMutation } from '../../data-creation/hook';
+import { UseCustomMutationFunction } from '../../data-creation/types';
 
 declare const window: PluginBrowserWindow;
 
@@ -80,6 +85,14 @@ export abstract class BbbPluginSdk {
       query: string,
       variablesObjectWrapper?: CustomSubscriptionHookOptions,
     ) => useCustomSubscription(query, variablesObjectWrapper)) as UseCustomSubscriptionFunction;
+    pluginApi.useCustomQuery = ((
+      query: string,
+      variablesObjectWrapper?: CustomQueryHookOptions,
+    ) => useCustomQuery(query, variablesObjectWrapper)) as UseCustomQueryFunction;
+    pluginApi.useCustomMutation = ((
+      mutation: string,
+      options?: object,
+    ) => useCustomMutation(mutation, options)) as UseCustomMutationFunction;
     pluginApi.useCurrentPresentation = (
       () => useCurrentPresentation()) as UseCurrentPresentationFunction;
     pluginApi.useLoadedUserList = (() => useLoadedUserList()) as UseLoadedUserListFunction;
@@ -121,10 +134,8 @@ export abstract class BbbPluginSdk {
       pluginApi.getRemoteData = (
         dataSourceName: string,
       ) => getRemoteData(dataSourceName, pluginName);
-      pluginApi.persistEvent = <T=object>(
-        eventName: string,
-        payload: T,
-      ) => persistEventFunctionWrapper(
+      pluginApi
+        .persistEvent = <T = object>(eventName: string, payload: T) => persistEventFunctionWrapper(
           pluginName,
           eventName,
           payload,
@@ -140,8 +151,8 @@ export abstract class BbbPluginSdk {
   private static isReactEnvironment(): boolean {
     const fn = console.error;
     try {
-      console.error = () => {};
-      useEffect(() => {}, []);
+      console.error = () => { };
+      useEffect(() => { }, []);
     } catch {
       console.error = fn;
       console.error('[PLUGIN-ERROR] Error: Initializing pluginApi outside of a react function component. It should be done inside');
@@ -188,7 +199,7 @@ export abstract class BbbPluginSdk {
         setFloatingWindows: () => [],
         setGenericContentItems: () => [],
         mapOfPushEntryFunctions: {
-          '': () => {},
+          '': () => { },
         },
         getSessionToken: () => getSessionToken(),
         pluginName,

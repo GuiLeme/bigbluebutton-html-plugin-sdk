@@ -35,6 +35,8 @@ import { PersistEventFunction } from '../../event-persistence/types';
 import { UseLocaleMessagesFunction } from '../auxiliary/plugin-information/locale-messages/types';
 import { UseShouldUnmountPluginFunction } from '../auxiliary/plugin-unmount/types';
 import { GetUiDataFunction } from '../../ui-data/getters/types';
+import { UseCustomQueryFunction } from '../../data-consumption/domain/shared/custom-query/types';
+import { UseCustomMutationFunction } from '../../data-creation/types';
 
 // Setter Functions for the API
 export type SetPresentationToolbarItems = (presentationToolbarItem:
@@ -154,7 +156,7 @@ export interface PluginApi {
    *
    */
   useUsersBasicInfo?: UseUsersBasicInfoFunction;
-   /**
+  /**
    * Returns an object containing brief data on the messages already loaded in the chat.
    *
    * @returns `GraphqlResponseWrapper` with the LoadedChatMessages.
@@ -189,13 +191,29 @@ export interface PluginApi {
    */
   useShouldUnmountPlugin?: UseShouldUnmountPluginFunction;
   /**
-   * Returns an object containing the data on the current presentation being displayed
-   * in the presentation area, and its current page.
+   * Returns an object containing the data related to the custom subscription made.
+   * This hook is reactive - If the resulting data changes, it updates the hook.
    *
    * @returns `GraphqlResponseWrapper` with the data type specified in the generic type.
    *
    */
   useCustomSubscription?: UseCustomSubscriptionFunction;
+  /**
+   * Returns an object containing the data related to the custom subscription made.
+   * This hook is not reactive - Once the data is returned, it doesn't update anymore.
+   *
+   * @returns `GraphqlResponseWrapper` with the data type specified in the generic type.
+   *
+   */
+  useCustomQuery?: UseCustomQueryFunction;
+  /**
+   * Gives developer the ability to manipulate data from bbb using custom mutations.
+   * It can only use mutations that already exist in bbb.
+   *
+   * @returns an array with the trigger function and the result of the mutation.
+   *
+   */
+  useCustomMutation?: UseCustomMutationFunction;
   // --- DataChannel Hook ---
   /**
    * Returns an array with tha data wrapped in the `GraphqlResponseWrapper` in the first
@@ -301,6 +319,6 @@ export interface MeetingClientSettings {
 }
 
 export interface PluginBrowserWindow extends Window {
-  bbb_plugins: { [key: string]: PluginApi};
+  bbb_plugins: { [key: string]: PluginApi };
   meetingClientSettings?: MeetingClientSettings;
 }

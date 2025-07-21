@@ -6,4 +6,5 @@ export enum DataConsumptionHooks {
   MEETING = 'Hooks::UseMeeting',
   TALKING_INDICATOR = 'Hooks::UseTalkingIndicator',
   CUSTOM_SUBSCRIPTION = 'Hooks::CustomSubscription',
+  CUSTOM_QUERY = 'Hooks::CustomQuery',
 }
