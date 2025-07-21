@@ -9,12 +9,14 @@ import { UiCommandsActionsBarObject } from './actions-bar/types';
 import { UiCommandsLayoutObject } from './layout/types';
 import { UiCommandsNavBarObject } from './nav-bar/types';
 import { UiCommandsCameraObject } from './camera/types';
+import { UiCommandsCaptionsObject } from './captions/types';
 
 export interface UiCommands {
   layout: UiCommandsLayoutObject;
   actionsBar: UiCommandsActionsBarObject;
   camera: UiCommandsCameraObject;
   chat: UiCommandsChatObject;
+  captions: UiCommandsCaptionsObject;
   externalVideo: UiCommandsExternalVideoObject;
   sidekickOptionsContainer: UiCommandsSidekickOptionsContainerObject;
   navBar: UiCommandsNavBarObject;
