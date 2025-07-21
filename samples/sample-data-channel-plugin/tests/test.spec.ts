@@ -51,7 +51,7 @@ test.describe.parallel('Data Channel', () => {
       e.whiteboard,
       { timeout: ELEMENT_WAIT_LONGER_TIME },
     );
-    await sampleTest.modPage.page.click(e.actions);
+    await sampleTest.modPage.page.click(e.mediaArea);
     const incrementDataChannelButton = sampleTest.modPage.getLocator(
       e.incrementDataChannelButtonPlugin,
     );
@@ -82,7 +82,7 @@ test.describe.parallel('Data Channel', () => {
     expect(extractedObject?.dataResponseDefaultLastItem, 'should have dataResponseDefaultLastItem in the first increment response').toBeDefined();
     expect(extractedObject?.dataResponseDefaultLastItem?.data[0]?.payloadJson, 'should have correct payload data after first increment with field value 1').toMatchObject({ first_example_field: 1, second_example_field: 'string as an example' });
 
-    await sampleTest.modPage.page.click(e.actions);
+    await sampleTest.modPage.page.click(e.mediaArea);
     sampleTest.modPage.page.on('console', consoleHandler);
     await incrementDataChannelButton.click();
     await sampleTest.modPage.page.waitForTimeout(1000);
@@ -93,7 +93,7 @@ test.describe.parallel('Data Channel', () => {
     const secondExtractedObject = extractObject<DataChannelResponse>(secondConsoleMessage.text());
     expect(secondExtractedObject?.dataResponseDefaultLastItem?.data[0]?.payloadJson, 'should have correct payload data after second increment with field value 2').toMatchObject({ first_example_field: 2, second_example_field: 'string as an example' });
 
-    await sampleTest.modPage.page.click(e.actions);
+    await sampleTest.modPage.page.click(e.mediaArea);
     sampleTest.modPage.page.on('console', consoleHandler);
     await wipeDataOffButtonPlugin.click();
     await sampleTest.modPage.page.waitForTimeout(1000);
