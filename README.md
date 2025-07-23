@@ -339,7 +339,7 @@ Wiping all data off will delete every item from the specific data-channel within
 
 **Data-channel configuration:**
 
-The data-channel name must be in the `manifest.json` along with all the permissions for writting, reading and deleting, see example below:
+The data-channel name must be in the `manifest.json` along with all the permissions for writing, reading and deleting, see example below:
 
 ```json
 {
@@ -413,6 +413,15 @@ One other thing is that the type of the return is precisely the same type requir
 - external-video:
   - volume:
     - set: this function will set the external video volume to a certain number between 0 and 1 (that is 0% and);
+- sidekick-area:
+  - options:
+    - renameGenericContentMenu: this function will rename the menu of the generic content in the sidekick-area (must have the ID of the sidekick and the newName);
+    - renameGenericContentSection: this function will rename the section in which the menu with the specified ID is;
+    - setMenuBadge: this will set a badge for a specific generic content in the sidekick area;
+    - removeMenuBadge: this will remove any badges that a specific generic content might have;
+    - panel:
+      - open: this function will open the sidekick options panel automatically;
+      - close: this function will close the sidekick options panel automatically (and also the sidebar content if open, to avoid inconsistencies in ui);
 - sidekick-options-container:
   - open: this function will open the sidekick options panel automatically;
   - close: this function will close the sidekick options panel automatically (and also the sidebar content if open, to avoid inconsistencies in ui);

@@ -5,6 +5,7 @@ import {
   BbbPluginSdk,
   PluginApi,
   GenericContentSidekickArea,
+  ActionButtonDropdownOption,
 } from 'bigbluebutton-html-plugin-sdk';
 import * as ReactDOM from 'react-dom/client';
 import { SampleGenericContentSidekickPluginProps } from './types';
@@ -16,9 +17,14 @@ function SampleGenericContentSidekickPlugin(
   BbbPluginSdk.initialize(uuid);
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);
 
+  const GENERIC_CONTENT_BADGE_ID = 'first-sidekick-component';
+
+  const [countGenericContent, setCountGenericContent] = React.useState(1);
+
   useEffect(() => {
     pluginApi.setGenericContentItems([
       new GenericContentSidekickArea({
+        id: GENERIC_CONTENT_BADGE_ID,
         name: 'Generic Content 1',
         section: 'Section 1',
         buttonIcon: 'video',
@@ -53,6 +59,23 @@ function SampleGenericContentSidekickPlugin(
     ]);
   }, []);
 
+  useEffect(() => {
+    pluginApi.setActionButtonDropdownItems([
+      new ActionButtonDropdownOption({
+        label: 'Click to increment the badge',
+        icon: 'user',
+        tooltip: 'Use it to enable the badge',
+        allowed: true,
+        onClick: () => {
+          setCountGenericContent((curr) => curr + 1);
+          pluginApi.uiCommands.sidekickArea.options.setMenuBadge(
+            GENERIC_CONTENT_BADGE_ID,
+            countGenericContent.toString(),
+          );
+        },
+      }),
+    ]);
+  }, [countGenericContent]);
   return null;
 }
 
