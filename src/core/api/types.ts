@@ -27,7 +27,7 @@ import { GenericContentInterface } from '../../extensible-areas/generic-content-
 import { UseUiDataFunction } from '../../ui-data/hooks/types';
 import { UseMeetingFunction } from '../../data-consumption/domain/meeting/from-core/types';
 import { ServerCommands } from '../../server-commands/types';
-import { SendGenericDataForLearningAnalyticsDashboard } from '../../learning-analytics-dashboard/types';
+import { LearningAnalyticsDashboardWrapperObject, SendGenericDataForLearningAnalyticsDashboard } from '../../learning-analytics-dashboard/types';
 import { UseUserCameraDomElementsFunction } from '../../dom-element-manipulation/user-camera/types';
 import { ScreenshareHelperInterface, UserCameraHelperInterface } from '../../extensible-areas';
 import { GetDataSource } from '../../remote-data/types';
@@ -287,12 +287,22 @@ export interface PluginApi {
    */
   useLocaleMessages?: UseLocaleMessagesFunction
   /**
+   * @deprecated Use {@link learningAnalyticsDashboard.upsertGenericData}  object instead.
+   *
    * Send data to the Learning analytics dashboard
    *
    * @param data - object in which one can render in the learning analytics dashboard
    *
    */
   sendGenericDataForLearningAnalyticsDashboard?: SendGenericDataForLearningAnalyticsDashboard;
+  /**
+   * Wrapper object of functions related to the learning analytics dashboard.
+   * It contains the following functions:
+   * - deleteGenericData: Deletes a certain entry in the learning dashboard generic-data;
+   * - upsertGenericData: Updates or insert a generic data entry in the learning dashboard;
+   *
+   */
+  learningAnalyticsDashboard?: LearningAnalyticsDashboardWrapperObject;
   /**
    * Fetches external data from pre-defined data-source in manifest.
    *
