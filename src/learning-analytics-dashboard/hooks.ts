@@ -1,8 +1,8 @@
 import {
   LearningAnalyticsDashboardEventDetails,
   GenericDataForLearningAnalyticsDashboard,
-  UpsertGenericDataArguments,
-  DeleteGenericDataArguments,
+  UpsertDataArguments,
+  DeleteDataArguments,
 } from './types';
 import { LearningAnalyticsDashboardEvents } from './enums';
 
@@ -21,15 +21,15 @@ export const sendGenericDataForLearningAnalyticsDashboard = (
   );
 };
 
-export const upsertGenericData = (
-  data: UpsertGenericDataArguments,
+export const upsertData = (
+  data: UpsertDataArguments,
   pluginName: string,
   targetUserId?: string,
 ) => {
   window.dispatchEvent(
     new CustomEvent<
       LearningAnalyticsDashboardEventDetails>(
-        LearningAnalyticsDashboardEvents.UPSERT_GENERIC_DATA_SENT,
+        LearningAnalyticsDashboardEvents.UPSERT_DATA_COMMAND_SENT,
         {
           detail: {
             pluginName,
@@ -41,15 +41,15 @@ export const upsertGenericData = (
   );
 };
 
-export const deleteGenericData = (
-  data: DeleteGenericDataArguments,
+export const deleteData = (
+  data: DeleteDataArguments,
   pluginName: string,
   targetUserId?: string,
 ) => {
   window.dispatchEvent(
     new CustomEvent<
       LearningAnalyticsDashboardEventDetails>(
-        LearningAnalyticsDashboardEvents.DELETE_GENERIC_DATA_SENT,
+        LearningAnalyticsDashboardEvents.DELETE_DATA_COMMAND_SENT,
         {
           detail: {
             pluginName,
