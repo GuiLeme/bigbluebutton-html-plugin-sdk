@@ -1,27 +1,26 @@
 import { PluginApi } from 'src/core/api/types';
 
-interface UseLocaleMessagesProps {
+export interface UseLocaleMessagesProps {
   pluginApi: PluginApi;
   fetchConfigs?: RequestInit;
 }
 
-interface PluginInformationResult {
+export interface PluginInformationResult {
   javascriptEntrypointIntegrity: string;
   javascriptEntrypointUrl: string;
   localesBaseUrl: string;
 }
 
-interface IntlMessages {
+export interface IntlMessages {
   loading: boolean;
   messages: Record<string, string>;
   currentLocale: string;
 }
 
-type UseLocaleMessagesFunction = (fetchConfigs?: RequestInit) => IntlMessages;
+export type UseLocaleMessagesFunction = (fetchConfigs?: RequestInit) => IntlMessages;
 
-export {
-  UseLocaleMessagesProps,
-  PluginInformationResult,
-  IntlMessages,
-  UseLocaleMessagesFunction,
-};
+export interface DataWaitingWrapper<T> {
+  data: T;
+  loading: boolean;
+  error?: object;
+}

@@ -1,23 +1,20 @@
 import { useEffect, useState } from 'react';
-import { IntlLocaleUiDataNames } from '../../../../ui-data';
 import { pluginLogger } from '../../../../utils';
 import { IntlMessages, UseLocaleMessagesProps } from './types';
-import { fetchLocaleAndStore, mergeLocaleMessages } from './utils';
+import { fetchLocaleAndStore, mergeLocaleMessages, useGetNormalizedLocale } from './utils';
 
 function useLocaleMessagesAuxiliary(
   { pluginApi, fetchConfigs }: UseLocaleMessagesProps,
 ): IntlMessages {
-  const currentLocale = pluginApi.useUiData!(IntlLocaleUiDataNames.CURRENT_LOCALE, {
-    locale: 'en',
-    fallbackLocale: 'en',
-  });
-
   const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState<Record<string, string>>({});
   const [fallbackMessages, setFallbackMessages] = useState<Record<string, string>>();
+  const localeDataWrapper = useGetNormalizedLocale({ pluginApi, fetchConfigs });
+
+  const { data: currentLocale } = localeDataWrapper;
 
   useEffect(() => {
-    if (pluginApi?.localesBaseUrl && currentLocale.locale) {
+    if (pluginApi?.localesBaseUrl && !localeDataWrapper.loading) {
       const { localesBaseUrl } = pluginApi;
       const { locale, fallbackLocale } = currentLocale;
       const localeUrl = `${localesBaseUrl}/${locale}.json`;
@@ -40,10 +37,11 @@ function useLocaleMessagesAuxiliary(
             return Promise.resolve({});
           }
         }
+        // The first of the list is the fallback
         return Promise.resolve(fallbackMessages);
       })).then((values) => {
-        const [desiredLocale, fallbackLocaleMessages] = values;
-        setMessages(mergeLocaleMessages(desiredLocale, fallbackLocaleMessages));
+        const [fallbackLocaleMessages, desiredLocaleMessages] = values;
+        setMessages(mergeLocaleMessages(desiredLocaleMessages, fallbackLocaleMessages));
         if (!fallbackMessages) setFallbackMessages(fallbackLocaleMessages);
       }).finally(() => {
         setLoading(false);
