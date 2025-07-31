@@ -5,7 +5,8 @@ import {
   BbbPluginSdk,
   PluginApi,
   GenericContentSidekickArea,
-  ActionButtonDropdownOption,
+  MediaAreaSeparator,
+  MediaAreaOption,
 } from 'bigbluebutton-html-plugin-sdk';
 import * as ReactDOM from 'react-dom/client';
 import { SampleGenericContentSidekickPluginProps } from './types';
@@ -60,8 +61,11 @@ function SampleGenericContentSidekickPlugin(
   }, []);
 
   useEffect(() => {
-    pluginApi.setActionButtonDropdownItems([
-      new ActionButtonDropdownOption({
+    pluginApi.setMediaAreaItems([
+      new MediaAreaSeparator({
+        dataTest: 'mediaAreaSeparator',
+      }),
+      new MediaAreaOption({
         label: 'Click to increment the badge',
         icon: 'user',
         tooltip: 'Use it to enable the badge',
@@ -74,19 +78,7 @@ function SampleGenericContentSidekickPlugin(
           );
         },
       }),
-      new ActionButtonDropdownOption({
-        label: 'Click to change section name',
-        icon: 'plus',
-        tooltip: 'Use it to change section name',
-        allowed: true,
-        onClick: () => {
-          pluginApi.uiCommands.sidekickArea.options.renameGenericContentSection(
-            GENERIC_CONTENT_BADGE_ID,
-            `New Section Name ${countGenericContent.current.toString()}`,
-          );
-        },
-      }),
-      new ActionButtonDropdownOption({
+      new MediaAreaOption({
         label: 'Click to change menu name',
         icon: 'user',
         tooltip: 'Use it to change menu name',

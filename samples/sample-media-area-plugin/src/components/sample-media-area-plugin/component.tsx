@@ -39,7 +39,7 @@ function SampleMediaAreaPlugin(
             pluginLogger.info('Log that the button from sample-media-area-plugin has been clicked');
           },
         }),
-        new ActionButtonDropdownOption({
+        new MediaAreaOption({
           label: 'Smart layout',
           icon: 'copy',
           tooltip: 'this is a button injected by plugin',
@@ -50,7 +50,7 @@ function SampleMediaAreaPlugin(
             );
           },
         }),
-        new ActionButtonDropdownOption({
+        new MediaAreaOption({
           label: 'Media Only',
           icon: 'copy',
           tooltip: 'this is a button injected by plugin',
@@ -61,7 +61,7 @@ function SampleMediaAreaPlugin(
             );
           },
         }),
-        new ActionButtonDropdownOption({
+        new MediaAreaOption({
           label: 'Participants and chat Only',
           icon: 'copy',
           tooltip: 'this is a button injected by plugin',
@@ -72,7 +72,7 @@ function SampleMediaAreaPlugin(
             );
           },
         }),
-        new ActionButtonDropdownOption({
+        new MediaAreaOption({
           label: 'Presentation Only',
           icon: 'copy',
           tooltip: 'this is a button injected by plugin',
@@ -83,7 +83,7 @@ function SampleMediaAreaPlugin(
             );
           },
         }),
-        new ActionButtonDropdownOption({
+        new MediaAreaOption({
           label: 'Cameras Only',
           icon: 'copy',
           tooltip: 'this is a button injected by plugin',
@@ -94,7 +94,7 @@ function SampleMediaAreaPlugin(
             );
           },
         }),
-        new ActionButtonDropdownOption({
+        new MediaAreaOption({
           label: 'Plugins only',
           icon: 'copy',
           tooltip: 'this is a button injected by plugin',
