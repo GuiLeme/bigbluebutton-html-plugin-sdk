@@ -104,7 +104,10 @@ function useGetNormalizedLocale(
           loading: false,
         });
       }
-    } else if (localeFromUiData.locale !== currentLocale.data.locale) {
+    } else if (
+      !localesIndex.loading
+      && localeFromUiData.locale !== currentLocale.data.locale
+    ) {
       setCurrentLocale({
         data: localeFromUiData,
         loading: false,
