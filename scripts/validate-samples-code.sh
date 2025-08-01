@@ -19,7 +19,7 @@ for SAMPLE in samples/*/; do
       npm ci
       cd "$PROJECT_DIR"
     fi
-    echo Printing the current path
+    echo Printing the current path "$SAMPLE"
     pwd
     # Publish current SDK to the Sample 
     ./scripts/publish-to-project-folder.sh "$SAMPLE"
