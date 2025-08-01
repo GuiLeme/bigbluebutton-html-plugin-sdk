@@ -106,7 +106,7 @@ function useGetNormalizedLocale(
       }
     } else if (
       !localesIndex.loading
-      && localeFromUiData.locale !== currentLocale.data.locale
+      && localesIndex.error
     ) {
       setCurrentLocale({
         data: localeFromUiData,
