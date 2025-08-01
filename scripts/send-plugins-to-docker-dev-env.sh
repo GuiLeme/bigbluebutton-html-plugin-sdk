@@ -4,22 +4,22 @@
 cd "$(dirname "$0")"
 cd ..
 
-OPTSTRING=":pi"
-run_publish_to_project_folder=false
-force_run_npm_ci=false
+OPT_STRING=":pi"
+RUN_PUBLISH_TO_PROJECT_FOLDER=false
+FORCE_RUN_NPM_CI=false
 
-while getopts ${OPTSTRING} opt; do
+while getopts ${OPT_STRING} opt; do
   case ${opt} in
     i)
       # This will force every plugin to run npm ci
       echo Force every plugin to run npm ci
-      force_run_npm_ci=true
+      FORCE_RUN_NPM_CI=true
       ;;
     p)
       # This flag will run the script to publish current
       # working version of SDK to samples
       echo Publish current SDK to samples for test
-      run_publish_to_project_folder=true
+      RUN_PUBLISH_TO_PROJECT_FOLDER=true
       ;;
     ?)
       echo "Invalid option: -${OPTARG}."
@@ -28,22 +28,22 @@ while getopts ${OPTSTRING} opt; do
   esac
 done
 
-if [ "$run_publish_to_project_folder" = true ] ; then
+if [ "$RUN_PUBLISH_TO_PROJECT_FOLDER" = true ] ; then
   npm ci
   npm run build
 fi
-echo Start processing of samples
+echo Start processing samples
 for dir in samples/*
 do
   if [ -d "$dir/tests" ]; then
     echo Identified test cases in $dir
     echo Installing dependencies in $dir
     cd $dir
-    if [ "$force_run_npm_ci" = true ] ; then
+    if [ "$FORCE_RUN_NPM_CI" = true ] ; then
       rm -rf node_modules
       npm ci
     fi
-    if [ "$run_publish_to_project_folder" = true ] ; then
+    if [ "$RUN_PUBLISH_TO_PROJECT_FOLDER" = true ] ; then
       ./../../scripts/publish-to-project-folder.sh .
     fi
     npm run build-bundle
