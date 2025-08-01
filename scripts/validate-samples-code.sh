@@ -19,6 +19,8 @@ for SAMPLE in samples/*/; do
       npm ci
       cd "$PROJECT_DIR"
     fi
+    echo Printing the current path
+    pwd
     # Publish current SDK to the Sample 
     ./scripts/publish-to-project-folder.sh "$SAMPLE"
     # Run check validations
