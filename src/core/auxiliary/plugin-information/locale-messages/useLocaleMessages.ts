@@ -47,7 +47,7 @@ function useLocaleMessagesAuxiliary(
         setLoading(false);
       });
     }
-  }, [currentLocale]);
+  }, [localeDataWrapper]);
   return {
     messages,
     loading,

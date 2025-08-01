@@ -88,12 +88,12 @@ function useGetNormalizedLocale(
         (locale) => locale === localeFromUiData.locale,
       ) !== -1;
 
-      if (isDesiredLocalePresent && localeFromUiData.locale !== currentLocale.data.locale) {
+      if (isDesiredLocalePresent) {
         setCurrentLocale({
           data: localeFromUiData,
           loading: false,
         });
-      } else if (!isDesiredLocalePresent) {
+      } else {
         const regionDefault = usableLocales.find((locale) => locale === desiredLocale[0]);
         const localeFallback = regionDefault || usableLocales[0];
         setCurrentLocale({
