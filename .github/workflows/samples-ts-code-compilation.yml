@@ -1,4 +1,4 @@
-name: Typescript - compile code
+name: Samples Code Validation (Typescript and ESLINT)
 on: [pull_request]
 permissions:
   contents: read
