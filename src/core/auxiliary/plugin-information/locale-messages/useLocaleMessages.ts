@@ -27,8 +27,7 @@ function useLocaleMessagesAuxiliary(
       Promise.all(urlToFetchList.map(async (url) => {
         if (url !== fallbackLocaleUrl || !fallbackMessages) {
           try {
-            const a = await fetchLocaleAndStore(url, fetchConfigs);
-            return a;
+            return await fetchLocaleAndStore(url, fetchConfigs);
           } catch (err) {
             pluginLogger.error(
               `[${pluginApi.pluginName}] - Something went wrong while trying to fetch [${url}] or parse its result: `,
@@ -47,7 +46,7 @@ function useLocaleMessagesAuxiliary(
         setLoading(false);
       });
     }
-  }, [currentLocale]);
+  }, [localeDataWrapper]);
   return {
     messages,
     loading,
