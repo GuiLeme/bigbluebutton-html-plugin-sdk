@@ -35,7 +35,7 @@ export class ActionButtonDropdownOption implements ActionButtonDropdownInterface
    * @returns the option to be displayed in the action button dropdown
    */
   constructor({
-    id, label = '', icon = '', tooltip = '', dataTest = '', allowed = true, onClick = () => {},
+    id, label = '', icon = '', tooltip = '', dataTest = '', allowed = true, onClick = () => { },
   }: ActionButtonDropdownOptionProps) {
     if (id) {
       this.id = id;
@@ -68,7 +68,7 @@ export class ActionButtonDropdownSeparator implements ActionButtonDropdownInterf
    *
    * @returns the separator to be displayed in the action button dropdown
    */
-  constructor({ dataTest = '' }) {
+  constructor({ dataTest = '' } = {}) {
     this.type = ActionButtonDropdownItemType.SEPARATOR;
     this.dataTest = dataTest;
   }
