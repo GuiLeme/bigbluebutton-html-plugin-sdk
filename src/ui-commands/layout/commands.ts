@@ -3,8 +3,8 @@ import { ChangeEnforcedLayout, ChangeEnforcedLayoutCommandArguments, SetEnforced
 
 export const layout = {
   /**
-   * @deprecated Use
-   * Changes The enforced layout
+   * @deprecated Use {@link layout.setEnforcedLayout} instead
+   * Changes the enforced layout
    *
    * @param layoutType is one of the options described by the enum
    */
@@ -21,7 +21,7 @@ export const layout = {
   }) as ChangeEnforcedLayout,
 
   /**
-   * Set enforced layout
+   * Sets the enforced layout
    *
    * @param layoutType is one of the options described by the enum
    */
