@@ -1,5 +1,5 @@
 {
-  "requiredSdkVersion": "~0.0.70",
+  "requiredSdkVersion": "~0.1.5",
   "name": "SampleAppsGalleryItemPlugin",
   "javascriptEntrypointUrl": "SampleAppsGalleryItemPlugin.js",
   "localesBaseUrl": "https://cdn.dominio.com/pluginabc/"
