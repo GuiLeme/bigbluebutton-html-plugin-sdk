@@ -30,7 +30,7 @@ export class AudioSettingsDropdownOption implements AudioSettingsDropdownInterfa
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5)
    */
   constructor({
-    id, label = '', icon = '', dataTest = '', onClick = () => {},
+    id, label = '', icon = '', dataTest = '', onClick = () => { },
   }: AudioSettingsDropdownOptionProps) {
     if (id) {
       this.id = id;
@@ -63,7 +63,8 @@ export class AudioSettingsDropdownSeparator implements AudioSettingsDropdownInte
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5)
    */
-  constructor() {
+  constructor({ dataTest = '' } = {}) {
+    this.dataTest = dataTest;
     this.type = AudioSettingsDropdownItemType.SEPARATOR;
   }
 
