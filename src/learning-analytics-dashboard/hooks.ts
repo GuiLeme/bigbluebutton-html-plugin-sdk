@@ -64,14 +64,16 @@ export const deleteUserData = (
 
 export const clearAllUsersData = (
   pluginName: string,
+  cardTitle?: string,
 ) => {
   window.dispatchEvent(
     new CustomEvent<
       ClearLearningAnalyticsDashboardEventDetails>(
-        LearningAnalyticsDashboardEvents.DELETE_USER_DATA_COMMAND_SENT,
+        LearningAnalyticsDashboardEvents.CLEAR_ALL_USERS_DATA_COMMAND_SENT,
         {
           detail: {
             pluginName,
+            cardTitle,
           },
         },
       ),

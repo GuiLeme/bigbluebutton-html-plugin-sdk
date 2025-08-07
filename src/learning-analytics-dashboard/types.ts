@@ -31,7 +31,7 @@ export type DeleteUserDataFunction = (
   targetUserId?: string,
 ) => void;
 
-export type ClearUsersDataFunction = () => void;
+export type ClearUsersDataFunction = (cardTitle?: string) => void;
 
 // General typing.
 export interface LearningAnalyticsDashboardEventDetails {
@@ -43,6 +43,7 @@ export interface LearningAnalyticsDashboardEventDetails {
 
 export interface ClearLearningAnalyticsDashboardEventDetails {
   pluginName: string;
+  cardTitle?: string;
 }
 
 export interface LearningAnalyticsDashboardWrapperObject {
@@ -64,7 +65,6 @@ export interface LearningAnalyticsDashboardWrapperObject {
   deleteUserData: DeleteUserDataFunction;
   /**
    * Clears all Users Data for a specific plugin. (No arguments required)
-   *
    */
   clearAllUsersData: ClearUsersDataFunction;
 }
