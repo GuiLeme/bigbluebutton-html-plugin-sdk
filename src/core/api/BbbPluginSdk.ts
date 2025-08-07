@@ -46,7 +46,7 @@ import { useUiData } from '../../ui-data/hooks/hooks';
 import { UseMeetingFunction } from '../../data-consumption/domain/meeting/from-core/types';
 import { useMeeting } from '../../data-consumption/domain/meeting/from-core/hooks';
 import { serverCommands } from '../../server-commands/commands';
-import { deleteData, sendGenericDataForLearningAnalyticsDashboard, upsertData } from '../../learning-analytics-dashboard/hooks';
+import { deleteUserData, sendGenericDataForLearningAnalyticsDashboard, upsertUserData } from '../../learning-analytics-dashboard/hooks';
 import { GenericDataForLearningAnalyticsDashboard } from '../../learning-analytics-dashboard/types';
 import { getRemoteData } from '../../remote-data/utils';
 import { persistEventFunctionWrapper } from '../../event-persistence/hooks';
@@ -132,12 +132,12 @@ export abstract class BbbPluginSdk {
         data: GenericDataForLearningAnalyticsDashboard,
       ) => sendGenericDataForLearningAnalyticsDashboard(data, pluginName);
       pluginApi.learningAnalyticsDashboard = {
-        upsertData: (data, targetUserId) => upsertData(
+        upsertUserData: (data, targetUserId) => upsertUserData(
           data,
           pluginName,
           targetUserId,
         ),
-        deleteData: (data, targetUserId) => deleteData(
+        deleteUserData: (data, targetUserId) => deleteUserData(
           data,
           pluginName,
           targetUserId,

@@ -1,8 +1,9 @@
 import {
   LearningAnalyticsDashboardEventDetails,
   GenericDataForLearningAnalyticsDashboard,
-  UpsertDataArguments,
-  DeleteDataArguments,
+  LearningAnalyticsDashboardUserData,
+  LearningAnalyticsDashboardDeleteUserData,
+  ClearLearningAnalyticsDashboardEventDetails,
 } from './types';
 import { LearningAnalyticsDashboardEvents } from './enums';
 
@@ -21,15 +22,15 @@ export const sendGenericDataForLearningAnalyticsDashboard = (
   );
 };
 
-export const upsertData = (
-  data: UpsertDataArguments,
+export const upsertUserData = (
+  data: LearningAnalyticsDashboardUserData,
   pluginName: string,
   targetUserId?: string,
 ) => {
   window.dispatchEvent(
     new CustomEvent<
       LearningAnalyticsDashboardEventDetails>(
-        LearningAnalyticsDashboardEvents.UPSERT_DATA_COMMAND_SENT,
+        LearningAnalyticsDashboardEvents.UPSERT_USER_DATA_COMMAND_SENT,
         {
           detail: {
             pluginName,
@@ -41,20 +42,36 @@ export const upsertData = (
   );
 };
 
-export const deleteData = (
-  data: DeleteDataArguments,
+export const deleteUserData = (
+  data: LearningAnalyticsDashboardDeleteUserData,
   pluginName: string,
   targetUserId?: string,
 ) => {
   window.dispatchEvent(
     new CustomEvent<
       LearningAnalyticsDashboardEventDetails>(
-        LearningAnalyticsDashboardEvents.DELETE_DATA_COMMAND_SENT,
+        LearningAnalyticsDashboardEvents.DELETE_USER_DATA_COMMAND_SENT,
         {
           detail: {
             pluginName,
             data,
             targetUserId,
+          },
+        },
+      ),
+  );
+};
+
+export const clearAllUsersData = (
+  pluginName: string,
+) => {
+  window.dispatchEvent(
+    new CustomEvent<
+      ClearLearningAnalyticsDashboardEventDetails>(
+        LearningAnalyticsDashboardEvents.DELETE_USER_DATA_COMMAND_SENT,
+        {
+          detail: {
+            pluginName,
           },
         },
       ),
