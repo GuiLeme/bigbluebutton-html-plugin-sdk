@@ -8,4 +8,5 @@ export {
 
 export {
   UsersBasicInfoResponseFromGraphqlWrapper,
+  UsersBasicInfoData,
 } from './users-basic-info/types';

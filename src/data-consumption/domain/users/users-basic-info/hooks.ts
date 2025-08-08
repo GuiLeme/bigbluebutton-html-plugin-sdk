@@ -1,8 +1,8 @@
-import { useCustomSubscription } from '../../shared/custom-subscription/hooks';
-import { USERS_BASIC_INFO_QUERY } from './queries';
+import { DataConsumptionHooks } from '../../../../data-consumption/enums';
+import { createDataConsumptionHook } from '../../../factory/hookCreator';
 import { UsersBasicInfoResponseFromGraphqlWrapper } from './types';
 
-export const useUsersBasicInfo = () => useCustomSubscription<
+export const useUsersBasicInfo = () => createDataConsumptionHook<
   UsersBasicInfoResponseFromGraphqlWrapper>(
-    USERS_BASIC_INFO_QUERY,
+    DataConsumptionHooks.USERS_BASIC_INFO,
   );
