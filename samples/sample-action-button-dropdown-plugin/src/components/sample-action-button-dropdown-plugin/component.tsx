@@ -84,14 +84,30 @@ function SampleActionButtonDropdownPlugin(
           },
         }),
         new ActionButtonDropdownOption({
-          label: 'Video Focus',
+          label: 'Cameras Only',
           icon: 'copy',
           tooltip: 'this is a button injected by plugin',
           allowed: true,
           onClick: () => {
             pluginApi.uiCommands.layout.changeEnforcedLayout(
-              ChangeEnforcedLayoutTypeEnum.VIDEO_FOCUS,
+              ChangeEnforcedLayoutTypeEnum.CAMERAS_ONLY,
             );
+          },
+        }),
+        new ActionButtonDropdownOption({
+          label: 'Plugins only',
+          icon: 'copy',
+          tooltip: 'this is a button injected by plugin',
+          allowed: true,
+          onClick: () => {
+            pluginApi.uiCommands.layout.changeEnforcedLayout(
+              ChangeEnforcedLayoutTypeEnum.PLUGINS_ONLY,
+            );
+            setTimeout(() => {
+              pluginApi.uiCommands.layout.changeEnforcedLayout(
+                ChangeEnforcedLayoutTypeEnum.SMART_LAYOUT,
+              );
+            }, 5000);
           },
         }),
       ]);
