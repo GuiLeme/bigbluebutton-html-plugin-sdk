@@ -3,7 +3,7 @@ export const coreElements = {
   closeModal: 'button[data-test="closeModal"]',
   errorMessageLabel: 'span[id="error-message"]',
   whiteboard: 'div[data-testid="canvas"]',
-  actions: 'button[data-test="actionsButton"]',
+  mediaArea: 'button[data-test="mediaAreaButton"]',
   // audio
   joinAudioButton: 'button[data-test="joinAudio"]',
   microphoneBtn: 'button[data-test="microphoneBtn"]',
