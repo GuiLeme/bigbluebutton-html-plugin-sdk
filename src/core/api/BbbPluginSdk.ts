@@ -51,7 +51,7 @@ import {
   deleteUserData,
   sendGenericDataForLearningAnalyticsDashboard,
   upsertUserData,
-} from '../../learning-analytics-dashboard/hooks';
+} from '../../learning-analytics-dashboard/commands';
 import { GenericDataForLearningAnalyticsDashboard } from '../../learning-analytics-dashboard/types';
 import { getRemoteData } from '../../remote-data/utils';
 import { persistEventFunctionWrapper } from '../../event-persistence/hooks';
