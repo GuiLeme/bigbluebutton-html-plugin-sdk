@@ -4,6 +4,7 @@ export enum LayoutEnum {
 }
 
 export enum EnforcedLayoutTypeEnum {
+  PLUGINS_ONLY = 'PLUGINS_ONLY',
   CUSTOM_LAYOUT = 'CUSTOM_LAYOUT',
   SMART_LAYOUT = 'SMART_LAYOUT',
   PRESENTATION_FOCUS = 'PRESENTATION_FOCUS',
