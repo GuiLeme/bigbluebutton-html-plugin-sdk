@@ -10,14 +10,17 @@ import { captions } from './captions/commands';
 import { actionsBar } from './actions-bar/commands';
 import { layout } from './layout/commands';
 import { navBar } from './nav-bar/commands';
+import { sidekickArea } from './sidekick-area/commands';
+import { UiCommands } from './types';
 
-export const uiCommands = {
+export const uiCommands: UiCommands = {
   actionsBar,
   camera,
   captions,
   chat,
   externalVideo,
   sidekickOptionsContainer,
+  sidekickArea,
   navBar,
   presentationArea,
   userStatus,
