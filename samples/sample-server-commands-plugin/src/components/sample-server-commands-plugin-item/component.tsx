@@ -28,7 +28,9 @@ function SampleServerCommandsPluginItem(
   useEffect(() => {
     // These buttons are interfaces for the user to manually send messages.
     pluginApi.setMediaAreaItems([
-      new MediaAreaSeparator(),
+      new MediaAreaSeparator({
+        dataTest: 'sample-server-commands-separator',
+      }),
       new MediaAreaOption({
         label: 'Send chat message',
         icon: 'chat',

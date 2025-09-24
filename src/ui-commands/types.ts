@@ -9,6 +9,7 @@ import { UiCommandsActionsBarObject } from './actions-bar/types';
 import { UiCommandsLayoutObject } from './layout/types';
 import { UiCommandsNavBarObject } from './nav-bar/types';
 import { UiCommandsCameraObject } from './camera/types';
+import { UiCommandsSidekickArea } from './sidekick-area/types';
 import { UiCommandsCaptionsObject } from './captions/types';
 
 export interface UiCommands {
@@ -19,6 +20,7 @@ export interface UiCommands {
   captions: UiCommandsCaptionsObject;
   externalVideo: UiCommandsExternalVideoObject;
   sidekickOptionsContainer: UiCommandsSidekickOptionsContainerObject;
+  sidekickArea: UiCommandsSidekickArea;
   navBar: UiCommandsNavBarObject;
   presentationArea: UiCommandsPresentationAreaObject;
   userStatus: UiCommandsUserStatusObject;

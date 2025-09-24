@@ -5,6 +5,8 @@ import {
   BbbPluginSdk,
   PluginApi,
   GenericContentSidekickArea,
+  MediaAreaSeparator,
+  MediaAreaOption,
 } from 'bigbluebutton-html-plugin-sdk';
 import * as ReactDOM from 'react-dom/client';
 import { SampleGenericContentSidekickPluginProps } from './types';
@@ -16,9 +18,14 @@ function SampleGenericContentSidekickPlugin(
   BbbPluginSdk.initialize(uuid);
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);
 
+  const GENERIC_CONTENT_BADGE_ID = 'first-sidekick-component';
+
+  const countGenericContent = React.useRef(0);
+
   useEffect(() => {
     pluginApi.setGenericContentItems([
       new GenericContentSidekickArea({
+        id: GENERIC_CONTENT_BADGE_ID,
         name: 'Generic Content 1',
         section: 'Section 1',
         buttonIcon: 'video',
@@ -53,6 +60,38 @@ function SampleGenericContentSidekickPlugin(
     ]);
   }, []);
 
+  useEffect(() => {
+    pluginApi.setMediaAreaItems([
+      new MediaAreaSeparator({
+        dataTest: 'mediaAreaSeparator',
+      }),
+      new MediaAreaOption({
+        label: 'Click to increment the badge',
+        icon: 'user',
+        tooltip: 'Use it to enable the badge',
+        allowed: true,
+        onClick: () => {
+          countGenericContent.current += 1;
+          pluginApi.uiCommands.sidekickArea.options.setMenuBadge(
+            GENERIC_CONTENT_BADGE_ID,
+            countGenericContent.current.toString(),
+          );
+        },
+      }),
+      new MediaAreaOption({
+        label: 'Click to change menu name',
+        icon: 'user',
+        tooltip: 'Use it to change menu name',
+        allowed: true,
+        onClick: () => {
+          pluginApi.uiCommands.sidekickArea.options.renameGenericContentMenu(
+            GENERIC_CONTENT_BADGE_ID,
+            `New Menu Name ${countGenericContent.current.toString()}`,
+          );
+        },
+      }),
+    ]);
+  }, []);
   return null;
 }
 

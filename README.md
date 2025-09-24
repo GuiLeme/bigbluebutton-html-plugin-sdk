@@ -41,7 +41,7 @@ _Running from source code with local BBB-server_
 pluginManifests=[{"url": "http://localhost:4701/manifest.json"}]
 ```
 
-*Running from source code with a remote BBB-server*
+_Running from source code with a remote BBB-server_
 
 If you are running your BBB-server elsewhere, than you can't simply point the manifest URL to a local address, you'll need to either serve the built version into a CDN or serve the dev version using a service to make it public. And for the second option we'd recommend NGROK. Here are the instructions to do that:
 
@@ -69,14 +69,13 @@ Right after that, NGROK will create an interface into your terminal and will dis
 
 Here's an example of URL: `https://<uuid>.ngrok-free.app`
 
-You can already interact with this URL and access both 
+You can already interact with this URL and access both
 
 `https://<uuid>.ngrok-free.app/manifest.json`
 
 or
 
 `https://<uuid>.ngrok-free.app/PickRandomUserPlugin.js`
-
 
 5. Add this create parameter into the API-mate of the server you are testing it on:
 
@@ -123,21 +122,21 @@ Here is as complete `manifest.json` example with all possible configurations:
   "name": "MyPlugin",
   "javascriptEntrypointUrl": "MyPlugin.js",
   "localesBaseUrl": "https://cdn.domain.com/my-plugin/", // Optional
-  "dataChannels":[
+  "dataChannels": [
     {
       "name": "public-channel",
-      "pushPermission": ["moderator","presenter"], // "moderator","presenter", "all"
+      "pushPermission": ["moderator", "presenter"], // "moderator","presenter", "all"
       "replaceOrDeletePermission": ["moderator", "creator"] // "moderator", "presenter","all", "creator"
     }
   ], // One can enable more data-channels to better organize client communication
   "eventPersistence": {
-    "isEnabled": true, // By default it is not enabled
+    "isEnabled": true // By default it is not enabled
   },
   "remoteDataSources": [
     {
       "name": "allUsers",
       "url": "${meta_pluginSettingsUserInformation}",
-      "fetchMode": "onMeetingCreate", // Possible values: "onMeetingCreate", "onDemand" 
+      "fetchMode": "onMeetingCreate", // Possible values: "onMeetingCreate", "onDemand"
       "permissions": ["moderator", "viewer"]
     }
   ],
@@ -199,10 +198,12 @@ Foreach of the following ui-extensible-area, we have a different setter function
 Mind that, although each area has its own structure, all the functions follows a certain argument structure, and returns nothing, that would be:
 
 ```ts
-pluginApi.setterFunctionExample([{
-  objectProperty1: 'string',
-  objectProperty2: 123,
-}])
+pluginApi.setterFunctionExample([
+  {
+    objectProperty1: 'string',
+    objectProperty2: 123,
+  },
+]);
 ```
 
 See, it is basically a function that requires an array as an argument, with which the more items you push to that array, the more of that extensible area you will have.
@@ -258,6 +259,54 @@ export interface GraphqlResponseWrapper<TData> {
 
 So we have the `data`, which is different for each hook, that's why it's a generic, the error, that will be set if, and only if, there is an error, otherwise it is undefined, and loading, which tells the developer if the query is still loading (being fetched) or not.
 
+### Realtime Data Creation
+
+**`useCustomMutation` Hook**
+
+The `useCustomMutation` hook enables you to post data to the backend (Postgres) using existing GraphQL mutations, respecting user permissions.
+
+It works similarly to Apollo Client’s `useMutation`, returning a _trigger function_ and a _result object_ with information about the mutation execution. These will be described in more detail below.
+
+One important difference is that the mutation query **must** be provided as a string. This is due to how the SDK communicates with the HTML5 client. As a consequence, you must explicitly define the type of the `variables` argument for the trigger function, as shown in the example below.
+
+```typescript
+interface MutationVariablesType {
+  reactionEmoji: string;
+}
+
+const [trigger, result] = pluginApi.useCustomMutation<MutationVariablesType>(`
+  mutation SetReactionEmoji($reactionEmoji: String!) {
+    userSetReactionEmoji(reactionEmoji: $reactionEmoji)
+  }
+`);
+
+// Later in the code, you can trigger the mutation:
+trigger({
+  variables: {
+    reactionEmoji: '👏',
+  },
+});
+```
+
+Note that the same type (`MutationVariablesType`) passed as the generic parameter to `useCustomMutation` is also the type of the `variables` object in the trigger function.
+
+The `result` object returned by the hook contains the following fields:
+
+```typescript
+const { called, data, error, loading } = result;
+```
+
+which follow this interface:
+
+```typescript
+interface MutationResultObject {
+  called: boolean; // Indicates if the trigger function has been called
+  data?: object; // Response data after the mutation is triggered
+  error?: object; // Error details from the mutation execution
+  loading: boolean; // Whether the mutation is currently loading (triggered or in progress)
+}
+```
+
 ### Real time data exchange
 
 - `useDataChannel` hook: this will allow you to exchange information (Send and receive) amongst different users through the same plugin;
@@ -268,7 +317,7 @@ So for this hook to read the data from the data channel, the developer will be a
 - LATEST_ITEM: Fetches only the latest item pushed to the data-channel within a specific subchannel-name since the beginning of the meeting;
 - NEW_ITEMS: Fetches the new items pushed to the data-channel within a specific subchannel-name since the moment that the `useDataChannel` hook has been called (It will not see entries sent previous to that moment);
 
-An interesting thing about this hook is that it is generic, so, you can use a custom type, and this will be  found not only in the consumer part of the data structure returned, but also in functions in which you need to specify an object to be persisted, meaning it will force the object to be of the type you mentioned previously (that is the case for `pushEntry` and `replaceEntry`). One can find examples of usage of this in the data-channel plugin sample or most of the official ones. The syntax is described below:
+An interesting thing about this hook is that it is generic, so, you can use a custom type, and this will be found not only in the consumer part of the data structure returned, but also in functions in which you need to specify an object to be persisted, meaning it will force the object to be of the type you mentioned previously (that is the case for `pushEntry` and `replaceEntry`). One can find examples of usage of this in the data-channel plugin sample or most of the official ones. The syntax is described below:
 
 ```typescript
 const {
@@ -279,7 +328,7 @@ const {
 } = useDataChannel<CustomType>(
   channelName, // Defined according to what is on manifest.json
   DataChannelTypes.ALL_ITEMS, // | LATEST_ITEM | NEW_ITEMS -> ALL_ITEMS is default
-  subChannelName = 'default', // If no subchannelName is specified, it will be 'default'
+  (subChannelName = 'default') // If no subchannelName is specified, it will be 'default'
 );
 ```
 
@@ -287,22 +336,22 @@ Wiping all data off will delete every item from the specific data-channel within
 
 **Data-channel configuration:**
 
-The data-channel name must be in the `manifest.json` along with all the permissions for writting, reading and deleting, see example below:
+The data-channel name must be in the `manifest.json` along with all the permissions for writing, reading and deleting, see example below:
 
 ```json
 {
   "requiredSdkVersion": "~0.0.59",
   "name": "PluginName",
   "javascriptEntrypointUrl": "PluginName.js",
-  "dataChannels":[
+  "dataChannels": [
     {
       "name": "channel-name",
-      "pushPermission": ["moderator","presenter"],
+      "pushPermission": ["moderator", "presenter"],
       "replaceOrDeletePermission": ["moderator", "sender"]
     }
   ]
 }
-``` 
+```
 
 If no permission is mentioned in that file (writing or deleting), no one will be able proceed with that specific action:
 
@@ -336,14 +385,16 @@ export type ObjectTo = ToUserId | ToRole;
 Example of usage:
 
 ```ts
-  const currentLocale = pluginApi.useUiData(IntlLocaleUiDataNames.CURRENT_LOCALE, {
+const currentLocale = pluginApi.useUiData(
+  IntlLocaleUiDataNames.CURRENT_LOCALE,
+  {
     locale: 'en',
     fallbackLocale: 'en',
-  });
-  // Do something with the currentLocale:
-  currentLocale.locale;
-  currentLocale.fallbackLocale;
-
+  }
+);
+// Do something with the currentLocale:
+currentLocale.locale;
+currentLocale.fallbackLocale;
 ```
 
 Mind that foreach enum we have, a different type of fallback is needed as the second argument. In the example above, we want the `intl`, so the second argument, will follow the structure depicted.
@@ -354,23 +405,42 @@ One other thing is that the type of the return is precisely the same type requir
 
 `uiCommands` object: It basically contains all the possible commands available to the developer to interact with the core BBB UI, see the ones implemented down below:
 
+- actions-bar:
+  - setDisplayActionBar: this function decides whether to display the actions bar
+- camera:
+  - setSelfViewDisableAllDevices: Sets the self-view camera disabled/enabled for all camera devices of a user;
+  - setSelfViewDisable: Sets the self-view camera disabled/enabled for specific camera.
 - chat:
   - form:
     - open: this function will open the sidebar chat panel automatically;
-    - fill: this function will fill the form input field of the chat passed in the argument as {text: string}
+    - fill: this function will fill the form input field of the chat passed in the argument as `{text: string}`
+- conference:
+  - setSpeakerLevel: this function will set the speaker volume level(audio output) of the conference to a certain number between 0 and 1;
 - external-video:
   - volume:
     - set: this function will set the external video volume to a certain number between 0 and 1 (that is 0% and);
-- sidekick-options-container:
-  - open: this function will open the sidekick options panel automatically;
-  - close: this function will close the sidekick options panel automatically (and also the sidebar content if open, to avoid inconsistencies in ui);
+- layout:
+  - changeEnforcedLayout: (deprecated) Changes the enforced layout
+  - setEnforcedLayout: Sets the enforced layout
+- navBar:
+  - setDisplayNavBar: Sets the displayNavBar to true (show it) or false (hide it).
+- notification:
+  - send: This function will send a notification for the client to render, keep in mind that it's only client-side. Should you want it to be rendered in multiple clients, use this with a data-channel;
 - presentation-area:
   - open: this function will open the presentation area content automatically;
   - close: this function will close the presentation area content automatically;
-- conference:
-  - setSpeakerLevel: this function will set the speaker volume level(audio output) of the conference to a certain number between 0 and 1;
-- notification:
-  - send: This function will send a notification for the client to render, keep in mind that it's only client-side. Should you want it to be rendered in multiple clients, use this with a data-channel;
+- sidekick-area:
+  - options:
+    - renameGenericContentMenu: this function will rename the menu of the generic content in the sidekick-area (must have the ID of the sidekick and the newName);
+    - renameGenericContentSection: this function will rename the section in which the menu with the specified ID is;
+    - setMenuBadge: this will set a badge for a specific generic content in the sidekick area;
+    - removeMenuBadge: this will remove any badges that a specific generic content might have;
+    - panel:
+      - open: this function will open the sidekick options panel automatically;
+      - close: this function will close the sidekick options panel automatically (and also the sidebar content if open, to avoid inconsistencies in ui);
+- sidekick-options-container:
+  - open: this function will open the sidekick options panel automatically;
+  - close: this function will close the sidekick options panel automatically (and also the sidebar content if open, to avoid inconsistencies in ui);
 - user-status:
   - setAwayStatus: this function will set the away status of the user to a certain status;
 - captions:
@@ -379,27 +449,28 @@ One other thing is that the type of the return is precisely the same type requir
 See usage ahead:
 
 ```ts
-  pluginApi.uiCommands.chat.form.open();
-  pluginApi.uiCommands.chat.form.fill({
-    text: 'Just an example message filled by the plugin',
-  });
+pluginApi.uiCommands.chat.form.open();
+pluginApi.uiCommands.chat.form.fill({
+  text: 'Just an example message filled by the plugin',
+});
 ```
 
 So the idea is that we have a `uiCommands` object and at a point, there will be the command to do the intended action, such as open the chat form and/or fill it, as demonstrated above
 
 ### Server Commands
-  
-  `serverCommands` object: It contains all the possible commands available to the developer to interact with the BBB core server, see the ones implemented down below:
-  
-  - chat:
-    - sendPublicMessage: This function sends a message to the public chat on behalf of the currently logged-in user.
 
-    - sendCustomPublicMessage: This function sends a text message to the public chat, optionally including custom metadata.
-      > **Note**: The custom messages sent by plugins are not automatically rendered by the client. To display these messages, a plugin must handle the rendering using `useLoadedChatMessages` and `useChatMessageDomElements`.
+`serverCommands` object: It contains all the possible commands available to the developer to interact with the BBB core server, see the ones implemented down below:
 
-  - caption:
-    - save: this function saves the given text, locale and caption type
-    - addLocale: this function sends a locale to be added to the available options
+- chat:
+
+  - sendPublicMessage: This function sends a message to the public chat on behalf of the currently logged-in user.
+
+  - sendCustomPublicMessage: This function sends a text message to the public chat, optionally including custom metadata.
+    > **Note**: The custom messages sent by plugins are not automatically rendered by the client. To display these messages, a plugin must handle the rendering using `useLoadedChatMessages` and `useChatMessageDomElements`.
+
+- caption:
+  - save: this function saves the given text, locale and caption type
+  - addLocale: this function sends a locale to be added to the available options
 
 ### Dom Element Manipulation
 
@@ -422,10 +493,9 @@ interface GenericDataForLearningAnalyticsDashboard {
 
 So that the data will appear in the following form:
 
-|   User    | Count | `<columnTitle>` |
-|    ---    |  :--  |      --:        |
-| user-name |   1   |   `<value>`     |
-
+| User      | Count | `<columnTitle>` |
+| --------- | :---- | --------------: |
+| user-name | 1     |       `<value>` |
 
 ### External data resources
 
@@ -437,12 +507,12 @@ This is possible by simply configuring the dataResource name in the manifest and
 {
   // ...rest of manifest configuration
   "remoteDataSources": [
-      {
-          "name": "allUsers",
-          "url": "${meta_pluginSettingsUserInformation}",
-          "fetchMode": "onMeetingCreate", // Possible values: "onMeetingCreate", "onDemand" 
-          "permissions": ["moderator", "viewer"] // Possible values: "moderator", "viewer", "presenter"
-      }
+    {
+      "name": "allUsers",
+      "url": "${meta_pluginSettingsUserInformation}",
+      "fetchMode": "onMeetingCreate", // Possible values: "onMeetingCreate", "onDemand"
+      "permissions": ["moderator", "viewer"] // Possible values: "moderator", "viewer", "presenter"
+    }
   ]
 }
 ```
@@ -468,20 +538,29 @@ See that we send the `meta_` parameter, for more information, refer to the [meta
 Lastly, in the plugin, just use the function like:
 
 ```typescript
-pluginApi.getRemoteData('allUsers').then((response: Response) => {
-  if (response.ok) {
-    response.json().then((r: CourseData) => {
-      // Do something with the jsonified data (if it's a json)
-    }).catch((reason) => {
-      pluginLogger.error('Error while processing the json from success response: ', reason);
-    });
-  }
-}).catch((reason) => {
-  pluginLogger.error('Error while fetching external resource: ', reason);
-});
+pluginApi
+  .getRemoteData('allUsers')
+  .then((response: Response) => {
+    if (response.ok) {
+      response
+        .json()
+        .then((r: CourseData) => {
+          // Do something with the jsonified data (if it's a json)
+        })
+        .catch((reason) => {
+          pluginLogger.error(
+            'Error while processing the json from success response: ',
+            reason
+          );
+        });
+    }
+  })
+  .catch((reason) => {
+    pluginLogger.error('Error while fetching external resource: ', reason);
+  });
 ```
 
-### Meta_ parameters
+### Meta\_ parameters
 
 This is not part of the API, but it's a way of passing information to the manifest. Any value can be passed like this, one just needs to put something like `${meta_nameOfParameter}` in a specific config of the manifest, and in the `/create` call, set this meta-parameter to whatever is preferred, like `meta_nameOfParameter="Sample message"`
 
@@ -497,7 +576,7 @@ To use it, one first need to add the following lines to their `manifest.json`:
 {
   // ...rest of manifest configuration
   "eventPersistence": {
-      "isEnabled": true,
+    "isEnabled": true
   }
 }
 ```
@@ -512,16 +591,17 @@ See example in the `sample-use-meeting` plugin here in this repository. It is as
 
 ```ts
 useEffect(() => {
-    setInterval(() => {
-      pluginLogger.info('persisting event');
-      pluginApi.persistEvent('eventFromUseMeetingSample', { foo: 'bar' });
-    }, 5000);
-  }, []);
+  setInterval(() => {
+    pluginLogger.info('persisting event');
+    pluginApi.persistEvent('eventFromUseMeetingSample', { foo: 'bar' });
+  }, 5000);
+}, []);
 ```
 
 After the meeting is ended (considering it has been recorded), one can simply do the following steps to see the events:
 
 In the server terminal run:
+
 ```bash
 sudo updatedb
 vi $(locate events.xml | grep <meeting-id>)
@@ -581,10 +661,10 @@ At this point, another folder will be created into the plugin directory called "
 module.exports = {
   // ... Other configurations
   output: {
-    filename: 'MyPlugin.js'
-  }
+    filename: 'MyPlugin.js',
+  },
   // ... Other configurations
-}
+};
 ```
 
 **Does the builded plugin need to be in the same BBB server?**
