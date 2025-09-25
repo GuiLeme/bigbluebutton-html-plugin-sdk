@@ -52,14 +52,18 @@ export interface DataChannelEntryResponseType<T> {
   createdAt: string;
   channelName: string;
   subChannelName: string;
+  /**
+   * @deprecated use {@link createdBy} instead.
+   */
   fromUserId: string;
+  createdBy: string;
   entryId: string;
   payloadJson: T;
   pluginName: string;
   toRoles: string[];
 }
 
-export interface UseDataChannelReturnType <T>{
+export interface UseDataChannelReturnType<T> {
   data: GraphqlResponseWrapper<DataChannelEntryResponseType<T>[]>,
   pushEntry: PushEntryFunction<T>,
   deleteEntry: DeleteEntryFunction,
