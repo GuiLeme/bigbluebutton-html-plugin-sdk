@@ -6,10 +6,23 @@ import { PluginProvidedUiItemDescriptor } from '../base';
 export interface MediaAreaInterface extends PluginProvidedUiItemDescriptor{
 }
 
+export interface MediaAreaButtonIconSvg {
+  svgContent: React.SVGProps<SVGSVGElement>;
+}
+
+export interface MediaAreaButtonIconName {
+  /**
+   * Default icon name defined by BBB (see options there).
+   */
+  iconName: string;
+}
+
+export type MediaAreaIconType = MediaAreaButtonIconSvg | MediaAreaButtonIconName
+
 export interface MediaAreaOptionProps {
   id?: string;
   label: string;
-  icon: string;
+  icon: MediaAreaIconType;
   tooltip: string;
   dataTest?: string;
   allowed: boolean;
