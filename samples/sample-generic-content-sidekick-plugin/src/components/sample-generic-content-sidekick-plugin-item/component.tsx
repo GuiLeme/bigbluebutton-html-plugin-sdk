@@ -67,7 +67,7 @@ function SampleGenericContentSidekickPlugin(
       }),
       new MediaAreaOption({
         label: 'Click to increment the badge',
-        icon: 'user',
+        icon: { iconName: 'user' },
         tooltip: 'Use it to enable the badge',
         allowed: true,
         onClick: () => {
@@ -80,7 +80,7 @@ function SampleGenericContentSidekickPlugin(
       }),
       new MediaAreaOption({
         label: 'Click to change menu name',
-        icon: 'user',
+        icon: { iconName: 'user' },
         tooltip: 'Use it to change menu name',
         allowed: true,
         onClick: () => {
