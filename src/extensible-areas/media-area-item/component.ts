@@ -1,6 +1,6 @@
 import { MediaAreaItemType } from './enums';
 import {
-  MediaAreaInterface, MediaAreaOptionProps,
+  MediaAreaInterface, MediaAreaOptionProps, MediaAreaIconType,
 } from './types';
 
 // MediaArea Extensible Area
@@ -12,7 +12,7 @@ export class MediaAreaOption implements MediaAreaInterface {
 
   label: string;
 
-  icon: string;
+  icon: MediaAreaIconType;
 
   tooltip: string;
 
@@ -26,7 +26,8 @@ export class MediaAreaOption implements MediaAreaInterface {
    * Returns the option for the media area
    *
    * @param label - label to be displayed on the option
-   * @param icon - icon to be displayed on the option
+   * @param icon - icon to be used in the button for the action bar - it can be the iconName
+   * from BigbBlueButton or an svg
    * @param tooltip - tooltip to be displayed when hovering over option
    * @param dataTest - string attribute to be used for testing
    * @param allowed - boolean indicating whether the option should be displayed
@@ -35,7 +36,7 @@ export class MediaAreaOption implements MediaAreaInterface {
    * @returns the option to be displayed in the media area
    */
   constructor({
-    id, label = '', icon = '', tooltip = '', dataTest = '', allowed = true, onClick = () => {},
+    id, label = '', icon, tooltip = '', dataTest = '', allowed = true, onClick = () => {},
   }: MediaAreaOptionProps) {
     if (id) {
       this.id = id;

@@ -33,7 +33,7 @@ function SampleServerCommandsPluginItem(
       }),
       new MediaAreaOption({
         label: 'Send chat message',
-        icon: 'chat',
+        icon: { iconName: 'chat' },
         tooltip: 'This is a button to send chat message',
         allowed: true,
         onClick: () => {
@@ -45,7 +45,7 @@ function SampleServerCommandsPluginItem(
       }),
       new MediaAreaOption({
         label: 'Send custom chat message',
-        icon: 'chat',
+        icon: { iconName: 'chat' },
         tooltip: 'This is a button to send chat message',
         allowed: true,
         onClick: () => {

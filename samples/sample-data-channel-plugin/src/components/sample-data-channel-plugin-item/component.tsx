@@ -32,7 +32,7 @@ function SampleDataChannelPlugin(
     pluginApi.setMediaAreaItems([
       new MediaAreaOption({
         label: 'Click to increment data-channel',
-        icon: 'user',
+        icon: { iconName: 'user' },
         tooltip: 'this is a button injected by plugin',
         dataTest: 'incrementDataChannelButtonPlugin',
         allowed: true,
@@ -56,7 +56,7 @@ function SampleDataChannelPlugin(
         },
       }), new MediaAreaOption({
         label: 'Click wipe data off data-channel',
-        icon: 'user',
+        icon: { iconName: 'user' },
         tooltip: 'this is a button injected by plugin',
         allowed: true,
         dataTest: 'wipeDataOffButtonPlugin',

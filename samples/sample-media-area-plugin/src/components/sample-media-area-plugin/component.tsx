@@ -31,7 +31,7 @@ function SampleMediaAreaPlugin(
         }),
         new MediaAreaOption({
           label: 'Button injected by plugin',
-          icon: 'copy',
+          icon: { iconName: 'copy' },
           tooltip: 'this is a button injected by plugin',
           allowed: true,
           dataTest: 'mediaAreaOption',
@@ -41,7 +41,7 @@ function SampleMediaAreaPlugin(
         }),
         new MediaAreaOption({
           label: 'Smart layout',
-          icon: 'copy',
+          icon: { iconName: 'copy' },
           tooltip: 'this is a button injected by plugin',
           allowed: true,
           onClick: () => {
@@ -52,7 +52,7 @@ function SampleMediaAreaPlugin(
         }),
         new MediaAreaOption({
           label: 'Media Only',
-          icon: 'copy',
+          icon: { iconName: 'copy' },
           tooltip: 'this is a button injected by plugin',
           allowed: true,
           onClick: () => {
@@ -63,7 +63,7 @@ function SampleMediaAreaPlugin(
         }),
         new MediaAreaOption({
           label: 'Participants and chat Only',
-          icon: 'copy',
+          icon: { iconName: 'copy' },
           tooltip: 'this is a button injected by plugin',
           allowed: true,
           onClick: () => {
@@ -74,7 +74,7 @@ function SampleMediaAreaPlugin(
         }),
         new MediaAreaOption({
           label: 'Presentation Only',
-          icon: 'copy',
+          icon: { iconName: 'copy' },
           tooltip: 'this is a button injected by plugin',
           allowed: true,
           onClick: () => {
@@ -85,7 +85,7 @@ function SampleMediaAreaPlugin(
         }),
         new MediaAreaOption({
           label: 'Cameras Only',
-          icon: 'copy',
+          icon: { iconName: 'copy' },
           tooltip: 'this is a button injected by plugin',
           allowed: true,
           onClick: () => {
@@ -96,7 +96,7 @@ function SampleMediaAreaPlugin(
         }),
         new MediaAreaOption({
           label: 'Plugins only',
-          icon: 'copy',
+          icon: { iconName: 'copy' },
           tooltip: 'this is a button injected by plugin',
           allowed: true,
           onClick: () => {
