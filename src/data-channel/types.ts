@@ -50,12 +50,9 @@ export interface MapOfPushEntryFunctions {
 
 export interface DataChannelEntryResponseType<T> {
   createdAt: string;
+  updatedAt: string;
   channelName: string;
   subChannelName: string;
-  /**
-   * @deprecated use {@link createdBy} instead.
-   */
-  fromUserId: string;
   createdBy: string;
   entryId: string;
   payloadJson: T;
