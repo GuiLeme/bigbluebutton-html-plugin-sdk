@@ -4,15 +4,15 @@ import { useEffect } from 'react';
 import {
   BbbPluginSdk,
   PluginApi,
-  pluginLogger,
   UserCameraDropdownOption,
   UserCameraDropdownSeparator,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleUserCameraDropdownPluginProps, VideoStreamsSubscriptionResultType } from './types';
 import { VIDEO_STREAMS_SUBSCRIPTION } from '../queries';
+import { pluginLogger } from '..';
 
 function SampleUserCameraDropdownPlugin({ pluginUuid: uuid }: SampleUserCameraDropdownPluginProps):
-React.ReactElement<SampleUserCameraDropdownPluginProps> {
+  React.ReactElement<SampleUserCameraDropdownPluginProps> {
   BbbPluginSdk.initialize(uuid);
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);
 

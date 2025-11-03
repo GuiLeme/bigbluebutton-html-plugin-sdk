@@ -1,8 +1,8 @@
 import {
   PluginApi,
-  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { useEffect } from 'react';
+import { pluginLogger } from '../..';
 
 interface UserAggregatorQueryProps {
   pluginApi: PluginApi;

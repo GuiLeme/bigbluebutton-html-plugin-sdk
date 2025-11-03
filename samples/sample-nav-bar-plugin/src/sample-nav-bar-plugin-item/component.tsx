@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 
 import {
   BbbPluginSdk, NavBarButton, NavBarInfo, NavBarItemPosition, PluginApi,
-  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleNavBarPluginProps } from './types';
+import { pluginLogger } from '..';
 
 function SampleNavBarPlugin({ pluginUuid: uuid }: SampleNavBarPluginProps): React.ReactElement {
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);

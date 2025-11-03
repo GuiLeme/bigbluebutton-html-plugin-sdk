@@ -5,9 +5,10 @@ import {
   PluginApi,
   ActionButtonDropdownSeparator,
   ActionButtonDropdownOption,
-  pluginLogger,
   ChangeEnforcedLayoutTypeEnum,
 } from 'bigbluebutton-html-plugin-sdk';
+
+import { pluginLogger } from '../../index';
 
 import { SampleActionButtonDropdownPluginProps } from './types';
 

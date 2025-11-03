@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 
 import {
   BbbPluginSdk, CameraSettingsDropdownOption, CameraSettingsDropdownSeparator, PluginApi,
-  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleCameraSettingsDropdownPluginProps } from './types';
+import { pluginLogger } from '../..';
 
 function SampleCameraSettingsDropdownPlugin(
   { pluginUuid: uuid }: SampleCameraSettingsDropdownPluginProps,

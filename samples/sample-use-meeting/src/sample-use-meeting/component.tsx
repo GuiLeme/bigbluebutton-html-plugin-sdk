@@ -2,12 +2,12 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import {
   BbbPluginSdk, PluginApi,
-  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleUseMeetingPluginProps } from './types';
+import { pluginLogger } from '..';
 
 function SampleUseMeetingPlugin({ pluginUuid: uuid }: SampleUseMeetingPluginProps):
-React.ReactElement<SampleUseMeetingPluginProps> {
+  React.ReactElement<SampleUseMeetingPluginProps> {
   BbbPluginSdk.initialize(uuid);
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);
   const meetingInfoGraphqlResponse = pluginApi.useMeeting();
