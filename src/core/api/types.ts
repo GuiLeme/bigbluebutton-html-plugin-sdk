@@ -1,3 +1,4 @@
+import { Logger } from 'browser-bunyan';
 import { UiCommands } from '../../ui-commands/types';
 import { UseChatMessageDomElementsFunction } from '../../dom-element-manipulation/chat/message/types';
 import { ActionButtonDropdownInterface } from '../../extensible-areas/action-button-dropdown-item/types';
@@ -308,6 +309,30 @@ export interface PluginApi {
    *
    */
   persistEvent?: PersistEventFunction;
+  /**
+   * Function used to log in the console.
+   */
+  logger: Logger;
+}
+
+export interface Console {
+  enabled: boolean
+  level: string
+}
+
+export interface External {
+  enabled: boolean
+  level: string
+  url: string
+  method: string
+  throttleInterval: number
+  flushOnClose: boolean
+  logTag: string
+}
+
+export interface ClientLog {
+  console: Console
+  external: External
 }
 
 export interface MeetingClientSettings {
@@ -315,6 +340,7 @@ export interface MeetingClientSettings {
     app: {
       bbbWebBase: string;
     }
+    clientLog: ClientLog;
   }
 }
 
