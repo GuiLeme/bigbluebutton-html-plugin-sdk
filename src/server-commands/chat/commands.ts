@@ -3,9 +3,36 @@ import { ChatCommandsEnum } from './enum';
 import {
   ChatSendMessageCommandArguments,
   ChatSendMessageEventArguments,
+  SendChatMessageArguments,
+  CreatePrivateChatCommandArguments,
 } from './types';
 
 export const chat = (pluginName: string) => ({
+  /**
+   * Sends chat message to specific chat.
+   *
+   * @param SendChatMessageArguments the text, custom metadata(optional), optional flag
+   *  to tell whether or not the message will be custom, and the chatId;
+   *  to be sent in the public chat message.
+   * Refer to {@link SendChatMessageArguments} to understand the argument
+   *  structure.
+   */
+  sendChatMessage: (
+    chatMessageArguments: SendChatMessageArguments,
+  ) => {
+    window.dispatchEvent(
+      new CustomEvent<
+        ChatSendMessageEventArguments
+      >(ChatCommandsEnum.SEND_MESSAGE, {
+        detail: {
+          pluginName,
+          ...chatMessageArguments,
+          custom: chatMessageArguments?.custom || false,
+        },
+      }),
+    );
+  },
+
   /**
    * Sends chat message to the public chat.
    *
@@ -52,6 +79,27 @@ export const chat = (pluginName: string) => ({
           pluginName,
           custom: true,
           ...chatSendCustomPublicChatMessageCommandArguments,
+        },
+      }),
+    );
+  },
+
+  /**
+   * Creates a private chat with a specific user.
+   *
+   * @param createPrivateChatCommandArguments the userId of the user to create a private chat with.
+   * Refer to {@link CreatePrivateChatCommandArguments} to understand the argument
+   *  structure.
+   */
+  createPrivateChat: (
+    createPrivateChatCommandArguments: CreatePrivateChatCommandArguments,
+  ) => {
+    window.dispatchEvent(
+      new CustomEvent<
+        CreatePrivateChatCommandArguments
+      >(ChatCommandsEnum.CREATE_PRIVATE_CHAT, {
+        detail: {
+          ...createPrivateChatCommandArguments,
         },
       }),
     );
