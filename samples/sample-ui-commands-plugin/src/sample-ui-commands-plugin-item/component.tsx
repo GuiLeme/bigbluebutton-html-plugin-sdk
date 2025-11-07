@@ -5,7 +5,6 @@ import {
   BbbPluginSdk,
   PluginApi,
   ActionButtonDropdownOption,
-  ChatFormUiDataNames,
 } from 'bigbluebutton-html-plugin-sdk';
 import { PrivateChatSubscriptionResult, SampleUiCommandsPluginProps } from './types';
 import { GET_CHATS_SUBSCRIPTION } from './query';
@@ -20,15 +19,15 @@ function SampleUiCommandsPlugin(
   const [targetUserId, setTargetUserId] = useState<string | null>(null);
 
   // Get all users in the meeting
-  const { data: usersData } = pluginApi.useUsersBasicInfo?.();
+  const { data: usersData } = pluginApi.useUsersBasicInfo();
 
   // Get current user to exclude from random selection
-  const { data: currentUser } = pluginApi.useCurrentUser?.();
+  const { data: currentUser } = pluginApi.useCurrentUser();
 
   // Subscribe to private chats to get chatId after creating
   const { data: privateChatsData } = pluginApi.useCustomSubscription?.<
     PrivateChatSubscriptionResult
-  >(GET_CHATS_SUBSCRIPTION);
+  >(GET_CHATS_SUBSCRIPTION) || { data: undefined };
 
   // Monitor for the chatId of the private chat we created
   useEffect(() => {
@@ -46,7 +45,7 @@ function SampleUiCommandsPlugin(
     if (privateChatId) {
       // Open the private chat panel
       pluginApi.uiCommands?.chat.form.open({
-        chatId: privateChatId
+        chatId: privateChatId,
       });
 
       // Fill the private chat form with a hello world message
