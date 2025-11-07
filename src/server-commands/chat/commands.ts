@@ -13,7 +13,6 @@ export const chat = (pluginName: string) => ({
    *
    * @param SendChatMessageArguments the text, custom metadata(optional), optional flag
    *  to tell whether or not the message will be custom, and the chatId;
-   *  to be sent in the public chat message.
    * Refer to {@link SendChatMessageArguments} to understand the argument
    *  structure.
    */
