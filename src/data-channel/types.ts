@@ -50,16 +50,17 @@ export interface MapOfPushEntryFunctions {
 
 export interface DataChannelEntryResponseType<T> {
   createdAt: string;
+  updatedAt: string;
   channelName: string;
   subChannelName: string;
-  fromUserId: string;
+  createdBy: string;
   entryId: string;
   payloadJson: T;
   pluginName: string;
   toRoles: string[];
 }
 
-export interface UseDataChannelReturnType <T>{
+export interface UseDataChannelReturnType<T> {
   data: GraphqlResponseWrapper<DataChannelEntryResponseType<T>[]>,
   pushEntry: PushEntryFunction<T>,
   deleteEntry: DeleteEntryFunction,
