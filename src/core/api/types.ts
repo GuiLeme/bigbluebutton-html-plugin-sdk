@@ -312,7 +312,7 @@ export interface PluginApi {
   /**
    * Function used to log in the console.
    */
-  logger: Logger;
+  logger?: Logger;
 }
 
 export interface Console {

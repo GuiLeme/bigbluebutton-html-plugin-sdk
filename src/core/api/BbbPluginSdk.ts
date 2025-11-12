@@ -56,7 +56,6 @@ import { useCustomQuery } from '../../data-consumption/domain/shared/custom-quer
 import { UseCustomQueryFunction } from '../../data-consumption/domain/shared/custom-query/types';
 import { useCustomMutation } from '../../data-creation/hook';
 import { UseCustomMutationFunction } from '../../data-creation/types';
-import pluginLogger from '../../utils/logger/logger';
 
 declare const window: PluginBrowserWindow;
 
@@ -203,7 +202,6 @@ export abstract class BbbPluginSdk {
           '': () => { },
         },
         getSessionToken: () => getSessionToken(),
-        logger: pluginLogger,
         pluginName,
         localesBaseUrl,
       };

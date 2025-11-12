@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
+import { pluginLogger } from '../../../../utils';
 import { IntlMessages, UseLocaleMessagesProps } from './types';
 import { fetchLocaleAndStore, mergeLocaleMessages, useGetNormalizedLocale } from './utils';
 
 function useLocaleMessagesAuxiliary(
   { pluginApi, fetchConfigs }: UseLocaleMessagesProps,
 ): IntlMessages {
-  const { logger: pluginLogger } = pluginApi;
   const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState<Record<string, string>>({});
   const [fallbackMessages, setFallbackMessages] = useState<Record<string, string>>();
