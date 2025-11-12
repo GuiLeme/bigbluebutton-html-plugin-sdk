@@ -1,4 +1,4 @@
-import { PluginApi } from '../../../../core/api/types';
+import { PluginApi } from '../../../api/types';
 
 export interface UseLocaleMessagesProps {
   pluginApi: PluginApi;
