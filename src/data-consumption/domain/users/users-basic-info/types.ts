@@ -5,6 +5,7 @@ export interface UsersBasicInfoData {
   extId: string;
   name: string;
   nameSortable: string;
+  bot: boolean;
   /**
    * @deprecated use {@link isModerator} instead
    */
