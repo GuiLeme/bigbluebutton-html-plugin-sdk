@@ -208,10 +208,6 @@ export abstract class BbbPluginSdk {
         localesBaseUrl,
       };
     }
-    if (!window.bbb_plugins[uuid].logger) {
-      window.bbb_plugins[uuid].logger = pluginLogger;
-    }
-
     return window.bbb_plugins[uuid];
   }
 }
