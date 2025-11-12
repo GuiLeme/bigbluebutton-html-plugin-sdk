@@ -6,9 +6,9 @@ import {
   PluginApi,
   ScreenshareHelperItemPosition,
   ScreenshareHelperButton,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleUserCameraDropdownPluginProps } from './types';
-import { pluginLogger } from '..';
 
 function SampleUserCameraDropdownPlugin({ pluginUuid: uuid }: SampleUserCameraDropdownPluginProps):
   React.ReactElement<SampleUserCameraDropdownPluginProps> {

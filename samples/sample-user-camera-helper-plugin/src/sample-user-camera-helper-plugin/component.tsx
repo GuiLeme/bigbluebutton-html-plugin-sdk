@@ -6,10 +6,10 @@ import {
   PluginApi,
   UserCameraHelperButton,
   UserCameraHelperItemPosition,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleUserCameraHelperPluginProps, VideoStreamsSubscriptionResultType } from './types';
 import { VIDEO_STREAMS_SUBSCRIPTION } from '../queries';
-import { pluginLogger } from '..';
 
 function SampleUserCameraHelperPlugin({ pluginUuid: uuid }: SampleUserCameraHelperPluginProps):
   React.ReactElement<SampleUserCameraHelperPluginProps> {

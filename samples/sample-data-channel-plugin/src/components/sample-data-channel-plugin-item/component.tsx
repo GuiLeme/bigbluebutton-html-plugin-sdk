@@ -4,9 +4,9 @@ import { useEffect } from 'react';
 import {
   BbbPluginSdk, PluginApi, ActionButtonDropdownOption,
   RESET_DATA_CHANNEL, DataChannelTypes,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleDataChannelPluginProps } from './types';
-import { pluginLogger } from '../..';
 
 interface DataExampleType {
   first_example_field: number;

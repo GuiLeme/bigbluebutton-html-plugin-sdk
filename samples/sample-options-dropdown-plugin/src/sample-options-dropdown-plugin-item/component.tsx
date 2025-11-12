@@ -3,10 +3,10 @@ import { useEffect } from 'react';
 
 import {
   BbbPluginSdk, OptionsDropdownOption, OptionsDropdownSeparator, PluginApi,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleOptionsDropdownPluginProps } from './types';
 import { UserAggregatorQuery } from './user-aggregator-query/component';
-import { pluginLogger } from '..';
 
 interface MutationVariablesType {
   reactionEmoji: string,

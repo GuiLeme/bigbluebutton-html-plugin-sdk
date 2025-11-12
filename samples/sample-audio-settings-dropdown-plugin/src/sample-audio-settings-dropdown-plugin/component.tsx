@@ -5,9 +5,8 @@ import {
   AudioSettingsDropdownOption,
   AudioSettingsDropdownSeparator,
   BbbPluginSdk, PluginApi,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
-
-import { pluginLogger } from '..';
 
 import { SampleAudioSettingsDropdownPluginProps } from './types';
 

@@ -7,9 +7,9 @@ import {
   PresentationDropdownInterface,
   PresentationDropdownOption,
   PresentationDropdownSeparator,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SamplePresentationDropdownPluginProps } from './types';
-import { pluginLogger } from '../..';
 
 function SamplePresentationDropdownPlugin(
   { pluginUuid: uuid }: SamplePresentationDropdownPluginProps,

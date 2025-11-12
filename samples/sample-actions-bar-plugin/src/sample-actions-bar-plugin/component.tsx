@@ -5,9 +5,9 @@ import {
   ActionsBarButton, ActionsBarInterface, ActionsBarPosition, ActionsBarSelector,
   ActionsBarSeparator, ActionsBarToggleGroup, BbbPluginSdk, GraphqlResponseWrapper,
   PluginApi, UsersBasicInfoResponseFromGraphqlWrapper,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 
-import { pluginLogger } from '../index';
 import { SampleActionsBarPluginProps } from './types';
 
 function SampleActionsBarPlugin({

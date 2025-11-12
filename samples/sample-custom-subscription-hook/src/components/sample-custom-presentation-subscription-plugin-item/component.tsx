@@ -7,9 +7,9 @@ import {
   PresentationToolbarButton,
   PresentationToolbarInterface,
   CustomSubscriptionHookOptions,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { PresentationFromGraphqlWrapper, SampleCustomSubscriptionPluginProps } from './types';
-import { pluginLogger } from '../..';
 
 function SampleCustomPresentationSubscriptionPlugin(
   { pluginUuid: uuid }: SampleCustomSubscriptionPluginProps,

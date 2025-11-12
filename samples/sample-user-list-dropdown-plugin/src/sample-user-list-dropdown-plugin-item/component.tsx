@@ -8,9 +8,9 @@ import {
   UserListDropdownInterface,
   UserListDropdownOption,
   UserListDropdownSeparator,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleUserListDropdownPluginProps } from './types';
-import { pluginLogger } from '..';
 
 function SampleUserListDropdownPlugin({
   pluginUuid: uuid,

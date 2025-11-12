@@ -6,10 +6,10 @@ import {
   PluginApi,
   UserCameraDropdownOption,
   UserCameraDropdownSeparator,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleUserCameraDropdownPluginProps, VideoStreamsSubscriptionResultType } from './types';
 import { VIDEO_STREAMS_SUBSCRIPTION } from '../queries';
-import { pluginLogger } from '..';
 
 function SampleUserCameraDropdownPlugin({ pluginUuid: uuid }: SampleUserCameraDropdownPluginProps):
   React.ReactElement<SampleUserCameraDropdownPluginProps> {
