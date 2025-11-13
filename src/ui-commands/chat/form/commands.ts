@@ -1,12 +1,26 @@
 import { ChatFormCommandsEnum } from './enums';
-import { FillChatFormCommandArguments } from './types';
+import {
+  FillChatFormCommandArguments,
+  OpenChatFormCommandArguments,
+} from './types';
 
 export const form = {
   /**
-   * Opens the public chat panel automatically.
+   * Opens the chat panel automatically. If chatId is provided, opens that specific chat.
+   *
+   * @param openChatCommandArgument Optional chatId to open a specific chat panel.
+   * Refer to {@link OpenChatFormCommandArguments} to understand the argument structure.
    */
-  open: () => {
-    window.dispatchEvent(new Event(ChatFormCommandsEnum.OPEN));
+  open: (openChatCommandArgument?: OpenChatFormCommandArguments) => {
+    if (openChatCommandArgument) {
+      window.dispatchEvent(
+        new CustomEvent<OpenChatFormCommandArguments>(ChatFormCommandsEnum.OPEN, {
+          detail: openChatCommandArgument,
+        }),
+      );
+    } else {
+      window.dispatchEvent(new Event(ChatFormCommandsEnum.OPEN));
+    }
   },
 
   /**
