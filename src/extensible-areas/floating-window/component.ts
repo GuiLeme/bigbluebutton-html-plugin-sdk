@@ -19,6 +19,8 @@ export class FloatingWindow implements FloatingWindowInterface {
 
   boxShadow: string;
 
+  zIndex?: number;
+
   contentFunction: (element: HTMLElement) => ReactDOM.Root;
 
   /**
@@ -32,6 +34,7 @@ export class FloatingWindow implements FloatingWindowInterface {
    * @param movable - tells whether the floating window is movable or static.
    * @param backgroundColor - background color of the floating window.
    * @param boxShadow - box shadow to apply to the floating window
+   * @param zIndex - z-index of the floating window (Optional).
    * @param contentFunction - function that gives the html element to render the content of
    * the floating window. It must return the root element where the floating window was rendered.
    *
@@ -44,6 +47,7 @@ export class FloatingWindow implements FloatingWindowInterface {
     movable,
     backgroundColor,
     boxShadow,
+    zIndex,
     contentFunction,
   }: FloatingWindowProps) {
     if (id) {
@@ -54,6 +58,7 @@ export class FloatingWindow implements FloatingWindowInterface {
     this.movable = movable;
     this.backgroundColor = backgroundColor;
     this.boxShadow = boxShadow;
+    this.zIndex = zIndex;
 
     this.contentFunction = contentFunction;
     this.type = FloatingWindowType.CONTAINER;
