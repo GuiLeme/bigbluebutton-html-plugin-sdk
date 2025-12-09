@@ -37,6 +37,7 @@ import { UseShouldUnmountPluginFunction } from '../auxiliary/plugin-unmount/type
 import { GetUiDataFunction } from '../../ui-data/getters/types';
 import { UseCustomQueryFunction } from '../../data-consumption/domain/shared/custom-query/types';
 import { UseCustomMutationFunction } from '../../data-creation/types';
+import { UseMeetingDataFunction } from '../../data-consumption/domain/meeting/meeting-data/types';
 
 // Setter Functions for the API
 export type SetPresentationToolbarItems = (presentationToolbarItem:
@@ -147,8 +148,21 @@ export interface PluginApi {
    *
    * @returns `GraphqlResponseWrapper` with the CurrentMeeting type.
    *
+   * @deprecated use {@link useMeetingData}
+   *
    */
   useMeeting?: UseMeetingFunction;
+  /**
+   * Returns an object containing the data on the current meeting, i.e. the meeting on which the
+   * plugin is running.
+   *
+   * @param projectionFunction - function to select only specific fields from the
+   *  Meeting type (Optional - if not provided, returns all fields).
+   *
+   * @returns `GraphqlResponseWrapper` with the CurrentMeeting type.
+   *
+   */
+  useMeetingData?: UseMeetingDataFunction;
   /**
    * Returns an object containing the brief data on every user in te meeting.
    *
