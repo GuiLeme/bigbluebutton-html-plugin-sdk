@@ -14,6 +14,8 @@ export class PresentationDropdownOption implements PresentationDropdownInterface
 
   icon: string;
 
+  dataTest: string;
+
   onClick: () => void;
 
   /**
@@ -23,18 +25,20 @@ export class PresentationDropdownOption implements PresentationDropdownInterface
    * @param label - label to be displayed in the presentation dropdown option.
    * @param icon - icon to be displayed in the presentation dropdown.
    * It goes in the left side of it.
+   * @param dataTest - string attribute to be used for testing
    * @param onClick - function to be called when clicking the option.
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, label = '', icon = '', onClick = () => {},
+    id, label = '', icon = '', dataTest = '', onClick = () => {},
   }: PresentationDropdownOptionProps) {
     if (id) {
       this.id = id;
     }
     this.label = label;
     this.icon = icon;
+    this.dataTest = dataTest;
     this.onClick = onClick;
     this.type = PresentationDropdownItemType.OPTION;
   }
@@ -49,13 +53,18 @@ export class PresentationDropdownSeparator implements PresentationDropdownInterf
 
   type: PresentationDropdownItemType;
 
+  dataTest: string;
+
   /**
    * Returns object to be used in the setter for the Presentation Dropdown. In this case,
    * a separator (horizontal thin black line).
-
+   *
+   * @param dataTest - string attribute to be used for testing
+   *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
-  constructor() {
+  constructor({ dataTest = '' } = {}) {
+    this.dataTest = dataTest;
     this.type = PresentationDropdownItemType.SEPARATOR;
   }
 
