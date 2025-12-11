@@ -11,7 +11,7 @@ THIS_SCRIPT_PATH=$(dirname "$(readlink -f "$0")")
 # Calculate the absolute path of the project directory.
 PROJECT_DIR=$(realpath "$THIS_SCRIPT_PATH/..")
 
-for SAMPLE in samples/*/; do
+for SAMPLE in $PROJECT_DIR/samples/*/; do
   if [ -d "$SAMPLE" ]; then
     # Install dependencies if there is no node_modules 
     if [ ! -d "$SAMPLE/node_modules" ]; then
