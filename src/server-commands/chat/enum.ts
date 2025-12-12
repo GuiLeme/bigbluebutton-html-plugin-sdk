@@ -1,3 +1,4 @@
 export enum ChatCommandsEnum {
   SEND_MESSAGE = 'CHAT_SEND_MESSAGE',
+  CREATE_PRIVATE_CHAT = 'CHAT_CREATE_PRIVATE_CHAT',
 }
