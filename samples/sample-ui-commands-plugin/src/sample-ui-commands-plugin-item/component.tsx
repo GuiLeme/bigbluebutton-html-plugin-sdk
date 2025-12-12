@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import {
   BbbPluginSdk,
   PluginApi,
-  ActionButtonDropdownOption,
+  MediaAreaOption,
+  MediaAreaSeparator,
 } from 'bigbluebutton-html-plugin-sdk';
 import { PrivateChatSubscriptionResult, SampleUiCommandsPluginProps } from './types';
 import { GET_CHATS_SUBSCRIPTION } from './query';
@@ -59,13 +60,16 @@ function SampleUiCommandsPlugin(
 
   useEffect(() => {
     // Set up the action button dropdown
-    pluginApi.setActionButtonDropdownItems([
-      new ActionButtonDropdownOption({
+    pluginApi.setMediaAreaItems([
+      new MediaAreaSeparator({
+        dataTest: 'mediaAreaSeparator',
+      }),
+      new MediaAreaOption({
         label: 'Create Private Chat & Say Hello',
-        icon: 'user',
+        icon: { iconName: 'user' },
         tooltip: 'Creates a private chat with a random user and sends Hello World',
-        dataTest: 'createPrivateChatButton',
         allowed: true,
+        dataTest: 'createPrivateChatButton',
         onClick: () => {
           // Get a random user (excluding current user)
           if (usersData?.user && currentUser) {
