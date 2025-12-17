@@ -287,7 +287,7 @@ export interface PluginApi {
    */
   useLocaleMessages?: UseLocaleMessagesFunction
   /**
-   * @deprecated Use {@link learningAnalyticsDashboard.upsertGenericData}  object instead.
+   * @deprecated Use {@link learningAnalyticsDashboard.upsertUserData}  object instead.
    *
    * Send data to the Learning analytics dashboard
    *
