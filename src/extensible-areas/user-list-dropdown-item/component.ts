@@ -25,6 +25,8 @@ export class UserListDropdownOption implements UserListDropdownInterface {
 
   allowed: boolean;
 
+  dataTest: string;
+
   onClick: () => void;
 
   /**
@@ -38,11 +40,12 @@ export class UserListDropdownOption implements UserListDropdownInterface {
    * @param allowed - if false, the use list dropdown  will not appear in the dropdown.
    * @param userId - the userId in which this dropdown option will appear when the user
    * list item is clicked.
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    label = '', icon = '', tooltip = '', allowed = true, onClick = () => {},
+    label = '', icon = '', tooltip = '', allowed = true, dataTest = '', onClick = () => {},
     userId = '',
   }: UserListDropdownOptionProps) {
     this.userId = userId;
@@ -50,6 +53,7 @@ export class UserListDropdownOption implements UserListDropdownInterface {
     this.icon = icon;
     this.tooltip = tooltip;
     this.allowed = allowed;
+    this.dataTest = dataTest;
     this.onClick = onClick;
     this.type = UserListDropdownItemType.OPTION;
   }
@@ -68,18 +72,22 @@ export class UserListDropdownSeparator implements UserListDropdownInterface {
 
   type: UserListDropdownItemType;
 
+  dataTest: string;
+
   /**
    * Returns object to be used in the setter for the User List Dropdown. In this case,
    * a separator.
    *
    * @param userId - the userId in which this dropdown separator will appear when the user
    * list item is clicked.
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
-  constructor({ userId = '', position = UserListDropdownSeparatorPosition.AFTER }: UserListDropdownSeparatorProps) {
+  constructor({ userId = '', position = UserListDropdownSeparatorPosition.AFTER, dataTest = '' }: UserListDropdownSeparatorProps) {
     this.userId = userId;
     this.position = position;
+    this.dataTest = dataTest;
     this.type = UserListDropdownItemType.SEPARATOR;
   }
 
@@ -105,6 +113,8 @@ export class UserListDropdownFixedContentInformation implements UserListDropdown
 
   allowed: boolean;
 
+  dataTest: string;
+
   /**
    * Returns object to be used in the setter for the User List Dropdown. In this case,
    * a button.
@@ -118,12 +128,13 @@ export class UserListDropdownFixedContentInformation implements UserListDropdown
    * @param textColor - Color that the text will have.
    * @param userId - the userId in which this dropdown information will appear when the user
    * list item is clicked.
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
     id, label = '', icon = '', iconRight = '', allowed = true,
-    userId = '', textColor = '',
+    userId = '', textColor = '', dataTest = '',
   }: UserListDropdownFixedContentInformationProps) {
     if (id) {
       this.id = id;
@@ -134,6 +145,7 @@ export class UserListDropdownFixedContentInformation implements UserListDropdown
     this.iconRight = iconRight;
     this.textColor = textColor;
     this.allowed = allowed;
+    this.dataTest = dataTest;
     this.type = UserListDropdownItemType.FIXED_CONTENT_INFORMATION;
   }
 
@@ -152,6 +164,8 @@ implements UserListDropdownInterface {
 
   type: UserListDropdownItemType;
 
+  dataTest: string;
+
   contentFunction: (element: HTMLElement) => void;
 
   /**
@@ -167,18 +181,20 @@ implements UserListDropdownInterface {
    * @param textColor - Color that the text will have.
    * @param userId - the userId in which this dropdown information will appear when the user
    * list item is clicked.
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
     id, contentFunction, allowed = true,
-    userId = '',
+    userId = '', dataTest = '',
   }: UserListDropdownGenericContentInformationProps) {
     if (id) {
       this.id = id;
     }
     this.userId = userId;
     this.allowed = allowed;
+    this.dataTest = dataTest;
     this.contentFunction = contentFunction;
     this.type = UserListDropdownItemType.GENERIC_CONTENT_INFORMATION;
   }
@@ -199,6 +215,8 @@ export class UserListDropdownTitleAction implements UserListDropdownInterface {
 
   tooltip: string;
 
+  dataTest: string;
+
   onClick: (args: UserListDropdownTitleActionOnClickArguments) => void;
 
   /**
@@ -211,11 +229,12 @@ export class UserListDropdownTitleAction implements UserListDropdownInterface {
    * It goes on the left side of it.
    * @param userId - the userId in which this dropdown title action will appear when the user
    * list item is clicked.
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, icon = '', userId = '', onClick, tooltip,
+    id, icon = '', userId = '', onClick, tooltip, dataTest = '',
   }: UserListDropdownTitleActionProps) {
     if (id) {
       this.id = id;
@@ -223,6 +242,7 @@ export class UserListDropdownTitleAction implements UserListDropdownInterface {
     this.userId = userId;
     this.icon = icon;
     this.tooltip = tooltip;
+    this.dataTest = dataTest;
     this.onClick = onClick;
     this.type = UserListDropdownItemType.TITLE_ACTION;
   }

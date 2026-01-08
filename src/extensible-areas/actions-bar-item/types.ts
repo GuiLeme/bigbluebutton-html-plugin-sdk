@@ -5,7 +5,7 @@ import { ActionsBarItemType, ActionsBarPosition } from './enums';
 /**
  * Interface for the generic Actions bar item. (`position` is mandatory)
  */
-export interface ActionsBarInterface extends PluginProvidedUiItemDescriptor{
+export interface ActionsBarInterface extends PluginProvidedUiItemDescriptor {
   position: ActionsBarPosition;
 }
 

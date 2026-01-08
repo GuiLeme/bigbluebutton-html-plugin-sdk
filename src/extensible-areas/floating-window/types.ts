@@ -11,6 +11,7 @@ export interface FloatingWindowProps {
   movable: boolean;
   backgroundColor: string;
   boxShadow: string;
+  dataTest?: string;
   contentFunction: (element: HTMLElement) => ReactDOM.Root;
 }
 

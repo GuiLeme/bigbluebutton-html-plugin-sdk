@@ -15,6 +15,7 @@ export interface NavBarButtonProps {
   hasSeparator: boolean;
   position: NavBarItemPosition;
   onClick: () => void;
+  dataTest?: string;
 }
 
 export interface NavBarInfoProps {
@@ -22,4 +23,5 @@ export interface NavBarInfoProps {
   label: string;
   hasSeparator: boolean;
   position: NavBarItemPosition;
+  dataTest?: string;
 }

@@ -15,6 +15,8 @@ export class UserListItemIcon implements UserListItemAdditionalInformationInterf
 
   icon: string;
 
+  dataTest: string;
+
   /**
    * Returns object to be used in the setter for the User List Item Additional information Item.
    * In this case, a icon.
@@ -23,17 +25,19 @@ export class UserListItemIcon implements UserListItemAdditionalInformationInterf
    * It goes on the left side of it.
    * @param userId - the userId in which this information will appear when the user
    * list item is clicked.
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, icon = '', userId = '',
+    id, icon = '', userId = '', dataTest = '',
   }: UserListItemIconProps) {
     if (id) {
       this.id = id;
     }
     this.icon = icon;
     this.userId = userId;
+    this.dataTest = dataTest;
     this.type = UserListItemAdditionalInformationType.ICON;
   }
 
@@ -53,6 +57,8 @@ export class UserListItemLabel implements UserListItemAdditionalInformationInter
 
   label: string;
 
+  dataTest: string;
+
   /**
    * Returns object to be used in the setter for the User List Item Additional information Item.
    * In this case, a label (Information).
@@ -62,11 +68,12 @@ export class UserListItemLabel implements UserListItemAdditionalInformationInter
    * It goes on the left side of it.
    * @param userId - the userId in which this information will appear when the user
    * list item is clicked.
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, icon = '', userId = '', label = '',
+    id, icon = '', userId = '', label = '', dataTest = '',
   }: UserListItemLabelProps) {
     if (id) {
       this.id = id;
@@ -74,6 +81,7 @@ export class UserListItemLabel implements UserListItemAdditionalInformationInter
     this.icon = icon;
     this.label = label;
     this.userId = userId;
+    this.dataTest = dataTest;
     this.type = UserListItemAdditionalInformationType.LABEL;
   }
 

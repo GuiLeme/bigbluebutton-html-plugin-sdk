@@ -19,11 +19,13 @@ export interface UserListDropdownOptionProps {
   allowed: boolean;
   userId: string;
   onClick: () => void;
+  dataTest?: string;
 }
 
 export interface UserListDropdownSeparatorProps {
   userId: string;
   position?: UserListDropdownSeparatorPosition;
+  dataTest?: string;
 }
 
 export interface UserListDropdownGenericContentInformationProps {
@@ -31,6 +33,7 @@ export interface UserListDropdownGenericContentInformationProps {
   contentFunction: (element: HTMLElement) => void;
   allowed: boolean;
   userId: string;
+  dataTest?: string;
 }
 
 export interface UserListDropdownFixedContentInformationProps {
@@ -41,6 +44,7 @@ export interface UserListDropdownFixedContentInformationProps {
   allowed: boolean;
   userId: string;
   textColor: string;
+  dataTest?: string;
 }
 
 export interface UserListDropdownTitleActionOnClickArguments {
@@ -53,4 +57,5 @@ export interface UserListDropdownTitleActionProps {
   icon: string;
   userId: string;
   onClick: (args: UserListDropdownTitleActionOnClickArguments) => void;
+  dataTest?: string;
 }
