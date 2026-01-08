@@ -20,7 +20,7 @@ export class FloatingWindow implements FloatingWindowInterface {
   boxShadow: string;
 
   zIndex?: number;
-  
+
   dataTest?: string;
 
   contentFunction: (element: HTMLElement) => ReactDOM.Root;

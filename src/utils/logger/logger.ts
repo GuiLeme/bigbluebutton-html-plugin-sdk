@@ -50,6 +50,7 @@ function logWith<T extends keyof Logger>(level: T, ...args: LoggerArgument[]): v
   try {
     method.call(logger, ...args);
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`[pluginLogger.${String(level)}] fallback`, err, ...args);
   }
 }
