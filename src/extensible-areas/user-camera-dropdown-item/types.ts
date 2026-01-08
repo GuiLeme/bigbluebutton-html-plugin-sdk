@@ -22,6 +22,7 @@ export interface UserCameraDropdownInterface extends PluginProvidedUiItemDescrip
 
 export interface UserCameraDropdownSeparatorProps {
   displayFunction?: (args: UserCameraDropdownCallbackFunctionsArguments) => boolean;
+  dataTest?: string;
 }
 
 export interface UserCameraDropdownOptionProps {
@@ -30,4 +31,5 @@ export interface UserCameraDropdownOptionProps {
   icon: string;
   onClick: (args: OnclickFunctionCallbackArguments) => void;
   displayFunction?: (args: UserCameraDropdownCallbackFunctionsArguments) => boolean;
+  dataTest?: string;
 }

@@ -1,3 +1,4 @@
+import { Logger } from 'browser-bunyan';
 import { UiCommands } from '../../ui-commands/types';
 import { UseChatMessageDomElementsFunction } from '../../dom-element-manipulation/chat/message/types';
 import { ActionButtonDropdownInterface } from '../../extensible-areas/action-button-dropdown-item/types';
@@ -27,7 +28,7 @@ import { GenericContentInterface } from '../../extensible-areas/generic-content-
 import { UseUiDataFunction } from '../../ui-data/hooks/types';
 import { UseMeetingFunction } from '../../data-consumption/domain/meeting/from-core/types';
 import { ServerCommands } from '../../server-commands/types';
-import { SendGenericDataForLearningAnalyticsDashboard } from '../../learning-analytics-dashboard/types';
+import { LearningAnalyticsDashboardWrapperObject, SendGenericDataForLearningAnalyticsDashboard } from '../../learning-analytics-dashboard/types';
 import { UseUserCameraDomElementsFunction } from '../../dom-element-manipulation/user-camera/types';
 import { ScreenshareHelperInterface, UserCameraHelperInterface } from '../../extensible-areas';
 import { GetDataSource } from '../../remote-data/types';
@@ -37,6 +38,7 @@ import { UseShouldUnmountPluginFunction } from '../auxiliary/plugin-unmount/type
 import { GetUiDataFunction } from '../../ui-data/getters/types';
 import { UseCustomQueryFunction } from '../../data-consumption/domain/shared/custom-query/types';
 import { UseCustomMutationFunction } from '../../data-creation/types';
+import { UseMeetingDataFunction } from '../../data-consumption/domain/meeting/meeting-data/types';
 
 // Setter Functions for the API
 export type SetPresentationToolbarItems = (presentationToolbarItem:
@@ -147,8 +149,21 @@ export interface PluginApi {
    *
    * @returns `GraphqlResponseWrapper` with the CurrentMeeting type.
    *
+   * @deprecated use {@link useMeetingData}
+   *
    */
   useMeeting?: UseMeetingFunction;
+  /**
+   * Returns an object containing the data on the current meeting, i.e. the meeting on which the
+   * plugin is running.
+   *
+   * @param projectionFunction - function to select only specific fields from the
+   *  Meeting type (Optional - if not provided, returns all fields).
+   *
+   * @returns `GraphqlResponseWrapper` with the CurrentMeeting type.
+   *
+   */
+  useMeetingData?: UseMeetingDataFunction;
   /**
    * Returns an object containing the brief data on every user in te meeting.
    *
@@ -287,12 +302,22 @@ export interface PluginApi {
    */
   useLocaleMessages?: UseLocaleMessagesFunction
   /**
+   * @deprecated Use {@link learningAnalyticsDashboard.upsertUserData}  object instead.
+   *
    * Send data to the Learning analytics dashboard
    *
    * @param data - object in which one can render in the learning analytics dashboard
    *
    */
   sendGenericDataForLearningAnalyticsDashboard?: SendGenericDataForLearningAnalyticsDashboard;
+  /**
+   * Wrapper object of functions related to the learning analytics dashboard.
+   * It contains the following functions:
+   * - deleteGenericData: Deletes a certain entry in the learning dashboard generic-data;
+   * - upsertGenericData: Updates or insert a generic data entry in the learning dashboard;
+   *
+   */
+  learningAnalyticsDashboard?: LearningAnalyticsDashboardWrapperObject;
   /**
    * Fetches external data from pre-defined data-source in manifest.
    *
@@ -308,6 +333,30 @@ export interface PluginApi {
    *
    */
   persistEvent?: PersistEventFunction;
+  /**
+   * Function used to log in the console.
+   */
+  logger?: Logger;
+}
+
+export interface Console {
+  enabled: boolean
+  level: string
+}
+
+export interface External {
+  enabled: boolean
+  level: string
+  url: string
+  method: string
+  throttleInterval: number
+  flushOnClose: boolean
+  logTag: string
+}
+
+export interface ClientLog {
+  console: Console
+  external: External
 }
 
 export interface MeetingClientSettings {
@@ -315,6 +364,7 @@ export interface MeetingClientSettings {
     app: {
       bbbWebBase: string;
     }
+    clientLog: ClientLog;
   }
 }
 

@@ -27,6 +27,7 @@ function SampleGenericContentSidekickPlugin(
         id: GENERIC_CONTENT_BADGE_ID,
         name: 'Generic Content 1',
         section: 'Section 1',
+        dataTest: 'section-1-generic-content-sidekick-abc',
         buttonIcon: 'video',
         open: false,
         contentFunction: (element: HTMLElement) => {

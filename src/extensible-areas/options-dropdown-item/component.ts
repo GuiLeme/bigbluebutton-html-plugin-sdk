@@ -14,6 +14,8 @@ export class OptionsDropdownOption implements OptionsDropdownInterface {
 
   icon: string;
 
+  dataTest: string;
+
   onClick: () => void;
 
   /**
@@ -22,18 +24,20 @@ export class OptionsDropdownOption implements OptionsDropdownInterface {
    *
    * @param label - label to be displayed in the options dropdown option.
    * @param icon - icon to be displayed in the options dropdown. It goes in the left side of it.
+   * @param dataTest - string attribute to be used for testing
    * @param onClick - function to be called when clicking the option.
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, label = '', icon = '', onClick = () => {},
+    id, label = '', icon = '', dataTest = '', onClick = () => {},
   }: OptionsDropdownOptionProps) {
     if (id) {
       this.id = id;
     }
     this.label = label;
     this.icon = icon;
+    this.dataTest = dataTest;
     this.onClick = onClick;
     this.type = OptionsDropdownItemType.OPTION;
   }
@@ -48,13 +52,18 @@ export class OptionsDropdownSeparator implements OptionsDropdownInterface {
 
   type: OptionsDropdownItemType;
 
+  dataTest: string;
+
   /**
    * Returns object to be used in the setter for the Navigation Bar. In this case,
    * a separator.
    *
+   * @param dataTest - string attribute to be used for testing
+   *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
-  constructor() {
+  constructor({ dataTest = '' } = {}) {
+    this.dataTest = dataTest;
     this.type = OptionsDropdownItemType.SEPARATOR;
   }
 

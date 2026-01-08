@@ -17,6 +17,8 @@ export class UserCameraDropdownOption implements UserCameraDropdownInterface {
 
   icon: string;
 
+  dataTest: string;
+
   onClick: (args: OnclickFunctionCallbackArguments) => void;
 
   displayFunction?: (args: UserCameraDropdownCallbackFunctionsArguments) => boolean;
@@ -27,12 +29,13 @@ export class UserCameraDropdownOption implements UserCameraDropdownInterface {
    *
    * @param label - label to be displayed in the option.
    * @param icon - icon to be displayed in the option. Left side of it.
+   * @param dataTest - string attribute to be used for testing
    * @param onClick - function to be called when clicking the button
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5)
    */
   constructor({
-    id, label = '', icon = '', onClick = () => {},
+    id, label = '', icon = '', dataTest = '', onClick = () => {},
     displayFunction = () => true,
   }: UserCameraDropdownOptionProps) {
     if (id) {
@@ -41,6 +44,7 @@ export class UserCameraDropdownOption implements UserCameraDropdownInterface {
     this.displayFunction = displayFunction;
     this.label = label;
     this.icon = icon;
+    this.dataTest = dataTest;
     this.onClick = onClick;
     this.type = UserCameraDropdownItemType.OPTION;
   }
@@ -55,18 +59,23 @@ export class UserCameraDropdownSeparator implements UserCameraDropdownInterface 
 
   type: UserCameraDropdownItemType;
 
+  dataTest: string;
+
   displayFunction?: (args: UserCameraDropdownCallbackFunctionsArguments) => boolean;
 
   /**
    * Returns object to be used in the setter for User Camera Dropdown. In this case
    * a separator.
    *
+   * @param dataTest - string attribute to be used for testing
+   *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5)
    */
   constructor({
-    displayFunction,
+    displayFunction, dataTest = '',
   }: UserCameraDropdownSeparatorProps = { displayFunction: () => true }) {
     this.displayFunction = displayFunction;
+    this.dataTest = dataTest;
     this.type = UserCameraDropdownItemType.SEPARATOR;
   }
 

@@ -11,22 +11,26 @@ export class GenericContentMainArea implements GenericContentInterface {
 
   contentFunction: (element: HTMLElement) => ReactDOM.Root;
 
+  dataTest: string;
+
   /**
    * Returns an object that when used in the setter as a generic content will be rendered
    * over the meeting main presentation.
    *
    * @param contentFunction - function that gives the html element to render the content of
    * the generic component
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, contentFunction,
+    id, contentFunction, dataTest = '',
   }: GenericContentMainAreaProps) {
     if (id) {
       this.id = id;
     }
     this.contentFunction = contentFunction;
+    this.dataTest = dataTest;
     this.type = GenericContentType.MAIN_AREA;
   }
 
@@ -48,6 +52,8 @@ export class GenericContentSidekickArea implements GenericContentInterface {
 
   open: boolean = false;
 
+  dataTest: string;
+
   contentFunction: (element: HTMLElement) => ReactDOM.Root;
 
   /**
@@ -63,11 +69,12 @@ export class GenericContentSidekickArea implements GenericContentInterface {
    *  displayed
    * @param buttonIcon - the icon of the associated sidebar navigation button
    * @param open - boolean value to decide wether to start open
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, contentFunction, name, section, buttonIcon, open,
+    id, contentFunction, name, section, buttonIcon, open, dataTest = '',
   }: GenericContentSidekickAreaProps) {
     if (id) {
       this.id = id;
@@ -76,6 +83,7 @@ export class GenericContentSidekickArea implements GenericContentInterface {
     this.name = name;
     this.section = section;
     this.buttonIcon = buttonIcon;
+    this.dataTest = dataTest;
     this.type = GenericContentType.SIDEKICK_AREA;
     this.open = open;
   }

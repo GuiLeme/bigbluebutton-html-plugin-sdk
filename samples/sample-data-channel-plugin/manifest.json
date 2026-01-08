@@ -1,13 +1,25 @@
 {
   "requiredSdkVersion": "~0.0.59",
   "name": "SampleDataChannelPlugin",
+  "version": "0.0.8-beta1",
   "javascriptEntrypointUrl": "SampleDataChannelPlugin.js",
   "localesBaseUrl": "https://cdn.dominio.com/pluginabc/",
-  "dataChannels":[
+  "loggerSettings": {
+    "console": {
+      "level": "error"
+    }
+  },
+  "dataChannels": [
     {
       "name": "public-channel",
-      "pushPermission": ["moderator","presenter"],
-      "replaceOrDeletePermission": ["moderator", "sender"]
+      "pushPermission": [
+        "moderator",
+        "presenter"
+      ],
+      "replaceOrDeletePermission": [
+        "moderator",
+        "creator"
+      ]
     }
   ]
 }

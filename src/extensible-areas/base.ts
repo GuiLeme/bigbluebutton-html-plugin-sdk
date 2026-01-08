@@ -27,4 +27,5 @@ export interface PluginProvidedUiItemDescriptor {
   id: string;
   type: PluginProvidedUiItemType;
   setItemId: (id: string) => void;
+  dataTest?: string;
 }

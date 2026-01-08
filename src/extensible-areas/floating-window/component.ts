@@ -20,6 +20,8 @@ export class FloatingWindow implements FloatingWindowInterface {
   boxShadow: string;
 
   zIndex?: number;
+  
+  dataTest?: string;
 
   contentFunction: (element: HTMLElement) => ReactDOM.Root;
 
@@ -49,6 +51,7 @@ export class FloatingWindow implements FloatingWindowInterface {
     boxShadow,
     zIndex,
     contentFunction,
+    dataTest,
   }: FloatingWindowProps) {
     if (id) {
       this.id = id;
@@ -56,6 +59,7 @@ export class FloatingWindow implements FloatingWindowInterface {
     this.top = top;
     this.left = left;
     this.movable = movable;
+    this.dataTest = dataTest;
     this.backgroundColor = backgroundColor;
     this.boxShadow = boxShadow;
     this.zIndex = zIndex;
