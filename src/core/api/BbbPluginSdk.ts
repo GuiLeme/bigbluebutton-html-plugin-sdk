@@ -56,6 +56,8 @@ import { useCustomQuery } from '../../data-consumption/domain/shared/custom-quer
 import { UseCustomQueryFunction } from '../../data-consumption/domain/shared/custom-query/types';
 import { useCustomMutation } from '../../data-creation/hook';
 import { UseCustomMutationFunction } from '../../data-creation/types';
+import { UseMeetingDataFunction } from '../../data-consumption/domain/meeting/meeting-data/types';
+import { useMeetingData } from '../../data-consumption/domain/meeting/meeting-data/hooks';
 
 declare const window: PluginBrowserWindow;
 
@@ -98,6 +100,7 @@ export abstract class BbbPluginSdk {
     pluginApi.useLoadedUserList = (() => useLoadedUserList()) as UseLoadedUserListFunction;
     pluginApi.useCurrentUser = (() => useCurrentUser()) as UseCurrentUserFunction;
     pluginApi.useMeeting = (() => useMeeting()) as UseMeetingFunction;
+    pluginApi.useMeetingData = useMeetingData as UseMeetingDataFunction;
     pluginApi.useUsersBasicInfo = (() => useUsersBasicInfo()) as UseUsersBasicInfoFunction;
     pluginApi.useTalkingIndicator = (() => useTalkingIndicator()) as UseTalkingIndicatorFunction;
     pluginApi.getJoinUrl = (params) => getJoinUrl(params);
