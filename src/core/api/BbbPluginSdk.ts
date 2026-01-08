@@ -46,7 +46,12 @@ import { useUiData } from '../../ui-data/hooks/hooks';
 import { UseMeetingFunction } from '../../data-consumption/domain/meeting/from-core/types';
 import { useMeeting } from '../../data-consumption/domain/meeting/from-core/hooks';
 import { serverCommands } from '../../server-commands/commands';
-import { sendGenericDataForLearningAnalyticsDashboard } from '../../learning-analytics-dashboard/hooks';
+import {
+  clearAllUsersData,
+  deleteUserData,
+  sendGenericDataForLearningAnalyticsDashboard,
+  upsertUserData,
+} from '../../learning-analytics-dashboard/commands';
 import { GenericDataForLearningAnalyticsDashboard } from '../../learning-analytics-dashboard/types';
 import { getRemoteData } from '../../remote-data/utils';
 import { persistEventFunctionWrapper } from '../../event-persistence/hooks';
@@ -134,6 +139,22 @@ export abstract class BbbPluginSdk {
       pluginApi.sendGenericDataForLearningAnalyticsDashboard = (
         data: GenericDataForLearningAnalyticsDashboard,
       ) => sendGenericDataForLearningAnalyticsDashboard(data, pluginName);
+      pluginApi.learningAnalyticsDashboard = {
+        upsertUserData: (data, targetUserId) => upsertUserData(
+          data,
+          pluginName,
+          targetUserId,
+        ),
+        deleteUserData: (data, targetUserId) => deleteUserData(
+          data,
+          pluginName,
+          targetUserId,
+        ),
+        clearAllUsersData: (cardTitle?: string) => clearAllUsersData(
+          pluginName,
+          cardTitle,
+        ),
+      };
       pluginApi.getRemoteData = (
         dataSourceName: string,
       ) => getRemoteData(dataSourceName, pluginName);
