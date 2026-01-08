@@ -7,6 +7,7 @@ import {
   PluginApi, UsersBasicInfoResponseFromGraphqlWrapper,
   pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
+
 import { SampleActionsBarPluginProps } from './types';
 
 function SampleActionsBarPlugin({

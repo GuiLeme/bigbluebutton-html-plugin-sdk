@@ -4,14 +4,14 @@ import { useEffect } from 'react';
 import {
   BbbPluginSdk,
   PluginApi,
-  pluginLogger,
   ScreenshareHelperItemPosition,
   ScreenshareHelperButton,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleUserCameraDropdownPluginProps } from './types';
 
 function SampleUserCameraDropdownPlugin({ pluginUuid: uuid }: SampleUserCameraDropdownPluginProps):
-React.ReactElement<SampleUserCameraDropdownPluginProps> {
+  React.ReactElement<SampleUserCameraDropdownPluginProps> {
   BbbPluginSdk.initialize(uuid);
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);
 

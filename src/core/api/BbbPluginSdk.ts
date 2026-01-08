@@ -209,7 +209,6 @@ export abstract class BbbPluginSdk {
         localesBaseUrl,
       };
     }
-
     return window.bbb_plugins[uuid];
   }
 }

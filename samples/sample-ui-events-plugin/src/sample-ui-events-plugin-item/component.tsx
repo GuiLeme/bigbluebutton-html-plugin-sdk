@@ -9,7 +9,7 @@ import {
 import { SampleUiEventsPluginProps } from './types';
 
 function SampleUiEventsPlugin({ pluginUuid: uuid }: SampleUiEventsPluginProps):
-React.ReactElement<SampleUiEventsPluginProps> {
+  React.ReactElement<SampleUiEventsPluginProps> {
   BbbPluginSdk.initialize(uuid);
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);
   const userListOpened = pluginApi

@@ -4,10 +4,10 @@ import { useEffect } from 'react';
 import {
   BbbPluginSdk,
   PluginApi,
-  pluginLogger,
   PresentationDropdownInterface,
   PresentationDropdownOption,
   PresentationDropdownSeparator,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SamplePresentationDropdownPluginProps } from './types';
 
