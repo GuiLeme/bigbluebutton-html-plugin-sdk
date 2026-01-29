@@ -18,14 +18,14 @@ function SampleAppsGalleryItemPlugin({
 
   useEffect(() => {
     const buttonToUserListItem:
-          AppsGalleryInterface = new AppsGalleryEntry({
-            icon: 'user',
-            name: 'Sample Apps Gallery Entry',
-            onClick: () => {
-              pluginLogger.info('The apps gallery item from plugin was clicked');
-              setModalOpen(true);
-            },
-          });
+      AppsGalleryInterface = new AppsGalleryEntry({
+        icon: 'user',
+        name: 'Sample Apps Gallery Entry',
+        onClick: () => {
+          pluginLogger.info('The apps gallery item from plugin was clicked');
+          setModalOpen(true);
+        },
+      });
 
     pluginApi.setAppsGalleryItems([
       buttonToUserListItem,

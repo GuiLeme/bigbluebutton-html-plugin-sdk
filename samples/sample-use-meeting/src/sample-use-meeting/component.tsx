@@ -7,7 +7,7 @@ import {
 import { SampleUseMeetingPluginProps } from './types';
 
 function SampleUseMeetingPlugin({ pluginUuid: uuid }: SampleUseMeetingPluginProps):
-React.ReactElement<SampleUseMeetingPluginProps> {
+  React.ReactElement<SampleUseMeetingPluginProps> {
   BbbPluginSdk.initialize(uuid);
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);
   const meetingInfoGraphqlResponse = pluginApi.useMeeting();

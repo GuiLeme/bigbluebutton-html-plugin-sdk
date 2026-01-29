@@ -41,4 +41,5 @@ export interface UserCameraHelperButtonProps {
   displayFunction?: (args: UserCameraHelperCallbackFunctionArguments) => boolean;
   position: UserCameraHelperItemPosition;
   onClick: (args: UserCameraHelperButtonOnclickCallback) => void;
+  dataTest?: string;
 }

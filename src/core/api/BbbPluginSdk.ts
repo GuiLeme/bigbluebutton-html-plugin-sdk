@@ -46,7 +46,12 @@ import { useUiData } from '../../ui-data/hooks/hooks';
 import { UseMeetingFunction } from '../../data-consumption/domain/meeting/from-core/types';
 import { useMeeting } from '../../data-consumption/domain/meeting/from-core/hooks';
 import { serverCommands } from '../../server-commands/commands';
-import { sendGenericDataForLearningAnalyticsDashboard } from '../../learning-analytics-dashboard/hooks';
+import {
+  clearAllUsersData,
+  deleteUserData,
+  sendGenericDataForLearningAnalyticsDashboard,
+  upsertUserData,
+} from '../../learning-analytics-dashboard/commands';
 import { GenericDataForLearningAnalyticsDashboard } from '../../learning-analytics-dashboard/types';
 import { getRemoteData } from '../../remote-data/utils';
 import { persistEventFunctionWrapper } from '../../event-persistence/hooks';
@@ -56,6 +61,8 @@ import { useCustomQuery } from '../../data-consumption/domain/shared/custom-quer
 import { UseCustomQueryFunction } from '../../data-consumption/domain/shared/custom-query/types';
 import { useCustomMutation } from '../../data-creation/hook';
 import { UseCustomMutationFunction } from '../../data-creation/types';
+import { UseMeetingDataFunction } from '../../data-consumption/domain/meeting/meeting-data/types';
+import { useMeetingData } from '../../data-consumption/domain/meeting/meeting-data/hooks';
 
 declare const window: PluginBrowserWindow;
 
@@ -98,6 +105,7 @@ export abstract class BbbPluginSdk {
     pluginApi.useLoadedUserList = (() => useLoadedUserList()) as UseLoadedUserListFunction;
     pluginApi.useCurrentUser = (() => useCurrentUser()) as UseCurrentUserFunction;
     pluginApi.useMeeting = (() => useMeeting()) as UseMeetingFunction;
+    pluginApi.useMeetingData = useMeetingData as UseMeetingDataFunction;
     pluginApi.useUsersBasicInfo = (() => useUsersBasicInfo()) as UseUsersBasicInfoFunction;
     pluginApi.useTalkingIndicator = (() => useTalkingIndicator()) as UseTalkingIndicatorFunction;
     pluginApi.getJoinUrl = (params) => getJoinUrl(params);
@@ -131,6 +139,22 @@ export abstract class BbbPluginSdk {
       pluginApi.sendGenericDataForLearningAnalyticsDashboard = (
         data: GenericDataForLearningAnalyticsDashboard,
       ) => sendGenericDataForLearningAnalyticsDashboard(data, pluginName);
+      pluginApi.learningAnalyticsDashboard = {
+        upsertUserData: (data, targetUserId) => upsertUserData(
+          data,
+          pluginName,
+          targetUserId,
+        ),
+        deleteUserData: (data, targetUserId) => deleteUserData(
+          data,
+          pluginName,
+          targetUserId,
+        ),
+        clearAllUsersData: (cardTitle?: string) => clearAllUsersData(
+          pluginName,
+          cardTitle,
+        ),
+      };
       pluginApi.getRemoteData = (
         dataSourceName: string,
       ) => getRemoteData(dataSourceName, pluginName);
@@ -207,7 +231,6 @@ export abstract class BbbPluginSdk {
         localesBaseUrl,
       };
     }
-
     return window.bbb_plugins[uuid];
   }
 }

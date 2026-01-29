@@ -23,6 +23,8 @@ export class UserCameraHelperButton implements UserCameraHelperButtonInterface {
 
   disabled: boolean;
 
+  dataTest: string;
+
   position: UserCameraHelperItemPosition;
 
   onClick: (args: UserCameraHelperButtonOnclickCallback) => void;
@@ -40,11 +42,12 @@ export class UserCameraHelperButton implements UserCameraHelperButtonInterface {
    * @param position - position to place the userCamera helper button.
    * See {@link UserCameraHelperItemPosition}
    * @param disabled - if true, the userCamera helper button will not be clickable
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, label = '', icon = '', tooltip = '', disabled = true, onClick = () => {},
+    id, label = '', icon = '', tooltip = '', disabled = true, dataTest = '', onClick = () => {},
     position = UserCameraHelperItemPosition.TOP_RIGHT, displayFunction,
   }: UserCameraHelperButtonProps) {
     if (id) {
@@ -54,6 +57,7 @@ export class UserCameraHelperButton implements UserCameraHelperButtonInterface {
     this.icon = icon;
     this.tooltip = tooltip;
     this.disabled = disabled;
+    this.dataTest = dataTest;
     this.onClick = onClick;
     this.displayFunction = displayFunction;
     this.type = UserCameraHelperItemType.BUTTON;

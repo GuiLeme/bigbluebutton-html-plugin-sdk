@@ -19,6 +19,8 @@ export class NavBarButton implements NavBarInterface {
 
   disabled: boolean;
 
+  dataTest: string;
+
   position: NavBarItemPosition;
 
   hasSeparator: boolean;
@@ -38,11 +40,12 @@ export class NavBarButton implements NavBarInterface {
    * @param hasSeparator - boolean indicating whether the navigation bar button has separator
    * (vertical bar)
    * @param disabled - if true, the navigation bar button will not be clickable
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, label = '', icon = '', tooltip = '', disabled = true, onClick = () => {},
+    id, label = '', icon = '', tooltip = '', disabled = true, dataTest = '', onClick = () => {},
     position = NavBarItemPosition.RIGHT, hasSeparator = true,
   }: NavBarButtonProps) {
     if (id) {
@@ -52,6 +55,7 @@ export class NavBarButton implements NavBarInterface {
     this.icon = icon;
     this.tooltip = tooltip;
     this.disabled = disabled;
+    this.dataTest = dataTest;
     this.onClick = onClick;
     this.type = NavBarItemType.BUTTON;
     this.hasSeparator = hasSeparator;
@@ -70,6 +74,8 @@ export class NavBarInfo implements NavBarInterface {
 
   label: string;
 
+  dataTest: string;
+
   hasSeparator: boolean;
 
   position: NavBarItemPosition;
@@ -83,17 +89,19 @@ export class NavBarInfo implements NavBarInterface {
    * See {@link NavBarItemPosition}
    * @param hasSeparator - boolean indicating whether the navigation bar information has separator
    * (vertical bar)
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
     id, label = '', position = NavBarItemPosition.RIGHT,
-    hasSeparator = true,
+    hasSeparator = true, dataTest = '',
   }: NavBarInfoProps) {
     if (id) {
       this.id = id;
     }
     this.label = label;
+    this.dataTest = dataTest;
     this.type = NavBarItemType.INFO;
     this.position = position;
     this.hasSeparator = hasSeparator;

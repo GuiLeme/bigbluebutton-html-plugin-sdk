@@ -32,4 +32,5 @@ export interface ScreenshareHelperButtonProps {
   hasSeparator: boolean;
   position: ScreenshareHelperItemPosition;
   onClick: (args: ScreenshareHelperButtonOnclickCallback) => void;
+  dataTest?: string;
 }

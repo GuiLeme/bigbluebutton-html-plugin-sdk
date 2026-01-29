@@ -9,5 +9,6 @@ export interface AppsGalleryItemProps {
   id?: string;
   name: string;
   icon: string;
+  dataTest?: string;
   onClick: () => void;
 }
