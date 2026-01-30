@@ -20,6 +20,8 @@ export class ScreenshareHelperButton implements ScreenshareHelperButtonInterface
 
   disabled: boolean;
 
+  dataTest: string;
+
   position: ScreenshareHelperItemPosition;
 
   onClick: (args: ScreenshareHelperButtonOnclickCallback) => void;
@@ -37,11 +39,12 @@ export class ScreenshareHelperButton implements ScreenshareHelperButtonInterface
    * @param hasSeparator - boolean indicating whether the screenshare helper button has separator
    * (vertical bar)
    * @param disabled - if true, the screenshare helper button will not be clickable
+   * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, label = '', icon = '', tooltip = '', disabled = true, onClick = () => {},
+    id, label = '', icon = '', tooltip = '', disabled = true, dataTest = '', onClick = () => {},
     position = ScreenshareHelperItemPosition.TOP_RIGHT,
   }: ScreenshareHelperButtonProps) {
     if (id) {
@@ -51,6 +54,7 @@ export class ScreenshareHelperButton implements ScreenshareHelperButtonInterface
     this.icon = icon;
     this.tooltip = tooltip;
     this.disabled = disabled;
+    this.dataTest = dataTest;
     this.onClick = onClick;
     this.type = ScreenshareHelperItemType.BUTTON;
     this.position = position;

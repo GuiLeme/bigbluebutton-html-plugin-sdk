@@ -15,6 +15,7 @@ export interface UserListItemIconProps {
   id?: string;
   userId: string;
   icon: string;
+  dataTest?: string;
 }
 
 export interface UserListItemLabelProps {
@@ -22,4 +23,5 @@ export interface UserListItemLabelProps {
   userId: string;
   icon: string;
   label: string;
+  dataTest?: string;
 }

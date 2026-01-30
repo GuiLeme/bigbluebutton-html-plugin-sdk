@@ -8,6 +8,8 @@ by the BigBlueButton HTML5 client to extend its functionalities.
 
 An overview of the plugin architecture and capabilities can be found [here](https://github.com/bigbluebutton/plugins/blob/main/README.md#capabilities-and-technical-details).
 
+For comprehensive documentation including architecture details, please refer to the [official BigBlueButton plugins documentation](https://docs.bigbluebutton.org/plugins/).
+
 ## Examples
 
 A variety of example implementations to manipulate different parts of the BBB client can be found in the [`samples`](samples) folder.
@@ -114,21 +116,23 @@ In this case, the your manifest URL will be `https://<your-host>/plugins/sampleM
 
 ### Manifest Json
 
-Here is as complete `manifest.json` example with all possible configurations:
+Here is a complete `manifest.json` example with all possible configurations:
 
 ```json
 {
   "requiredSdkVersion": "~0.0.59",
   "name": "MyPlugin",
+  "version": "1.0.0",
   "javascriptEntrypointUrl": "MyPlugin.js",
-  "localesBaseUrl": "https://cdn.domain.com/my-plugin/", // Optional
+  "javascriptEntrypointIntegrity": "sha384-Bwsz2rxm...",
+  "localesBaseUrl": "https://cdn.domain.com/my-plugin/",
   "dataChannels": [
     {
       "name": "public-channel",
       "pushPermission": ["moderator", "presenter"], // "moderator","presenter", "all"
       "replaceOrDeletePermission": ["moderator", "creator"] // "moderator", "presenter","all", "creator"
     }
-  ], // One can enable more data-channels to better organize client communication
+  ],
   "eventPersistence": {
     "isEnabled": true // By default it is not enabled
   },
@@ -140,6 +144,9 @@ Here is as complete `manifest.json` example with all possible configurations:
       "permissions": ["moderator", "viewer"]
     }
   ],
+  "serverCommandsPermission": {
+    "chat.sendCustomPublicChatMessage": ["presenter", "moderator"]
+  },
   "settingsSchema": [
     {
       "name": "myJson",
@@ -153,6 +160,39 @@ Here is as complete `manifest.json` example with all possible configurations:
   ]
 }
 ```
+
+**Manifest field descriptions:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `requiredSdkVersion` | Yes | Specifies the SDK version compatibility (e.g., `~0.0.59`) |
+| `name` | Yes | Plugin name as referenced in configuration |
+| `version` | No | Plugin version for cache-busting (appends `?version=X` to JS URL) |
+| `javascriptEntrypointUrl` | Yes | URL to the main JavaScript bundle |
+| `javascriptEntrypointIntegrity` | No | Subresource Integrity (SRI) hash for security |
+| `localesBaseUrl` | No | Base URL for internationalization locale files |
+| `dataChannels` | No | Array of data channels for inter-client communication |
+| `eventPersistence` | No | Configuration for persisting events to meeting recording |
+| `remoteDataSources` | No | External API endpoints for fetching data |
+| `serverCommandsPermission` | No | Role-based permissions for server commands |
+| `settingsSchema` | No | Configuration schema for plugin settings |
+
+**Possible values for permissions:**
+- `pushPermission`: `"moderator"`, `"presenter"`, `"all"`, `"viewer"`
+- `replaceOrDeletePermission`: `"moderator"`, `"presenter"`, `"all"`, `"viewer"`, `"creator"`
+- `serverCommandsPermission`: `"moderator"`, `"presenter"`, `"all"`, `"viewer"`
+- `remoteDataSources.permissions`: `"moderator"`, `"viewer"`, `"presenter"`
+
+**Possible values for fetchMode:**
+- `"onMeetingCreate"`: Fetch once when meeting is created and cache the result
+- `"onDemand"`: Fetch every time the plugin requests the data
+
+**Possible values for settingsSchema.type:**
+- `"int"`: Integer number
+- `"float"`: Floating-point number
+- `"string"`: Text string
+- `"boolean"`: True/false value
+- `"json"`: JSON object
 
 To better understand remote-data-sources, please, refer to [this section](#external-data-resources)
 
@@ -229,11 +269,228 @@ That being said, here are the extensible areas we have so far:
 
 Mind that no plugin will interfere into another's extensible area. So feel free to set whatever you need into a certain plugin with no worries.
 
-### Auxiliary functions:
+**Example usage for different extensible areas:**
+
+```typescript
+BbbPluginSdk.initialize(pluginUuid);
+const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(pluginUuid);
+
+useEffect(() => {
+  // 1. Action Bar Items (bottom toolbar)
+  pluginApi.setActionsBarItems([
+    new ActionsBarButton({
+      icon: { iconName: 'user' },
+      tooltip: 'My custom action',
+      onClick: () => pluginLogger.info('Action bar button clicked'),
+      position: ActionsBarPosition.RIGHT,
+    }),
+    new ActionsBarSeparator({
+      position: ActionsBarPosition.RIGHT,
+    }),
+  ]);
+
+  // 2. Action Button Dropdown Items (three dots menu in action bar)
+  pluginApi.setActionButtonDropdownItems([
+    new ActionButtonDropdownSeparator(),
+    new ActionButtonDropdownOption({
+      label: 'Custom dropdown option',
+      icon: 'copy',
+      tooltip: 'This is a custom option',
+      onClick: () => pluginLogger.info('Dropdown option clicked'),
+    }),
+  ]);
+
+  // 3. Options Dropdown Items (three dots menu in top-right)
+  pluginApi.setOptionsDropdownItems([
+    new OptionsDropdownSeparator(),
+    new OptionsDropdownOption({
+      label: 'Plugin Settings',
+      icon: 'settings',
+      onClick: () => pluginLogger.info('Options clicked'),
+    }),
+  ]);
+
+  // 4. Nav Bar Items (top navigation bar)
+  pluginApi.setNavBarItems([
+    new NavBarButton({
+      icon: 'user',
+      label: 'Custom Nav Button',
+      tooltip: 'Navigate to custom area',
+      position: NavBarItemPosition.RIGHT,
+      onClick: () => pluginLogger.info('Nav button clicked'),
+      hasSeparator: true,
+    }),
+    new NavBarInfo({
+      label: 'Plugin Active',
+      position: NavBarItemPosition.CENTER,
+      hasSeparator: false,
+    }),
+  ]);
+
+  // 5. Presentation Toolbar Items (presentation controls)
+  pluginApi.setPresentationToolbarItems([
+    new PresentationToolbarButton({
+      label: 'Custom Tool',
+      tooltip: 'Use custom presentation tool',
+      onClick: () => pluginLogger.info('Presentation tool clicked'),
+    }),
+    new PresentationToolbarSeparator(),
+  ]);
+
+  // 6. User List Dropdown Items (per-user menu)
+  pluginApi.setUserListDropdownItems([
+    new UserListDropdownSeparator(),
+    new UserListDropdownOption({
+      label: 'View Profile',
+      icon: 'user',
+      onClick: (userId) => {
+        pluginLogger.info('View profile for user:', userId);
+      },
+    }),
+  ]);
+
+  // 7. Audio Settings Dropdown Items
+  pluginApi.setAudioSettingsDropdownItems([
+    new AudioSettingsDropdownOption({
+      label: 'Audio Plugin Settings',
+      icon: 'settings',
+      onClick: () => pluginLogger.info('Audio settings clicked'),
+    }),
+  ]);
+
+  // 8. Camera Settings Dropdown Items
+  pluginApi.setCameraSettingsDropdownItems([
+    new CameraSettingsDropdownOption({
+      label: 'Camera Plugin Settings',
+      icon: 'video',
+      onClick: () => pluginLogger.info('Camera settings clicked'),
+    }),
+  ]);
+
+  // 9. Floating Window
+  pluginApi.setFloatingWindows([
+    new FloatingWindow({
+      top: 100,
+      left: 100,
+      width: 400,
+      height: 300,
+      movable: true,
+      resizable: true,
+      backgroundColor: '#ffffff',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+      contentFunction: (element: HTMLElement) => {
+        const root = ReactDOM.createRoot(element);
+        root.render(
+          <div style={{ padding: '20px' }}>
+            <h2>Custom Floating Window</h2>
+            <p>This is custom plugin content!</p>
+          </div>
+        );
+        return root;
+      },
+    }),
+  ]);
+
+  // 10. Generic Content Sidekick Area
+  pluginApi.setGenericContentItems([
+    new GenericContentSidekickArea({
+      id: 'my-plugin-content',
+      name: 'Plugin Content',
+      section: 'Custom Section',
+      buttonIcon: 'copy',
+      open: false,
+      contentFunction: (element: HTMLElement) => {
+        const root = ReactDOM.createRoot(element);
+        root.render(
+          <div style={{ padding: '20px' }}>
+            <h1>Sidekick Content</h1>
+            <p>Custom sidekick panel content here!</p>
+          </div>
+        );
+        return root;
+      },
+    }),
+  ]);
+
+  // 11. User List Item Additional Information
+  pluginApi.setUserListItemAdditionalInformation([
+    new UserListItemAdditionalInformation({
+      userId: 'specific-user-id', // or use a function to determine dynamically
+      label: 'VIP',
+      icon: 'star',
+    }),
+  ]);
+
+  // 12. Presentation Dropdown Items
+  pluginApi.setPresentationDropdownItems([
+    new PresentationDropdownOption({
+      label: 'Export Presentation',
+      icon: 'download',
+      onClick: () => pluginLogger.info('Export presentation clicked'),
+    }),
+  ]);
+
+  // 13. User Camera Dropdown Items
+  pluginApi.setUserCameraDropdownItems([
+    new UserCameraDropdownOption({
+      label: 'Camera Effects',
+      icon: 'video',
+      displayFunction: ({ userId }) => {
+        // Show only for specific users or conditions
+        return true;
+      },
+      onClick: ({ userId, streamId }) => {
+        pluginLogger.info('Camera option clicked:', userId, streamId);
+      },
+    }),
+  ]);
+
+}, []);
+
+```
+
+**Key Points:**
+- Each extensible area has its own setter function (e.g., `setActionsBarItems`, `setOptionsDropdownItems`)
+- Items are set as arrays, allowing multiple items per area
+- Use separators to visually group related items
+- Items from different plugins won't conflict - each plugin manages its own items
+- Most items support icons, labels, tooltips, and onClick handlers
+- Some items support positioning (LEFT, CENTER, RIGHT) or display conditions
+
+### Auxiliary functions
 
 - `getSessionToken`: returns the user session token located on the user's URL.
 - `getJoinUrl`: returns the join url associated with the parameters passed as an argument. Since it fetches the BigBlueButton API, this getter method is asynchronous.
 - `useLocaleMessages`: returns the messages to be used in internationalization functions (recommend to use `react-intl`, as example, refer to official plugins)
+
+**Example usage:**
+
+```typescript
+BbbPluginSdk.initialize(pluginUuid);
+const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(pluginUuid);
+
+// Get session token
+const sessionToken = pluginApi.getSessionToken();
+console.log('Session token:', sessionToken);
+
+// Get join URL (async)
+useEffect(() => {
+  pluginApi.getJoinUrl({
+    fullName: 'John Doe',
+    role: 'MODERATOR',
+    // other join parameters...
+  }).then((joinUrl) => {
+    console.log('Join URL:', joinUrl);
+  });
+}, []);
+
+// Use locale messages for internationalization
+const localeMessages = pluginApi.useLocaleMessages();
+console.log('Current locale:', localeMessages);
+
+return null;
+
+```
 
 ### Realtime data consumption
 
@@ -258,6 +515,87 @@ export interface GraphqlResponseWrapper<TData> {
 ```
 
 So we have the `data`, which is different for each hook, that's why it's a generic, the error, that will be set if, and only if, there is an error, otherwise it is undefined, and loading, which tells the developer if the query is still loading (being fetched) or not.
+
+**Example usage:**
+
+```typescript
+  BbbPluginSdk.initialize(pluginUuid);
+  const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(pluginUuid);
+
+  // Get current user information
+  const { data: currentUser, loading: userLoading, error: userError } =
+    pluginApi.useCurrentUser();
+
+  // Get meeting information
+  const { data: meeting, loading: meetingLoading } = pluginApi.useMeeting();
+
+  // Get current presentation
+  const { data: presentation } = pluginApi.useCurrentPresentation();
+
+  // Get all users basic info
+  const { data: usersBasicInfo } = pluginApi.useUsersBasicInfo();
+
+  // Get loaded chat messages
+  const { data: chatMessages } = pluginApi.useLoadedChatMessages();
+
+  // Get talking indicators
+  const { data: talkingIndicators } = pluginApi.useTalkingIndicator();
+
+  // Get plugin settings
+  const { data: pluginSettings } = pluginApi.usePluginSettings();
+
+  useEffect(() => {
+    if (currentUser && !userLoading) {
+      pluginLogger.info('Current user:', currentUser);
+      pluginLogger.info('User is presenter:', currentUser.presenter);
+      pluginLogger.info('User is moderator:', currentUser.isModerator);
+    }
+    if (userError) {
+      pluginLogger.error('Error fetching user:', userError);
+    }
+  }, [currentUser, userLoading, userError]);
+
+  useEffect(() => {
+    if (meeting) {
+      pluginLogger.info('Meeting ID:', meeting.meetingId);
+      pluginLogger.info('Meeting name:', meeting.name);
+    }
+  }, [meeting]);
+
+  useEffect(() => {
+    if (presentation) {
+      pluginLogger.info('Current page:', presentation.currentPage?.num);
+      pluginLogger.info('Total pages:', presentation.totalPages);
+    }
+  }, [presentation]);
+
+  useEffect(() => {
+    if (chatMessages) {
+      pluginLogger.info('Total messages:', chatMessages.length);
+      chatMessages.forEach((msg) => {
+        pluginLogger.info(`Message from ${msg.senderName}: ${msg.message}`);
+      });
+    }
+  }, [chatMessages]);
+
+  // Custom subscription example
+  const { data: customData } = pluginApi.useCustomSubscription<CustomDataType>(`
+    subscription MyCustomSubscription {
+      user {
+        userId
+        name
+        role
+      }
+    }
+  `);
+
+  useEffect(() => {
+    if (customData) {
+      pluginLogger.info('Custom subscription data:', customData);
+    }
+  }, [customData]);
+
+```
 
 ### Realtime Data Creation
 
@@ -346,8 +684,8 @@ The data-channel name must be in the `manifest.json` along with all the permissi
   "dataChannels": [
     {
       "name": "channel-name",
-      "pushPermission": ["moderator", "presenter"],
-      "replaceOrDeletePermission": ["moderator", "sender"]
+      "pushPermission": ["moderator","presenter"],
+      "replaceOrDeletePermission": ["moderator", "creator"]
     }
   ]
 }
@@ -446,18 +784,70 @@ One other thing is that the type of the return is precisely the same type requir
 - captions:
   - setDisplayAudioCaptions: This function will set the track of transcripted audio to be displayed or disable it;
 
-See usage ahead:
+**Example usage:**
 
-```ts
-pluginApi.uiCommands.chat.form.open();
-pluginApi.uiCommands.chat.form.fill({
-  text: 'Just an example message filled by the plugin',
-});
+```typescript
+  BbbPluginSdk.initialize(pluginUuid);
+  const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(pluginUuid);
+
+  useEffect(() => {
+    // Open and fill chat form
+    pluginApi.uiCommands.chat.form.open();
+    pluginApi.uiCommands.chat.form.fill({
+      text: 'Just an example message filled by the plugin',
+    });
+
+    // Set speaker volume to 50%
+    pluginApi.uiCommands.conference.setSpeakerLevel(0.5);
+
+    // Set external video volume to 75%
+    pluginApi.uiCommands.externalVideo.volume.set(0.75);
+
+    // Change layout
+    pluginApi.uiCommands.layout.setEnforcedLayout('FOCUS');
+
+    // Show/hide nav bar
+    pluginApi.uiCommands.navBar.setDisplayNavBar(false);
+
+    // Send a notification
+    pluginApi.uiCommands.notification.send({
+      type: 'info',
+      message: 'This is a notification from the plugin',
+      icon: 'user',
+    });
+
+    // Open presentation area
+    pluginApi.uiCommands.presentationArea.open();
+
+    // Sidekick area commands
+    pluginApi.uiCommands.sidekickArea.options.setMenuBadge('my-content-id', '5');
+    pluginApi.uiCommands.sidekickArea.options.renameGenericContentMenu(
+      'my-content-id',
+      'New Menu Name'
+    );
+    pluginApi.uiCommands.sidekickArea.options.renameGenericContentSection(
+      'my-content-id',
+      'New Section Name'
+    );
+
+    // Camera commands
+    pluginApi.uiCommands.camera.setSelfViewDisableAllDevices(true);
+    pluginApi.uiCommands.camera.setSelfViewDisable('camera-stream-id', false);
+
+    // Set away status
+    pluginApi.uiCommands.userStatus.setAwayStatus(true);
+  }, []);
+
 ```
 
 So the idea is that we have a `uiCommands` object and at a point, there will be the command to do the intended action, such as open the chat form and/or fill it, as demonstrated above
 
 ### Server Commands
+
+  `serverCommands` object: It contains all the possible commands available to the developer to interact with the BBB core server, see the ones implemented down below:
+
+  - chat:
+    - sendPublicChatMessage: This function sends a message to the public chat on behalf of the currently logged-in user.
 
 `serverCommands` object: It contains all the possible commands available to the developer to interact with the BBB core server, see the ones implemented down below:
 
@@ -472,30 +862,335 @@ So the idea is that we have a `uiCommands` object and at a point, there will be 
   - save: this function saves the given text, locale and caption type
   - addLocale: this function sends a locale to be added to the available options
 
+**Example usage:**
+
+```typescript
+  BbbPluginSdk.initialize(pluginUuid);
+  const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(pluginUuid);
+
+  useEffect(() => {
+    // Add a button that sends a chat message
+    pluginApi.setActionButtonDropdownItems([
+      new ActionButtonDropdownOption({
+        label: 'Send chat message',
+        icon: 'chat',
+        onClick: () => {
+          // Send a public chat message
+          pluginApi.serverCommands.chat.sendPublicChatMessage({
+            textMessageInMarkdownFormat: 'Hello from plugin!',
+            pluginCustomMetadata: pluginUuid,
+          });
+        },
+      }),
+      new ActionButtonDropdownOption({
+        label: 'Send custom message',
+        icon: 'copy',
+        onClick: () => {
+          // Send a custom public chat message with metadata
+          pluginApi.serverCommands.chat.sendCustomPublicMessage({
+            textMessageInMarkdownFormat: '**Custom message** with metadata',
+            pluginCustomMetadata: {
+              type: 'notification',
+              pluginId: pluginUuid,
+              timestamp: Date.now(),
+            },
+          });
+        },
+      }),
+      new ActionButtonDropdownOption({
+        label: 'Save caption',
+        icon: 'closed_caption',
+        onClick: () => {
+          // Save a caption
+          pluginApi.serverCommands.caption.save({
+            text: 'This is a caption text',
+            locale: 'en-US',
+            captionType: 'TYPED',
+          });
+        },
+      }),
+      new ActionButtonDropdownOption({
+        label: 'Add caption locale',
+        icon: 'closed_caption',
+        onClick: () => {
+          // Add a new locale option for captions
+          pluginApi.serverCommands.caption.addLocale({
+            locale: 'pt-BR',
+            localeName: 'Portuguese (Brazil)',
+          });
+        },
+      }),
+    ]);
+  }, []);
+
+```
+
+**Note on permissions:** Some server commands have permission controls based on roles defined in the manifest. See the [Manifest Json](#manifest-json) section for configuration details.
+
 ### Dom Element Manipulation
 
 - `useChatMessageDomElements` hook: This hook will return the dom element of a chat message reactively, so one can modify whatever is inside, such as text, css, js, etc.;
 - `useUserCameraDomElements` hook: This hook will return the dom element of each of the user's webcam corresponding to the streamIds passed reactively, so one can modify whatever is inside, such as text, css, js, etc., and also can get the video element within it;
 
+**Example usage:**
+
+```typescript
+  BbbPluginSdk.initialize(pluginUuid);
+  const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(pluginUuid);
+  const [chatIdsToHighlight, setChatIdsToHighlight] = useState<string[]>([]);
+  const [streamIdsToStyle, setStreamIdsToStyle] = useState<string[]>([]);
+
+  // Example 1: Manipulate chat messages (highlight mentions)
+  const { data: chatMessages } = pluginApi.useLoadedChatMessages();
+
+  useEffect(() => {
+    if (chatMessages) {
+      // Filter messages that mention someone with @ pattern
+      const MENTION_REGEX = /@([A-Z][a-z]+ ){0,2}[A-Z][a-z]+/;
+      const messageIds = chatMessages
+        .filter((msg) => MENTION_REGEX.test(msg.message))
+        .map((msg) => msg.messageId);
+      setChatIdsToHighlight(messageIds);
+    }
+  }, [chatMessages]);
+
+  // Get DOM elements for the chat messages we want to manipulate
+  const chatMessagesDomElements = pluginApi.useChatMessageDomElements(chatIdsToHighlight);
+
+  useEffect(() => {
+    if (chatMessagesDomElements && chatMessagesDomElements.length > 0) {
+      chatMessagesDomElements.forEach((chatMessageDomElement) => {
+        const MENTION_REGEX = /@([A-Z][a-z]+ ){0,2}[A-Z][a-z]+/;
+        const mention = chatMessageDomElement.innerHTML.match(MENTION_REGEX);
+
+        if (mention) {
+          // Highlight the mention with custom styling
+          chatMessageDomElement.innerHTML = chatMessageDomElement.innerHTML.replace(
+            mention[0],
+            `<span style="color: #4185cf; background-color: #f2f6f8; padding: 2px 4px; border-radius: 3px;">${mention[0]}</span>`
+          );
+        }
+
+        // Style the parent element
+        const { parentElement } = chatMessageDomElement;
+        if (parentElement) {
+          parentElement.style.paddingTop = '0.5rem';
+          parentElement.style.paddingBottom = '0.5rem';
+          parentElement.style.borderLeft = '3px solid #4185cf';
+          parentElement.style.backgroundColor = '#f8f9fa';
+        }
+
+        pluginLogger.info('Styled chat message:', chatMessageDomElement);
+      });
+    }
+  }, [chatMessagesDomElements]);
+
+  // Example 2: Manipulate user camera streams
+  const { data: videoStreams } = pluginApi.useCustomSubscription<VideoStreamsType>(`
+    subscription VideoStreams {
+      user_camera {
+        streamId
+        user {
+          userId
+          name
+        }
+      }
+    }
+  `);
+
+  useEffect(() => {
+    if (videoStreams?.user_camera) {
+      // Get all stream IDs
+      const streamIds = videoStreams.user_camera.map((stream) => stream.streamId);
+      setStreamIdsToStyle(streamIds);
+    }
+  }, [videoStreams]);
+
+  // Get DOM elements for user cameras
+  const userCameraDomElements = pluginApi.useUserCameraDomElements(streamIdsToStyle);
+
+  useEffect(() => {
+    if (userCameraDomElements && userCameraDomElements.length > 0) {
+      userCameraDomElements.forEach((cameraElement) => {
+        // Add a custom border to the camera
+        cameraElement.element.style.border = '3px solid #0c5cb3';
+        cameraElement.element.style.borderRadius = '8px';
+        cameraElement.element.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+
+        // Access the video element directly
+        if (cameraElement.videoElement) {
+          cameraElement.videoElement.style.objectFit = 'cover';
+          pluginLogger.info('Styled video element for stream:', cameraElement.streamId);
+        }
+
+        // Add a custom overlay
+        const overlay = document.createElement('div');
+        overlay.style.position = 'absolute';
+        overlay.style.top = '5px';
+        overlay.style.right = '5px';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        overlay.style.color = 'white';
+        overlay.style.padding = '4px 8px';
+        overlay.style.borderRadius = '4px';
+        overlay.style.fontSize = '12px';
+        overlay.textContent = '🎥 Live';
+        cameraElement.element.style.position = 'relative';
+        cameraElement.element.appendChild(overlay);
+      });
+    }
+  }, [userCameraDomElements]);
+```
+
+**Important notes:**
+- Use DOM manipulation carefully and only when necessary
+- Always check if elements exist before manipulating them
+- Prefer using the provided hooks over direct DOM queries
+- Be aware that excessive DOM manipulation can impact performance
+- When styling chat messages, avoid changing the actual text content as it may cause issues with recordings for more information on that, see [guidelines section](https://docs.bigbluebutton.org/plugins/#dom-element-manipulation-guidelines)
+
 ### Learning Analytics Dashboard integration
 
-- `sendGenericDataForLearningAnalyticsDashboard`: This function will send data for the bbb to render inside the plugin's table
+This integration allow you to insert/update entry in LAD (Learning Analytics Dashboard) via `upsertUserData` function and also delete entries via `deleteUserData` function.
 
-The object structure of this function's argument must be:
+It's an object available in the `pluginApi` that wraps those 3 functions:
+
+- `pluginApi.learningAnalyticsDashboard.upsertUserData`
+- `pluginApi.learningAnalyticsDashboard.deleteUserData`
+- `pluginApi.learningAnalyticsDashboard.clearAllUsersData`
+
+For the `upsert` function, the argument's data object structure must be:
 
 ```ts
-interface GenericDataForLearningAnalyticsDashboard {
-  cardTitle: string; // Yet to be implemented (future updates)
+interface LearningAnalyticsDashboardUserData {
+  cardTitle: string;
   columnTitle: string;
   value: string;
 }
 ```
 
+For the `deleteUserData` function, the argument's data object structure must be:
+
+```ts
+interface LearningAnalyticsDashboardDeleteUserData {
+  cardTitle: string;
+  columnTitle: string;
+}
+```
+
+For the `clearAllUsersData` function, the argument is the cardTitle (optionally), and when it's not sent, all the entries for a specific plugin will be deleted. (And if the card ends up empty, it will be removed) 
+
+If the user is a moderator, there is the possibility to publish data on behalf of other users by using the second **optional** parameter named `targetUserId`
+
 So that the data will appear in the following form:
 
-| User      | Count | `<columnTitle>` |
-| --------- | :---- | --------------: |
-| user-name | 1     |       `<value>` |
+|   User    | Count | `<columnTitle>` |
+|    ---    |  :--  |      --:        |
+| user-name |   1   |   `<value>`     |
+
+**Example usage:**
+
+```typescript
+  BbbPluginSdk.initialize(pluginUuid);
+  const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(pluginUuid);
+  const [interactionCount, setInteractionCount] = useState(0);
+
+  // Example: Track user interactions and send to Learning Analytics Dashboard
+  useEffect(() => {
+    const handleUserInteraction = () => {
+      const newCount = interactionCount + 1;
+      setInteractionCount(newCount);
+
+      // Send data to Learning Analytics Dashboard
+      pluginApi.sendGenericDataForLearningAnalyticsDashboard({
+        cardTitle: 'User Interactions', // For future use
+        columnTitle: 'Total Clicks',
+        value: newCount.toString(),
+      });
+
+      pluginLogger.info('Sent interaction data to dashboard:', newCount);
+    };
+
+    // Example: Track button clicks
+    pluginApi.setActionButtonDropdownItems([
+      new ActionButtonDropdownOption({
+        label: 'Track Interaction',
+        icon: 'user',
+        onClick: handleUserInteraction,
+      }),
+    ]);
+  }, [interactionCount]);
+
+  // Example: Send engagement metrics periodically
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const engagementScore = Math.floor(Math.random() * 100);
+
+      pluginApi.sendGenericDataForLearningAnalyticsDashboard({
+        cardTitle: 'Engagement Metrics',
+        columnTitle: 'Engagement Score',
+        value: `${engagementScore}%`,
+      });
+
+      pluginLogger.info('Sent engagement score:', engagementScore);
+    }, 60000); // Every minute
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Example: Track specific plugin events
+  const { data: chatMessages } = pluginApi.useLoadedChatMessages();
+
+  useEffect(() => {
+    if (chatMessages) {
+      const messageCount = chatMessages.length;
+
+      pluginApi.sendGenericDataForLearningAnalyticsDashboard({
+        cardTitle: 'Chat Activity',
+        columnTitle: 'Messages Sent',
+        value: messageCount.toString(),
+      });
+    }
+  }, [chatMessages]);
+
+```
+
+**Use cases for Learning Analytics:**
+- Track user participation and engagement
+- Monitor plugin-specific metrics (e.g., poll responses, quiz answers)
+- Measure feature usage and adoption
+- Collect custom learning indicators
+- Generate post-meeting reports with plugin data
+
+
+See example of use ahead:
+
+```ts
+const targetUserId = 'abcd-efg';
+pluginApi.learningAnalyticsDashboard.upsertUserData(
+  {
+    cardTitle: 'Example Title',
+    columnTitle: 'link sent by user',
+    value: '[link](https://my-website.com/abc.png)'
+  },
+  targetUserId,
+);
+
+pluginApi.learningAnalyticsDashboard.deleteUserData(
+  {
+    cardTitle: 'Example Title',
+    columnTitle: 'link sent by user',
+  },
+  targetUserId,
+);
+
+pluginApi.learningAnalyticsDashboard.clearAllUsersData(columnTitle);
+
+pluginApi.learningAnalyticsDashboard.clearAllUsersData(); // Or without the Column Title
+```
+
+Note 1: the `value` field (in the upsert function's argument) supports markdown, so feel free to use it as you wish.
+
+Note 2: pluginApi.sendGenericDataForLearningAnalyticsDashboard is now being deprecated, but has the same data structure as upsert (without the possibility to send entry on behalf of another user)
 
 ### External data resources
 
@@ -560,11 +1255,166 @@ pluginApi
   });
 ```
 
-### Meta\_ parameters
+### Fetch ui data on demand
+
+- `getUiData` async function: This will return certain data from the UI depending on the parameter the developer uses. Unlike the `useUiData` this function does not return real-time information as it changes. See the currently supported:
+  - PresentationWhiteboardUiDataNames.CURRENT_PAGE_SNAPSHOT;
+
+**Example usage:**
+
+```typescript
+  BbbPluginSdk.initialize(pluginUuid);
+  const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(pluginUuid);
+
+  useEffect(() => {
+    pluginApi.setActionButtonDropdownItems([
+      new ActionButtonDropdownOption({
+        label: 'Capture whiteboard snapshot',
+        icon: 'copy',
+        onClick: async () => {
+          // Fetch the current whiteboard page as a PNG snapshot
+          const snapshotData = await pluginApi.getUiData(
+            PresentationWhiteboardUiDataNames.CURRENT_PAGE_SNAPSHOT
+          );
+
+          if (snapshotData?.pngBase64) {
+            console.log('Whiteboard snapshot (base64 PNG):', snapshotData.pngBase64);
+
+            // Example: Download the snapshot
+            const link = document.createElement('a');
+            link.href = `data:image/png;base64,${snapshotData.pngBase64}`;
+            link.download = `whiteboard-snapshot-${Date.now()}.png`;
+            link.click();
+          }
+        },
+      }),
+    ]);
+  }, []);
+
+```
+
+### Customize manifest.json
+
+The following sections explain how you can dynamically customize your manifest.json for different runs.
+
+#### Meta_ parameters
 
 This is not part of the API, but it's a way of passing information to the manifest. Any value can be passed like this, one just needs to put something like `${meta_nameOfParameter}` in a specific config of the manifest, and in the `/create` call, set this meta-parameter to whatever is preferred, like `meta_nameOfParameter="Sample message"`
 
 This feature is mainly used for security purposes, see [external data section](#external-data-resources). But can be used for customization reasons as well.
+
+**Example:**
+
+```json
+{
+  "requiredSdkVersion": "~0.0.59",
+  "name": "MyPlugin",
+  "javascriptEntrypointUrl": "MyPlugin.js",
+  "remoteDataSources": [
+    {
+      "name": "userData",
+      "url": "${meta_userDataEndpoint}",
+      "fetchMode": "onMeetingCreate",
+      "permissions": ["moderator", "viewer"]
+    }
+  ]
+}
+```
+
+Then in the `/create` call:
+
+```
+meta_userDataEndpoint=https://my-api.com/users
+pluginManifests=[{"url": "https://my-cdn.com/my-plugin/manifest.json"}]
+```
+
+#### Plugin_ parameters
+
+`plugin_` parameters work similarly to `meta_` parameters, allowing data to be passed dynamically to the manifest. While they can serve the same purposes — like security or customization — they are specifically scoped to individual plugins.
+
+**Format:**
+
+```
+plugin_<pluginName>_<parameter-name>
+```
+
+- `<pluginName>` — The name of the plugin as defined in `manifest.json`.
+- `<parameter-name>` — The parameter's name. It may include letters (uppercase or lowercase), numbers and hyphens (`-`).
+
+This naming convention ensures that each plugin has its own namespace for parameters. Other plugins cannot access values outside their own namespace. For example:
+
+```
+plugin_MyPlugin_api-endpoint=https://api.example.com
+plugin_MyPlugin_theme-color=blue
+```
+
+This isolates the parameter to `MyPlugin` and avoids conflicts with other plugins.
+
+**Example manifest.json:**
+
+```json
+{
+  "requiredSdkVersion": "~0.0.59",
+  "name": "MyPlugin",
+  "javascriptEntrypointUrl": "MyPlugin.js",
+  "dataChannels": [
+    {
+      "name": "${plugin_MyPlugin_channel-name:defaultChannel}",
+      "pushPermission": ["moderator", "presenter"],
+      "replaceOrDeletePermission": ["moderator", "creator"]
+    }
+  ],
+  "remoteDataSources": [
+    {
+      "name": "pluginData",
+      "url": "${plugin_MyPlugin_api-endpoint}",
+      "fetchMode": "onDemand",
+      "permissions": ["moderator"]
+    }
+  ]
+}
+```
+
+Then in the `/create` call:
+
+```
+plugin_MyPlugin_channel-name=customChannelName
+plugin_MyPlugin_api-endpoint=https://my-api.com/plugin-data
+pluginManifests=[{"url": "https://my-cdn.com/my-plugin/manifest.json"}]
+```
+
+#### Default value (fallback) for missing placeholder's parameters
+
+If a plugin expects a placeholder (via `meta_` or `plugin_`) but doesn't receive a value, the plugin will fail to load. To prevent this, both types of placeholders support default values. This allows the system administrator to define fallback values, ensuring the plugin loads correctly.
+
+**Example with a default value:**
+
+```json
+{
+  "requiredSdkVersion": "~0.0.59",
+  "name": "MyPlugin",
+  "javascriptEntrypointUrl": "MyPlugin.js",
+  "dataChannels": [
+    {
+      "name": "${plugin_MyPlugin_data-channel-name:storeState}",
+      "pushPermission": ["moderator", "presenter"],
+      "replaceOrDeletePermission": ["moderator", "creator"]
+    }
+  ],
+  "remoteDataSources": [
+    {
+      "name": "apiData",
+      "url": "${meta_apiEndpoint:https://default-api.com/data}",
+      "fetchMode": "onMeetingCreate",
+      "permissions": ["moderator"]
+    }
+  ]
+}
+```
+
+In this example:
+- If `plugin_MyPlugin_data-channel-name` is not provided, it will fall back to `"storeState"`
+- If `meta_apiEndpoint` is not provided, it will fall back to `"https://default-api.com/data"`
 
 ### Event persistence
 
@@ -619,6 +1469,185 @@ Where `<meeting-id>` is the id of the the meeting you just recorded. Then, among
   <timestampUTC>1730311211929</timestampUTC>
 </event>
 ```
+
+## Common Patterns and Best Practices
+
+This section covers common patterns and best practices for plugin development.
+
+### Plugin Initialization Pattern
+
+Always initialize your plugin in this order:
+
+```typescript
+import { BbbPluginSdk, PluginApi } from 'bigbluebutton-html-plugin-sdk';
+import { useEffect } from 'react';
+
+function MyPlugin({ pluginUuid }: MyPluginProps) {
+  // 1. Initialize the SDK (must be first)
+  BbbPluginSdk.initialize(pluginUuid);
+
+  // 2. Get the plugin API instance
+  const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(pluginUuid);
+
+  // 3. Use hooks to fetch data
+  const { data: currentUser } = pluginApi.useCurrentUser();
+
+  // 4. Set up UI extensions in useEffect
+  useEffect(() => {
+    // Register UI items here
+    pluginApi.setActionButtonDropdownItems([...]);
+  }, []); // Empty dependency array for one-time setup
+
+  // 5. Return null (plugins typically don't render directly)
+  return null;
+}
+```
+
+### Error Handling Pattern
+
+```typescript
+function MyPlugin({ pluginUuid }: MyPluginProps) {
+  BbbPluginSdk.initialize(pluginUuid);
+  const pluginApi = BbbPluginSdk.getPluginApi(pluginUuid);
+
+  const { data, loading, error } = pluginApi.useCurrentUser();
+
+  useEffect(() => {
+    if (error) {
+      pluginLogger.error('Error fetching user data:', error);
+      // Show user-friendly notification
+      pluginApi.uiCommands.notification.send({
+        type: 'error',
+        message: 'Failed to load plugin. Please refresh the page.',
+        icon: 'warning',
+      });
+      return;
+    }
+
+    if (loading) {
+      pluginLogger.info('Loading user data...');
+      return;
+    }
+
+    if (data) {
+      // Proceed with plugin logic
+      pluginLogger.info('User data loaded successfully');
+    }
+  }, [data, loading, error]);
+
+  return null;
+}
+```
+
+### State Management Pattern
+
+```typescript
+function MyPlugin({ pluginUuid }: MyPluginProps) {
+  BbbPluginSdk.initialize(pluginUuid);
+  const pluginApi = BbbPluginSdk.getPluginApi(pluginUuid);
+  const [count, setCount] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    pluginApi.setActionButtonDropdownItems([
+      new ActionButtonDropdownOption({
+        label: `Counter: ${count}`,
+        icon: 'copy',
+        onClick: () => {
+          setCount(prevCount => prevCount + 1);
+          setIsActive(true);
+        },
+      }),
+    ]);
+  }, [count]); // Re-render when count changes
+
+  return null;
+}
+```
+
+### Data Channel Communication Pattern
+
+```typescript
+interface MessageType {
+  userId: string;
+  message: string;
+  timestamp: number;
+}
+
+function MyPlugin({ pluginUuid }: MyPluginProps) {
+  BbbPluginSdk.initialize(pluginUuid);
+  const pluginApi = BbbPluginSdk.getPluginApi(pluginUuid);
+
+  const {
+    data: messages,
+    pushEntry,
+    deleteEntry,
+  } = pluginApi.useDataChannel<MessageType>(
+    'my-channel',
+    DataChannelTypes.ALL_ITEMS,
+    'default'
+  );
+
+  const sendMessage = (text: string) => {
+    if (pushEntry) {
+      pushEntry({
+        userId: 'current-user-id',
+        message: text,
+        timestamp: Date.now(),
+      });
+    }
+  };
+
+  const clearMessages = () => {
+    if (deleteEntry) {
+      deleteEntry(RESET_DATA_CHANNEL);
+    }
+  };
+
+  useEffect(() => {
+    pluginApi.setActionButtonDropdownItems([
+      new ActionButtonDropdownOption({
+        label: 'Send Message',
+        icon: 'chat',
+        onClick: () => sendMessage('Hello!'),
+      }),
+      new ActionButtonDropdownOption({
+        label: 'Clear Messages',
+        icon: 'delete',
+        onClick: clearMessages,
+      }),
+    ]);
+  }, []);
+
+  useEffect(() => {
+    if (messages?.data) {
+      pluginLogger.info('Messages:', messages.data);
+    }
+  }, [messages]);
+
+  return null;
+}
+```
+
+### Best Practices
+
+1. **Always initialize the SDK first** before using any plugin API
+2. **Use TypeScript** for type safety and better development experience
+3. **Handle loading and error states** gracefully
+4. **Clean up resources** (intervals, event listeners) in useEffect cleanup
+5. **Use pluginLogger** instead of console.log for better debugging
+6. **Test your plugin** with different user roles (moderator, presenter, viewer)
+7. **Use the samples** as reference - they demonstrate best practices
+8. **Document your plugin** - include a README with usage instructions
+
+### Performance Tips
+
+- **Minimize re-renders**: Use proper dependency arrays in useEffect
+- **Avoid excessive DOM manipulation**: Use the provided hooks when possible
+- **Debounce frequent operations**: Use debouncing for frequent UI updates
+- **Clean up subscriptions**: Always return cleanup functions from useEffect
+- **Use memoization**: Use React.useMemo and React.useCallback for expensive operations
+
 
 ### Frequently Asked Questions (FAQ)
 

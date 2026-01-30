@@ -10,12 +10,26 @@ export class AppsGalleryEntry implements AppsGalleryInterface {
 
   icon: string = '';
 
+  dataTest: string;
+
   onClick: () => void;
 
+  /**
+   * Returns object to be used in the setter for the Apps Gallery. In this case,
+   * an entry.
+   *
+   * @param name - name to be displayed in the apps gallery entry.
+   * @param icon - icon to be displayed in the apps gallery entry.
+   * @param dataTest - string attribute to be used for testing
+   * @param onClick - function to be called when clicking the entry.
+   *
+   * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
+   */
   constructor({
     id,
     name,
     icon,
+    dataTest = '',
     onClick,
   }: AppsGalleryItemProps) {
     if (id) {
@@ -23,6 +37,7 @@ export class AppsGalleryEntry implements AppsGalleryInterface {
     }
     this.name = name;
     this.icon = icon;
+    this.dataTest = dataTest;
     this.onClick = onClick;
   }
 

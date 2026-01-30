@@ -4,15 +4,15 @@ import { useEffect } from 'react';
 import {
   BbbPluginSdk,
   PluginApi,
-  pluginLogger,
   UserCameraHelperButton,
   UserCameraHelperItemPosition,
+  pluginLogger,
 } from 'bigbluebutton-html-plugin-sdk';
 import { SampleUserCameraHelperPluginProps, VideoStreamsSubscriptionResultType } from './types';
 import { VIDEO_STREAMS_SUBSCRIPTION } from '../queries';
 
 function SampleUserCameraHelperPlugin({ pluginUuid: uuid }: SampleUserCameraHelperPluginProps):
-React.ReactElement<SampleUserCameraHelperPluginProps> {
+  React.ReactElement<SampleUserCameraHelperPluginProps> {
   BbbPluginSdk.initialize(uuid);
   const pluginApi: PluginApi = BbbPluginSdk.getPluginApi(uuid);
 

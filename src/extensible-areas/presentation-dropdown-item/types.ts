@@ -15,4 +15,5 @@ export interface PresentationDropdownOptionProps {
   label: string;
   icon: string;
   onClick: () => void;
+  dataTest?: string;
 }
