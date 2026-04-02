@@ -36,6 +36,7 @@ export interface ActionsBarButtonProps {
   position: ActionsBarPosition;
   dataTest?: string;
   onClick: () => void;
+  color?: string;
 }
 
 export interface ActionsBarSeparatorProps {
