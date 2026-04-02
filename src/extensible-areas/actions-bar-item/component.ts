@@ -46,6 +46,8 @@ export class ActionsBarButton extends ActionsBarItem {
 
   onClick: () => void;
 
+  color: string;
+
   /**
    * Returns object to be used in the setter for action bar. In this case,
    * a button.
@@ -56,11 +58,13 @@ export class ActionsBarButton extends ActionsBarItem {
    * @param dataTest - string attribute to be used for testing
    * @param onClick - function to be called when clicking the button
    * @param position - position that this button will be displayed, see {@link ActionsBarPosition}
+   * @param color - button color variant, defaults to 'primary'
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5)
    */
   constructor({
     id, icon, tooltip = '', dataTest = '', onClick = () => {}, position = ActionsBarPosition.RIGHT,
+    color = 'primary',
   }: ActionsBarButtonProps) {
     super({
       id, type: ActionsBarItemType.BUTTON, position, dataTest,
@@ -69,6 +73,7 @@ export class ActionsBarButton extends ActionsBarItem {
     this.tooltip = tooltip;
     this.dataTest = dataTest;
     this.onClick = onClick;
+    this.color = color;
   }
 }
 
