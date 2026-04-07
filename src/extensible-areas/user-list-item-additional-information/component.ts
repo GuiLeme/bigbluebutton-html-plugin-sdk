@@ -3,6 +3,7 @@ import {
   UserListItemAdditionalInformationInterface, UserListItemIconProps,
   UserListItemLabelProps,
 } from './types';
+import { PluginIconType } from '../common/icon';
 
 // UserListItemAdditionalInformation Extensible Area
 
@@ -13,7 +14,7 @@ export class UserListItemIcon implements UserListItemAdditionalInformationInterf
 
   userId: string;
 
-  icon: string;
+  icon: PluginIconType;
 
   dataTest: string;
 
@@ -53,7 +54,7 @@ export class UserListItemLabel implements UserListItemAdditionalInformationInter
 
   userId: string;
 
-  icon: string;
+  icon: PluginIconType;
 
   label: string;
 

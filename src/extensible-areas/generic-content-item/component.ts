@@ -1,6 +1,7 @@
 import * as ReactDOM from 'react-dom/client';
 import { GenericContentType } from './enums';
 import { GenericContentInterface, GenericContentMainAreaProps, GenericContentSidekickAreaProps } from './types';
+import { PluginIconType } from '../common/icon';
 
 // GenericContent Extensible Area
 
@@ -48,7 +49,7 @@ export class GenericContentSidekickArea implements GenericContentInterface {
 
   section: string = '';
 
-  buttonIcon: string = '';
+  buttonIcon: PluginIconType = '';
 
   open: boolean = false;
 

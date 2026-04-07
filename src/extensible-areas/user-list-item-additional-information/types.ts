@@ -1,4 +1,5 @@
 import { PluginProvidedUiItemDescriptor } from '../base';
+import { PluginIconType } from '../common/icon';
 
 /**
  * User List Item Additional Information - The general user list item additional information item
@@ -14,14 +15,14 @@ export interface UserListItemAdditionalInformationInterface extends PluginProvid
 export interface UserListItemIconProps {
   id?: string;
   userId: string;
-  icon: string;
+  icon: PluginIconType;
   dataTest?: string;
 }
 
 export interface UserListItemLabelProps {
   id?: string;
   userId: string;
-  icon: string;
+  icon: PluginIconType;
   label: string;
   dataTest?: string;
 }

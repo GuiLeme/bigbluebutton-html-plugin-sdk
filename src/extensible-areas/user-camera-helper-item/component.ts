@@ -5,6 +5,7 @@ import {
   UserCameraHelperButtonOnclickCallback,
   UserCameraHelperCallbackFunctionArguments,
 } from './types';
+import { PluginIconType } from '../common/icon';
 
 // UserCameraHelper Extensible Area
 
@@ -17,7 +18,7 @@ export class UserCameraHelperButton implements UserCameraHelperButtonInterface {
 
   displayFunction?: (args: UserCameraHelperCallbackFunctionArguments) => boolean;
 
-  icon: string;
+  icon: PluginIconType;
 
   tooltip: string;
 
@@ -47,7 +48,7 @@ export class UserCameraHelperButton implements UserCameraHelperButtonInterface {
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, label = '', icon = '', tooltip = '', disabled = true, dataTest = '', onClick = () => {},
+    id, label = '', icon = '', tooltip = '', disabled = true, dataTest = '', onClick = () => { },
     position = UserCameraHelperItemPosition.TOP_RIGHT, displayFunction,
   }: UserCameraHelperButtonProps) {
     if (id) {

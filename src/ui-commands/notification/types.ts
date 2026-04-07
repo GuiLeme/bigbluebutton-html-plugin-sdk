@@ -1,4 +1,5 @@
 import { NotificationTypeUiCommand } from './enums';
+import { PluginIconType } from '../../extensible-areas/common/icon';
 
 export interface SendNotificationCommandArgumentsOptions {
   helpLabel?: string,
@@ -8,7 +9,7 @@ export interface SendNotificationCommandArgumentsOptions {
 
 export interface SendNotificationCommandArguments {
   message: string;
-  icon: string;
+  icon: PluginIconType;
   type: NotificationTypeUiCommand;
   options?: SendNotificationCommandArgumentsOptions;
   content?: string;

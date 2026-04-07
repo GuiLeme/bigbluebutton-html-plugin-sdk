@@ -7,6 +7,7 @@ import {
   UserListDropdownGenericContentInformationProps,
 } from './types';
 import { UserListDropdownItemType, UserListDropdownSeparatorPosition } from './enums';
+import { PluginIconType } from '../common/icon';
 
 // UserListDropdown Extensible Area
 
@@ -19,7 +20,7 @@ export class UserListDropdownOption implements UserListDropdownInterface {
 
   label: string;
 
-  icon: string;
+  icon: PluginIconType;
 
   tooltip: string;
 
@@ -45,7 +46,7 @@ export class UserListDropdownOption implements UserListDropdownInterface {
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    label = '', icon = '', tooltip = '', allowed = true, dataTest = '', onClick = () => {},
+    label = '', icon = '', tooltip = '', allowed = true, dataTest = '', onClick = () => { },
     userId = '',
   }: UserListDropdownOptionProps) {
     this.userId = userId;
@@ -105,9 +106,9 @@ export class UserListDropdownFixedContentInformation implements UserListDropdown
 
   label: string;
 
-  icon: string;
+  icon: PluginIconType;
 
-  iconRight: string;
+  iconRight: PluginIconType;
 
   textColor: string;
 
@@ -155,7 +156,7 @@ export class UserListDropdownFixedContentInformation implements UserListDropdown
 }
 
 export class UserListDropdownGenericContentInformation
-implements UserListDropdownInterface {
+  implements UserListDropdownInterface {
   id: string = '';
 
   userId: string;
@@ -211,7 +212,7 @@ export class UserListDropdownTitleAction implements UserListDropdownInterface {
 
   type: UserListDropdownItemType;
 
-  icon: string;
+  icon: PluginIconType;
 
   tooltip: string;
 
