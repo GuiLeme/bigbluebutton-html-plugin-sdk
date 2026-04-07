@@ -155,8 +155,7 @@ export class UserListDropdownFixedContentInformation implements UserListDropdown
   };
 }
 
-export class UserListDropdownGenericContentInformation
-  implements UserListDropdownInterface {
+export class UserListDropdownGenericContentInformation implements UserListDropdownInterface {
   id: string = '';
 
   userId: string;
