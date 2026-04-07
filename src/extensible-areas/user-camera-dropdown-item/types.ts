@@ -1,4 +1,5 @@
 import { PluginProvidedUiItemDescriptor } from '../base';
+import { PluginIconType } from '../common/icon';
 
 export interface UserCameraDropdownCallbackFunctionsArguments {
   streamId: string;
@@ -6,7 +7,7 @@ export interface UserCameraDropdownCallbackFunctionsArguments {
 }
 
 export interface OnclickFunctionCallbackArguments
-  extends UserCameraDropdownCallbackFunctionsArguments{
+  extends UserCameraDropdownCallbackFunctionsArguments {
   browserClickEvent: React.MouseEvent<HTMLElement>;
 }
 
@@ -16,7 +17,7 @@ export interface OnclickFunctionCallbackArguments
  * @remarks
  * This dropdown is located on the bottom left corner of the user webcam area
  */
-export interface UserCameraDropdownInterface extends PluginProvidedUiItemDescriptor{
+export interface UserCameraDropdownInterface extends PluginProvidedUiItemDescriptor {
   displayFunction?: (args: UserCameraDropdownCallbackFunctionsArguments) => boolean;
 }
 
@@ -28,7 +29,7 @@ export interface UserCameraDropdownSeparatorProps {
 export interface UserCameraDropdownOptionProps {
   id?: string;
   label: string;
-  icon: string;
+  icon: PluginIconType;
   onClick: (args: OnclickFunctionCallbackArguments) => void;
   displayFunction?: (args: UserCameraDropdownCallbackFunctionsArguments) => boolean;
   dataTest?: string;

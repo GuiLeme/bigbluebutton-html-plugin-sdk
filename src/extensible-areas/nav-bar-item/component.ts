@@ -3,6 +3,7 @@ import {
   NavBarInterface, NavBarButtonProps,
   NavBarInfoProps,
 } from './types';
+import { PluginIconType } from '../common/icon';
 
 // NavBar Extensible Area
 
@@ -13,7 +14,7 @@ export class NavBarButton implements NavBarInterface {
 
   label: string;
 
-  icon: string;
+  icon: PluginIconType;
 
   tooltip: string;
 
@@ -45,7 +46,7 @@ export class NavBarButton implements NavBarInterface {
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, label = '', icon = '', tooltip = '', disabled = true, dataTest = '', onClick = () => {},
+    id, label = '', icon = '', tooltip = '', disabled = true, dataTest = '', onClick = () => { },
     position = NavBarItemPosition.RIGHT, hasSeparator = true,
   }: NavBarButtonProps) {
     if (id) {
