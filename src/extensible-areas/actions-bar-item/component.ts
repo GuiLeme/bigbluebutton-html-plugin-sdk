@@ -9,8 +9,8 @@ import {
   SelectOption,
   ToggleGroupOption,
   ActionsBarToggleGroupProps,
-  ActionsBarIconType,
 } from './types';
+import { PluginIconType } from '../common/icon';
 
 // ActionsBar Extensible Area
 
@@ -34,13 +34,13 @@ class ActionsBarItem implements ActionsBarInterface {
     this.dataTest = dataTest;
   }
 
-  setItemId(id: string):void {
+  setItemId(id: string): void {
     this.id = `ActionsBar${this.type}_${id}`;
   }
 }
 
 export class ActionsBarButton extends ActionsBarItem {
-  icon: ActionsBarIconType;
+  icon: PluginIconType;
 
   tooltip: string;
 
@@ -63,7 +63,7 @@ export class ActionsBarButton extends ActionsBarItem {
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5)
    */
   constructor({
-    id, icon, tooltip = '', dataTest = '', onClick = () => {}, position = ActionsBarPosition.RIGHT,
+    id, icon, tooltip = '', dataTest = '', onClick = () => { }, position = ActionsBarPosition.RIGHT,
     color = 'primary',
   }: ActionsBarButtonProps) {
     super({
@@ -78,7 +78,7 @@ export class ActionsBarButton extends ActionsBarItem {
 }
 
 export class ActionsBarSeparator extends ActionsBarItem {
-  icon: string;
+  icon: PluginIconType;
 
   /**
    * Returns object to be used in the setter for action bar. In this case,
@@ -134,7 +134,7 @@ export class ActionsBarSelector extends ActionsBarItem {
     options = [],
     defaultOption = options[0],
     dataTest = '',
-    onChange = () => {},
+    onChange = () => { },
     position = ActionsBarPosition.RIGHT,
     width = 140,
   }: ActionsBarSelectorProps) {
@@ -184,7 +184,7 @@ export class ActionsBarToggleGroup extends ActionsBarItem {
     options = [],
     defaultOption = options[0],
     dataTest = '',
-    onChange = () => {},
+    onChange = () => { },
     position = ActionsBarPosition.RIGHT,
   }: ActionsBarToggleGroupProps) {
     super({

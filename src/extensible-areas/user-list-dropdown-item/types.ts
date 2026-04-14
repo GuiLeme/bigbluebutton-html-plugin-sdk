@@ -1,5 +1,6 @@
 import { PluginProvidedUiItemDescriptor } from '../base';
 import { UserListDropdownSeparatorPosition } from './enums';
+import { PluginIconType } from '../common/icon';
 
 /**
  * User List Dropdown Item - The general user list dropdown extensible area item
@@ -8,13 +9,13 @@ import { UserListDropdownSeparatorPosition } from './enums';
  * This dropdown is located on the bottom left corner of the user webcam area.
  * Mandatory to have the `userId`
  */
-export interface UserListDropdownInterface extends PluginProvidedUiItemDescriptor{
+export interface UserListDropdownInterface extends PluginProvidedUiItemDescriptor {
   userId: string;
 }
 
 export interface UserListDropdownOptionProps {
   label: string;
-  icon: string;
+  icon: PluginIconType;
   tooltip: string;
   allowed: boolean;
   userId: string;
@@ -39,8 +40,8 @@ export interface UserListDropdownGenericContentInformationProps {
 export interface UserListDropdownFixedContentInformationProps {
   id?: string;
   label: string;
-  icon?: string;
-  iconRight?: string;
+  icon?: PluginIconType;
+  iconRight?: PluginIconType;
   allowed: boolean;
   userId: string;
   textColor: string;
@@ -54,7 +55,7 @@ export interface UserListDropdownTitleActionOnClickArguments {
 export interface UserListDropdownTitleActionProps {
   id?: string;
   tooltip: string;
-  icon: string;
+  icon: PluginIconType;
   userId: string;
   onClick: (args: UserListDropdownTitleActionOnClickArguments) => void;
   dataTest?: string;

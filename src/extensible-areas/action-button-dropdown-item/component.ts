@@ -2,6 +2,7 @@ import { ActionButtonDropdownItemType } from './enums';
 import {
   ActionButtonDropdownInterface, ActionButtonDropdownOptionProps,
 } from './types';
+import { PluginIconType } from '../common/icon';
 
 // ActionButtonDropdown Extensible Area
 
@@ -12,7 +13,7 @@ export class ActionButtonDropdownOption implements ActionButtonDropdownInterface
 
   label: string;
 
-  icon: string;
+  icon: PluginIconType;
 
   tooltip: string;
 
