@@ -11,6 +11,7 @@ import { UiCommandsNavBarObject } from './nav-bar/types';
 import { UiCommandsCameraObject } from './camera/types';
 import { UiCommandsSidekickArea } from './sidekick-area/types';
 import { UiCommandsCaptionsObject } from './captions/types';
+import { UiCommandsScreenshareObject } from './screenshare/types';
 
 export interface UiCommands {
   layout: UiCommandsLayoutObject;
@@ -26,4 +27,5 @@ export interface UiCommands {
   userStatus: UiCommandsUserStatusObject;
   conference: UiCommandsConferenceObject;
   notification: UiCommandsNotificationObject;
+  screenshare: UiCommandsScreenshareObject;
 }
