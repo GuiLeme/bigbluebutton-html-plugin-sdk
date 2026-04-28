@@ -110,6 +110,15 @@ function SampleActionButtonDropdownPlugin(
             }, 5000);
           },
         }),
+        new ActionButtonDropdownOption({
+          label: 'Stop screenshare',
+          icon: 'desktop',
+          tooltip: 'Stop the ongoing screenshare session',
+          allowed: true,
+          onClick: () => {
+            pluginApi.uiCommands.screenshare.stop();
+          },
+        }),
       ]);
     }
   }, [currentUser]);
