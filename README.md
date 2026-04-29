@@ -768,6 +768,8 @@ One other thing is that the type of the return is precisely the same type requir
 - presentation-area:
   - open: this function will open the presentation area content automatically;
   - close: this function will close the presentation area content automatically;
+- screenshare:
+  - stop: Stops broadcasting the screenshare if user is presenter and is sharing screen (it is ignored otherwise);
 - sidekick-area:
   - options:
     - renameGenericContentMenu: this function will rename the menu of the generic content in the sidekick-area (must have the ID of the sidekick and the newName);
@@ -854,6 +856,9 @@ So the idea is that we have a `uiCommands` object and at a point, there will be 
   - caption:
     - save: this function saves the given text, locale and caption type
     - addLocale: this function sends a locale to be added to the available options
+
+  - presentation:
+    - upload: uploads a new presentation to BigBlueButton;
 
 **Example usage:**
 
