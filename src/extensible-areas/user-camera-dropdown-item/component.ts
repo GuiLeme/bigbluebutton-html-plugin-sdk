@@ -5,6 +5,7 @@ import {
   UserCameraDropdownInterface, UserCameraDropdownOptionProps,
   UserCameraDropdownSeparatorProps,
 } from './types';
+import { PluginIconType } from '../common/icon';
 
 // UserCameraDropdown Extensible Area
 
@@ -15,7 +16,7 @@ export class UserCameraDropdownOption implements UserCameraDropdownInterface {
 
   label: string;
 
-  icon: string;
+  icon: PluginIconType;
 
   dataTest: string;
 
@@ -35,7 +36,7 @@ export class UserCameraDropdownOption implements UserCameraDropdownInterface {
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5)
    */
   constructor({
-    id, label = '', icon = '', dataTest = '', onClick = () => {},
+    id, label = '', icon = '', dataTest = '', onClick = () => { },
     displayFunction = () => true,
   }: UserCameraDropdownOptionProps) {
     if (id) {

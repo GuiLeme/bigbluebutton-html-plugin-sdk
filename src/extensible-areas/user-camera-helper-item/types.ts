@@ -1,7 +1,8 @@
 import { PluginProvidedUiItemDescriptor } from '../base';
 import { UserCameraHelperItemPosition } from './enums';
+import { PluginIconType } from '../common/icon';
 
-export interface UserCameraHelperInterface extends PluginProvidedUiItemDescriptor{
+export interface UserCameraHelperInterface extends PluginProvidedUiItemDescriptor {
   position: UserCameraHelperItemPosition;
 }
 
@@ -16,10 +17,10 @@ export interface UserCameraHelperCallbackFunctionArguments {
   userId: string;
 }
 
-export interface UserCameraHelperButtonInterface extends UserCameraHelperInterface{
+export interface UserCameraHelperButtonInterface extends UserCameraHelperInterface {
   label: string;
 
-  icon: string;
+  icon: PluginIconType;
 
   tooltip: string;
 
@@ -35,7 +36,7 @@ export interface UserCameraHelperButtonInterface extends UserCameraHelperInterfa
 export interface UserCameraHelperButtonProps {
   id?: string;
   label?: string;
-  icon: string;
+  icon: PluginIconType;
   tooltip: string;
   disabled: boolean;
   displayFunction?: (args: UserCameraHelperCallbackFunctionArguments) => boolean;

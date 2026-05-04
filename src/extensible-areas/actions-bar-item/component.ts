@@ -9,8 +9,8 @@ import {
   SelectOption,
   ToggleGroupOption,
   ActionsBarToggleGroupProps,
-  ActionsBarIconType,
 } from './types';
+import { PluginIconType } from '../common/icon';
 
 // ActionsBar Extensible Area
 
@@ -34,17 +34,19 @@ class ActionsBarItem implements ActionsBarInterface {
     this.dataTest = dataTest;
   }
 
-  setItemId(id: string):void {
+  setItemId(id: string): void {
     this.id = `ActionsBar${this.type}_${id}`;
   }
 }
 
 export class ActionsBarButton extends ActionsBarItem {
-  icon: ActionsBarIconType;
+  icon: PluginIconType;
 
   tooltip: string;
 
   onClick: () => void;
+
+  color: string;
 
   /**
    * Returns object to be used in the setter for action bar. In this case,
@@ -56,11 +58,13 @@ export class ActionsBarButton extends ActionsBarItem {
    * @param dataTest - string attribute to be used for testing
    * @param onClick - function to be called when clicking the button
    * @param position - position that this button will be displayed, see {@link ActionsBarPosition}
+   * @param color - button color variant, defaults to 'primary'
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5)
    */
   constructor({
-    id, icon, tooltip = '', dataTest = '', onClick = () => {}, position = ActionsBarPosition.RIGHT,
+    id, icon, tooltip = '', dataTest = '', onClick = () => { }, position = ActionsBarPosition.RIGHT,
+    color = 'primary',
   }: ActionsBarButtonProps) {
     super({
       id, type: ActionsBarItemType.BUTTON, position, dataTest,
@@ -69,11 +73,12 @@ export class ActionsBarButton extends ActionsBarItem {
     this.tooltip = tooltip;
     this.dataTest = dataTest;
     this.onClick = onClick;
+    this.color = color;
   }
 }
 
 export class ActionsBarSeparator extends ActionsBarItem {
-  icon: string;
+  icon: PluginIconType;
 
   /**
    * Returns object to be used in the setter for action bar. In this case,
@@ -129,7 +134,7 @@ export class ActionsBarSelector extends ActionsBarItem {
     options = [],
     defaultOption = options[0],
     dataTest = '',
-    onChange = () => {},
+    onChange = () => { },
     position = ActionsBarPosition.RIGHT,
     width = 140,
   }: ActionsBarSelectorProps) {
@@ -179,7 +184,7 @@ export class ActionsBarToggleGroup extends ActionsBarItem {
     options = [],
     defaultOption = options[0],
     dataTest = '',
-    onChange = () => {},
+    onChange = () => { },
     position = ActionsBarPosition.RIGHT,
   }: ActionsBarToggleGroupProps) {
     super({

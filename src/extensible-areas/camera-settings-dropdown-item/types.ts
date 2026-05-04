@@ -1,4 +1,5 @@
 import { PluginProvidedUiItemDescriptor } from '../base';
+import { PluginIconType } from '../common/icon';
 
 /**
  * Camera Settings Dropdown Item - The general Camera settings extensible area
@@ -7,13 +8,13 @@ import { PluginProvidedUiItemDescriptor } from '../base';
  * To make this dropdown appear, the user needs to enter with webcam.
  * This will make a small downward arrow appear in the camera icon (the chevron).
  */
-export interface CameraSettingsDropdownInterface extends PluginProvidedUiItemDescriptor{
+export interface CameraSettingsDropdownInterface extends PluginProvidedUiItemDescriptor {
 }
 
 export interface CameraSettingsDropdownOptionProps {
   id?: string;
   label: string;
-  icon: string;
+  icon: PluginIconType;
   dataTest?: string;
   onClick: () => void;
 }

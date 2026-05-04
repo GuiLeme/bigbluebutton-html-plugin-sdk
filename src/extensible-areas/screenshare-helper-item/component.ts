@@ -4,6 +4,7 @@ import {
   ScreenshareHelperButtonInterface,
   ScreenshareHelperButtonOnclickCallback,
 } from './types';
+import { PluginIconType } from '../common/icon';
 
 // ScreenshareHelper Extensible Area
 
@@ -14,7 +15,7 @@ export class ScreenshareHelperButton implements ScreenshareHelperButtonInterface
 
   label: string;
 
-  icon: string;
+  icon: PluginIconType;
 
   tooltip: string;
 
@@ -44,7 +45,7 @@ export class ScreenshareHelperButton implements ScreenshareHelperButtonInterface
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, label = '', icon = '', tooltip = '', disabled = true, dataTest = '', onClick = () => {},
+    id, label = '', icon = '', tooltip = '', disabled = true, dataTest = '', onClick = () => { },
     position = ScreenshareHelperItemPosition.TOP_RIGHT,
   }: ScreenshareHelperButtonProps) {
     if (id) {

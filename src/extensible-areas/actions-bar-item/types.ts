@@ -1,6 +1,7 @@
 import { ChangeEvent, MouseEvent } from 'react';
 import { PluginProvidedUiItemDescriptor } from '../base';
 import { ActionsBarItemType, ActionsBarPosition } from './enums';
+import { PluginIconType } from '../common/icon';
 
 /**
  * Interface for the generic Actions bar item. (`position` is mandatory)
@@ -16,31 +17,19 @@ export interface ActionsBarItemProps {
   dataTest?: string;
 }
 
-export interface ActionsBarButtonIconSvg {
-  svgContent: React.SVGProps<SVGSVGElement>;
-}
-
-export interface ActionsBarButtonIconName {
-  /**
-   * Default icon name defined by BBB (see options there).
-   */
-  iconName: string;
-}
-
-export type ActionsBarIconType = ActionsBarButtonIconSvg | ActionsBarButtonIconName
-
 export interface ActionsBarButtonProps {
   id?: string;
-  icon: ActionsBarIconType;
+  icon: PluginIconType;
   tooltip: string;
   position: ActionsBarPosition;
   dataTest?: string;
   onClick: () => void;
+  color?: string;
 }
 
 export interface ActionsBarSeparatorProps {
   position: ActionsBarPosition;
-  icon?: string;
+  icon?: PluginIconType;
   dataTest?: string;
 }
 

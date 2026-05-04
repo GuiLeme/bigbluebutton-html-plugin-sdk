@@ -1,5 +1,6 @@
 import * as ReactDOM from 'react-dom/client';
 import { PluginProvidedUiItemDescriptor } from '../base';
+import { PluginIconType } from '../common/icon';
 
 export interface GenericContentInterface extends PluginProvidedUiItemDescriptor {
 }
@@ -15,7 +16,7 @@ export interface GenericContentSidekickAreaProps {
   contentFunction: (element: HTMLElement) => ReactDOM.Root;
   name: string;
   section: string;
-  buttonIcon: string;
+  buttonIcon: PluginIconType;
   open: boolean;
   dataTest?: string;
 }

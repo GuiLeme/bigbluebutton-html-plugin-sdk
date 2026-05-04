@@ -1,4 +1,5 @@
 import { PluginProvidedUiItemDescriptor } from '../base';
+import { PluginIconType } from '../common/icon';
 
 /**
  * Audio Settings Dropdown Item - The general Audio settings extensible area
@@ -7,13 +8,13 @@ import { PluginProvidedUiItemDescriptor } from '../base';
  * To make this dropdown appear, the user needs to enter with audio, either listen only
  * or microphone. This will make a small downward arrow appear (chevron).
  */
-export interface AudioSettingsDropdownInterface extends PluginProvidedUiItemDescriptor{
+export interface AudioSettingsDropdownInterface extends PluginProvidedUiItemDescriptor {
 }
 
 export interface AudioSettingsDropdownOptionProps {
   id?: string;
   label: string;
-  icon: string;
+  icon: PluginIconType;
   dataTest?: string;
   onClick: () => void;
 }

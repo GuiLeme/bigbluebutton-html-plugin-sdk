@@ -1,7 +1,8 @@
 import { PluginProvidedUiItemDescriptor } from '../base';
 import { NavBarItemPosition } from './enums';
+import { PluginIconType } from '../common/icon';
 
-export interface NavBarInterface extends PluginProvidedUiItemDescriptor{
+export interface NavBarInterface extends PluginProvidedUiItemDescriptor {
   position: NavBarItemPosition;
   hasSeparator: boolean;
 }
@@ -9,7 +10,7 @@ export interface NavBarInterface extends PluginProvidedUiItemDescriptor{
 export interface NavBarButtonProps {
   id?: string;
   label: string;
-  icon: string;
+  icon: PluginIconType;
   tooltip: string;
   disabled: boolean;
   hasSeparator: boolean;

@@ -1,4 +1,5 @@
 import { PluginProvidedUiItemDescriptor } from '../base';
+import { PluginIconType } from '../common/icon';
 
 /**
  * Interface for a generic item for the media area.
@@ -17,12 +18,10 @@ export interface MediaAreaButtonIconName {
   iconName: string;
 }
 
-export type MediaAreaIconType = MediaAreaButtonIconSvg | MediaAreaButtonIconName
-
 export interface MediaAreaOptionProps {
   id?: string;
   label: string;
-  icon: MediaAreaIconType;
+  icon: PluginIconType;
   tooltip: string;
   dataTest?: string;
   allowed: boolean;
