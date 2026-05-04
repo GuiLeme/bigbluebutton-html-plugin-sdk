@@ -1,7 +1,8 @@
 import { MediaAreaItemType } from './enums';
 import {
-  MediaAreaInterface, MediaAreaOptionProps, MediaAreaIconType,
+  MediaAreaInterface, MediaAreaOptionProps,
 } from './types';
+import { PluginIconType } from '../common/icon';
 
 // MediaArea Extensible Area
 
@@ -12,7 +13,7 @@ export class MediaAreaOption implements MediaAreaInterface {
 
   label: string;
 
-  icon: MediaAreaIconType;
+  icon: PluginIconType;
 
   tooltip: string;
 

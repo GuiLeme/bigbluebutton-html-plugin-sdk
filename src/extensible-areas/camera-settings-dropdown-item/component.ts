@@ -2,6 +2,7 @@ import { CameraSettingsDropdownItemType } from './enums';
 import {
   CameraSettingsDropdownInterface, CameraSettingsDropdownOptionProps,
 } from './types';
+import { PluginIconType } from '../common/icon';
 
 // CameraSettingsDropdown Extensible Area
 
@@ -12,7 +13,7 @@ export class CameraSettingsDropdownOption implements CameraSettingsDropdownInter
 
   label: string;
 
-  icon: string;
+  icon: PluginIconType;
 
   dataTest: string = '';
 
@@ -30,7 +31,7 @@ export class CameraSettingsDropdownOption implements CameraSettingsDropdownInter
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, label = '', icon = '', dataTest = '', onClick = () => {},
+    id, label = '', icon = '', dataTest = '', onClick = () => { },
   }: CameraSettingsDropdownOptionProps) {
     if (id) {
       this.id = id;

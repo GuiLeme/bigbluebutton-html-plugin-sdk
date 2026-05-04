@@ -31,7 +31,9 @@ sed -i "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" pack
 npm install
 
 # Publishes to npm
-npm publish
+npm publish --tag tmp
+npm dist-tag add bigbluebutton-html-plugin-sdk@$NEW_VERSION latest
+npm dist-tag rm bigbluebutton-html-plugin-sdk tmp
 
 echo "Sleeping 120 seconds to allow npm replicate internally"
 sleep 120

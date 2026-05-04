@@ -2,6 +2,7 @@ import { AudioSettingsDropdownItemType } from './enums';
 import {
   AudioSettingsDropdownInterface, AudioSettingsDropdownOptionProps,
 } from './types';
+import { PluginIconType } from '../common/icon';
 
 // AudioSettingsDropdown Extensible Area
 
@@ -12,7 +13,7 @@ export class AudioSettingsDropdownOption implements AudioSettingsDropdownInterfa
 
   label: string;
 
-  icon: string;
+  icon: PluginIconType;
 
   dataTest: string;
 

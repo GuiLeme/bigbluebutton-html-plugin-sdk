@@ -2,6 +2,7 @@ import { PresentationDropdownItemType } from './enums';
 import {
   PresentationDropdownInterface, PresentationDropdownOptionProps,
 } from './types';
+import { PluginIconType } from '../common/icon';
 
 // PresentationDropdown Extensible Area
 
@@ -12,7 +13,7 @@ export class PresentationDropdownOption implements PresentationDropdownInterface
 
   label: string;
 
-  icon: string;
+  icon: PluginIconType;
 
   dataTest: string;
 
@@ -31,7 +32,7 @@ export class PresentationDropdownOption implements PresentationDropdownInterface
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
    */
   constructor({
-    id, label = '', icon = '', dataTest = '', onClick = () => {},
+    id, label = '', icon = '', dataTest = '', onClick = () => { },
   }: PresentationDropdownOptionProps) {
     if (id) {
       this.id = id;
