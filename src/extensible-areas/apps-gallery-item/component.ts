@@ -1,5 +1,6 @@
 import { AppsGalleryType } from './enums';
 import { AppsGalleryInterface, AppsGalleryItemProps } from './types';
+import { PluginIconType } from '../common/icon';
 
 export class AppsGalleryEntry implements AppsGalleryInterface {
   id: string = '';
@@ -8,7 +9,7 @@ export class AppsGalleryEntry implements AppsGalleryInterface {
 
   type: AppsGalleryType = AppsGalleryType.ENTRY;
 
-  icon: string = '';
+  icon: PluginIconType = '';
 
   dataTest: string;
 
