@@ -89,6 +89,16 @@ function SampleUiCommandsPlugin(
           }
         },
       }),
+      new ActionButtonDropdownOption({
+        label: 'Stop screenshare',
+        icon: 'copy',
+        tooltip: '',
+        dataTest: 'stopScreenshareButton',
+        allowed: true,
+        onClick: () => {
+          pluginApi.uiCommands?.screenshare.stop();
+        },
+      }),
     ]);
   }, [usersData, currentUser]);
 

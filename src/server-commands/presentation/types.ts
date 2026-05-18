@@ -2,10 +2,26 @@ export interface UploadPresentationBase64Content {
   base64: string;
 }
 
-export type UploadPresentationContent = UploadPresentationBase64Content;
+export interface UploadPresentationBlobContent {
+  blob: Blob;
+}
+
+export interface UploadPresentationFileContent {
+  file: File;
+}
+
+export interface UploadPresentationDataUrlContent {
+  dataUrl: string;
+}
+
+export type UploadPresentationContent =
+  | UploadPresentationBase64Content
+  | UploadPresentationBlobContent
+  | UploadPresentationFileContent
+  | UploadPresentationDataUrlContent;
 
 export interface UploadPresentationCommandArguments {
-  content: UploadPresentationBase64Content;
+  content: UploadPresentationContent;
   mimeType: string;
   filename?: string;
 }
