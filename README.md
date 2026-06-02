@@ -315,6 +315,11 @@ useEffect(() => {
       label: 'Custom Nav Button',
       tooltip: 'Navigate to custom area',
       position: NavBarItemPosition.RIGHT,
+      color: 'primary',
+      circle: true,
+      hideLabel: true,
+      size: 'sm', // Available sizes: 'sm', 'md', 'lg', 'jumbo'.
+      style: { marginLeft: '4px' },
       onClick: () => pluginLogger.info('Nav button clicked'),
       hasSeparator: true,
     }),

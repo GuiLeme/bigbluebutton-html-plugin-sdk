@@ -2,6 +2,7 @@ import { ChangeEvent, MouseEvent } from 'react';
 import { PluginProvidedUiItemDescriptor } from '../base';
 import { ActionsBarItemType, ActionsBarPosition } from './enums';
 import { PluginIconType } from '../common/icon';
+import { PluginButtonStyleProps } from '../common/button';
 
 /**
  * Interface for the generic Actions bar item. (`position` is mandatory)
@@ -17,14 +18,13 @@ export interface ActionsBarItemProps {
   dataTest?: string;
 }
 
-export interface ActionsBarButtonProps {
+export interface ActionsBarButtonProps extends PluginButtonStyleProps {
   id?: string;
   icon: PluginIconType;
   tooltip: string;
   position: ActionsBarPosition;
   dataTest?: string;
   onClick: () => void;
-  color?: string;
 }
 
 export interface ActionsBarSeparatorProps {

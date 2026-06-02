@@ -1,4 +1,5 @@
 export * from './common/icon';
+export * from './common/button';
 export * from './presentation-toolbar-item';
 export * from './user-list-dropdown-item';
 export * from './action-button-dropdown-item';

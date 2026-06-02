@@ -2,6 +2,7 @@ import { PresentationToolbarItemType } from './enums';
 import {
   PresentationToolbarInterface, PresentationToolbarButtonProps,
 } from './types';
+import { PluginButtonSize } from '../common/button';
 
 // PresentationToolbar Extensible Area
 
@@ -13,6 +14,14 @@ export class PresentationToolbarButton implements PresentationToolbarInterface {
   label: string;
 
   tooltip: string;
+
+  color: string;
+
+  circle: boolean;
+
+  hideLabel: boolean;
+
+  size: PluginButtonSize;
 
   style: React.CSSProperties;
 
@@ -27,13 +36,18 @@ export class PresentationToolbarButton implements PresentationToolbarInterface {
    * @param label - label to be displayed in the button
    * @param tooltip - tooltip to be displayed when hovering the button
    * @param onClick - function to be called when clicking the button
+   * @param color - button color variant, defaults to 'default'
+   * @param circle - if true, the presentation toolbar button will be displayed as a circle
+   * @param hideLabel - if true, the presentation toolbar button label will be visually hidden
+   * @param size - button size variant, defaults to 'md'
    * @param style - style of the button in the presentation toolbar
    * @param dataTest - data-test attribute for testing purposes
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5)
    */
   constructor({
-    id, label = '', tooltip = '', dataTest = '', onClick = () => {}, style = {},
+    id, label = '', tooltip = '', dataTest = '', onClick = () => {},
+    color = 'default', circle = false, hideLabel = false, size = 'md', style = {},
   }: PresentationToolbarButtonProps) {
     if (id) {
       this.id = id;
@@ -41,6 +55,10 @@ export class PresentationToolbarButton implements PresentationToolbarInterface {
     this.label = label;
     this.tooltip = tooltip;
     this.onClick = onClick;
+    this.color = color;
+    this.circle = circle;
+    this.hideLabel = hideLabel;
+    this.size = size;
     this.style = style;
     this.dataTest = dataTest;
     this.type = PresentationToolbarItemType.BUTTON;

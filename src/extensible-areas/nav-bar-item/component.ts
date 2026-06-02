@@ -4,6 +4,7 @@ import {
   NavBarInfoProps,
 } from './types';
 import { PluginIconType } from '../common/icon';
+import { PluginButtonSize } from '../common/button';
 
 // NavBar Extensible Area
 
@@ -19,6 +20,16 @@ export class NavBarButton implements NavBarInterface {
   tooltip: string;
 
   disabled: boolean;
+
+  color: string;
+
+  circle: boolean;
+
+  hideLabel: boolean;
+
+  size: PluginButtonSize;
+
+  style: React.CSSProperties;
 
   dataTest: string;
 
@@ -41,6 +52,11 @@ export class NavBarButton implements NavBarInterface {
    * @param hasSeparator - boolean indicating whether the navigation bar button has separator
    * (vertical bar)
    * @param disabled - if true, the navigation bar button will not be clickable
+   * @param color - button color variant, defaults to 'primary'
+   * @param circle - if true, the navigation bar button will be displayed as a circle
+   * @param hideLabel - if true, the navigation bar button label will be visually hidden
+   * @param size - button size variant, defaults to 'sm'
+   * @param style - style of the navigation bar button
    * @param dataTest - string attribute to be used for testing
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5).
@@ -48,6 +64,7 @@ export class NavBarButton implements NavBarInterface {
   constructor({
     id, label = '', icon = '', tooltip = '', disabled = true, dataTest = '', onClick = () => { },
     position = NavBarItemPosition.RIGHT, hasSeparator = true,
+    color = 'primary', circle = true, hideLabel = true, size = 'sm', style = {},
   }: NavBarButtonProps) {
     if (id) {
       this.id = id;
@@ -56,6 +73,11 @@ export class NavBarButton implements NavBarInterface {
     this.icon = icon;
     this.tooltip = tooltip;
     this.disabled = disabled;
+    this.color = color;
+    this.circle = circle;
+    this.hideLabel = hideLabel;
+    this.size = size;
+    this.style = style;
     this.dataTest = dataTest;
     this.onClick = onClick;
     this.type = NavBarItemType.BUTTON;
