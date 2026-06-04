@@ -53,9 +53,11 @@ export class NavBarButton implements NavBarInterface {
    * (vertical bar)
    * @param disabled - if true, the navigation bar button will not be clickable
    * @param color - button color variant, defaults to 'primary'
-   * @param circle - if true, the navigation bar button will be displayed as a circle
-   * @param hideLabel - if true, the navigation bar button label will be visually hidden
-   * @param size - button size variant, defaults to 'sm'
+   * @param circle - if true, the navigation bar button will be displayed as a circle,
+   * defaults to false
+   * @param hideLabel - if true, the navigation bar button label will be visually hidden,
+   * defaults to false
+   * @param size - button size variant, defaults to 'md'
    * @param style - style of the navigation bar button
    * @param dataTest - string attribute to be used for testing
    *
@@ -64,7 +66,7 @@ export class NavBarButton implements NavBarInterface {
   constructor({
     id, label = '', icon = '', tooltip = '', disabled = true, dataTest = '', onClick = () => { },
     position = NavBarItemPosition.RIGHT, hasSeparator = true,
-    color = 'primary', circle = true, hideLabel = true, size = 'sm', style = {},
+    color = 'primary', circle = false, hideLabel = false, size = 'md', style = {},
   }: NavBarButtonProps) {
     if (id) {
       this.id = id;
