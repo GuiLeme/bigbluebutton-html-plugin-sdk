@@ -20,6 +20,7 @@ export interface ActionsBarItemProps {
 
 export interface ActionsBarButtonProps extends PluginButtonStyleProps {
   id?: string;
+  label?: string;
   icon: PluginIconType;
   tooltip: string;
   position: ActionsBarPosition;

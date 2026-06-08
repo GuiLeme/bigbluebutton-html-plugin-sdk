@@ -41,6 +41,8 @@ class ActionsBarItem implements ActionsBarInterface {
 }
 
 export class ActionsBarButton extends ActionsBarItem {
+  label: string;
+
   icon: PluginIconType;
 
   tooltip: string;
@@ -61,6 +63,7 @@ export class ActionsBarButton extends ActionsBarItem {
    * Returns object to be used in the setter for action bar. In this case,
    * a button.
    *
+   * @param label - label to be displayed in the button
    * @param icon - icon to be used in the button for the action bar - it can be the iconName
    * from BigBlueButton or an svg
    * @param tooltip - tooltip to be displayed when hovering the button
@@ -76,12 +79,14 @@ export class ActionsBarButton extends ActionsBarItem {
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5)
    */
   constructor({
-    id, icon, tooltip = '', dataTest = '', onClick = () => { }, position = ActionsBarPosition.RIGHT,
-    color = 'primary', circle = true, hideLabel = true, size = 'lg', style = {},
+    id, label = '', icon, tooltip = '', dataTest = '', onClick = () => { },
+    position = ActionsBarPosition.RIGHT, color = 'primary', circle = true, hideLabel = true,
+    size = 'lg', style = {},
   }: ActionsBarButtonProps) {
     super({
       id, type: ActionsBarItemType.BUTTON, position, dataTest,
     });
+    this.label = label;
     this.icon = icon;
     this.tooltip = tooltip;
     this.dataTest = dataTest;
