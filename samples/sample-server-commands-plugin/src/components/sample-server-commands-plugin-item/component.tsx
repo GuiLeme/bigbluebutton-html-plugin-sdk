@@ -43,7 +43,7 @@ function SampleServerCommandsPluginItem(
           });
         },
       }),
-      new ActionButtonDropdownOption({
+      new MediaAreaOption({
         label: 'Upload PDF',
         icon: 'copy',
         tooltip: '',
@@ -57,7 +57,7 @@ function SampleServerCommandsPluginItem(
           });
         },
       }),
-      new ActionButtonDropdownOption({
+      new MediaAreaOption({
         label: 'Upload BBB Image',
         icon: 'copy',
         tooltip: '',
