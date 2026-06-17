@@ -93,7 +93,7 @@ function SampleUiCommandsPlugin(
           }
         },
       }),
-      new ActionButtonDropdownOption({
+      new MediaAreaOption({
         label: 'Stop screenshare',
         icon: 'copy',
         tooltip: '',
