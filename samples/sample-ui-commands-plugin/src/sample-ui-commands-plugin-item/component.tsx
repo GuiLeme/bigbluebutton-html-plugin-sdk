@@ -93,6 +93,16 @@ function SampleUiCommandsPlugin(
           }
         },
       }),
+      new MediaAreaOption({
+        label: 'Stop screenshare',
+        icon: 'copy',
+        tooltip: '',
+        dataTest: 'stopScreenshareButton',
+        allowed: true,
+        onClick: () => {
+          pluginApi.uiCommands?.screenshare.stop();
+        },
+      }),
     ]);
   }, [usersData, currentUser]);
 

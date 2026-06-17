@@ -11,6 +11,7 @@ import { actionsBar } from './actions-bar/commands';
 import { layout } from './layout/commands';
 import { navBar } from './nav-bar/commands';
 import { sidekickArea } from './sidekick-area/commands';
+import { screenshare } from './screenshare/commands';
 import { UiCommands } from './types';
 
 export const uiCommands: UiCommands = {
@@ -27,4 +28,5 @@ export const uiCommands: UiCommands = {
   conference,
   notification,
   layout,
+  screenshare,
 };
