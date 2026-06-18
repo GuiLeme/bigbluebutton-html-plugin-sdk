@@ -11,6 +11,7 @@ import {
   ActionsBarToggleGroupProps,
 } from './types';
 import { PluginIconType } from '../common/icon';
+import { PluginButtonSize } from '../common/button';
 
 // ActionsBar Extensible Area
 
@@ -40,6 +41,8 @@ class ActionsBarItem implements ActionsBarInterface {
 }
 
 export class ActionsBarButton extends ActionsBarItem {
+  label: string;
+
   icon: PluginIconType;
 
   tooltip: string;
@@ -48,10 +51,19 @@ export class ActionsBarButton extends ActionsBarItem {
 
   color: string;
 
+  circle: boolean;
+
+  hideLabel: boolean;
+
+  size: PluginButtonSize;
+
+  style: React.CSSProperties;
+
   /**
    * Returns object to be used in the setter for action bar. In this case,
    * a button.
    *
+   * @param label - label to be displayed in the button
    * @param icon - icon to be used in the button for the action bar - it can be the iconName
    * from BigBlueButton or an svg
    * @param tooltip - tooltip to be displayed when hovering the button
@@ -59,21 +71,31 @@ export class ActionsBarButton extends ActionsBarItem {
    * @param onClick - function to be called when clicking the button
    * @param position - position that this button will be displayed, see {@link ActionsBarPosition}
    * @param color - button color variant, defaults to 'primary'
+   * @param circle - if true, the action bar button will be displayed as a circle
+   * @param hideLabel - if true, the action bar button label will be visually hidden
+   * @param size - button size variant, defaults to 'lg'
+   * @param style - style of the action bar button
    *
    * @returns Object that will be interpreted by the core of Bigbluebutton (HTML5)
    */
   constructor({
-    id, icon, tooltip = '', dataTest = '', onClick = () => { }, position = ActionsBarPosition.RIGHT,
-    color = 'primary',
+    id, label = '', icon, tooltip = '', dataTest = '', onClick = () => { },
+    position = ActionsBarPosition.RIGHT, color = 'primary', circle = true, hideLabel = true,
+    size = 'lg', style = {},
   }: ActionsBarButtonProps) {
     super({
       id, type: ActionsBarItemType.BUTTON, position, dataTest,
     });
+    this.label = label;
     this.icon = icon;
     this.tooltip = tooltip;
     this.dataTest = dataTest;
     this.onClick = onClick;
     this.color = color;
+    this.circle = circle;
+    this.hideLabel = hideLabel;
+    this.size = size;
+    this.style = style;
   }
 }
 
