@@ -317,6 +317,11 @@ useEffect(() => {
       label: 'Custom Nav Button',
       tooltip: 'Navigate to custom area',
       position: NavBarItemPosition.RIGHT,
+      color: 'primary',
+      circle: true,
+      hideLabel: true,
+      size: 'sm', // Available sizes: 'sm', 'md', 'lg', 'jumbo'.
+      style: { marginLeft: '4px' },
       onClick: () => pluginLogger.info('Nav button clicked'),
       hasSeparator: true,
     }),
@@ -863,6 +868,9 @@ So the idea is that we have a `uiCommands` object and at a point, there will be 
 - caption:
   - save: this function saves the given text, locale and caption type
   - addLocale: this function sends a locale to be added to the available options
+
+  - presentation:
+    - upload: uploads a new presentation to BigBlueButton;
 
   - presentation:
     - upload: uploads a new presentation to BigBlueButton;
